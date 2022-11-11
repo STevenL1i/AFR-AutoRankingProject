@@ -1,0 +1,16 @@
+Round,raceDate,GP_CHN,GP_ENG,driverGroup,raceStatus
+1,2021/8/12,巴林,Bahrain,A3,CANCELLED
+1,2021/8/13,巴林,Bahrain,A2,FINISHED
+1,2021/8/14,巴林,Bahrain,A1,FINISHED
+2,2021/8/19,阿塞拜疆,Azerbaijan,A3,FINISHED
+2,2021/8/20,阿塞拜疆,Azerbaijan,A2,FINISHED
+2,2021/8/21,阿塞拜疆,Azerbaijan,A1,FINISHED
+3,2021/8/26,加拿大,Canada,A3,FINISHED
+3,2021/8/27,加拿大,Canada,A2,FINISHED
+3,2021/8/28,加拿大,Canada,A1,FINISHED
+4,2021/9/2,法国,France,A3,FINISHED
+4,2021/9/3,法国,France,A1,FINISHED
+4,2021/9/4,法国,France,A2,FINISHED
+5,2021/9/9,奥地利,Austria,A3,FINISHED
+5,2021/9/10,奥地利,Austria,A1,FINISHED
+5,2021/9/11,奥地利,Austria,A2,FINISHED

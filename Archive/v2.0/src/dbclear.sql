@@ -1,0 +1,10 @@
+delete from afr_s7.driverList;
+delete from afr_s7.driverTransfer;
+delete from afr_s7.driverLeaderBoard;
+delete from afr_s7.constructorsLeaderBoard;
+delete from afr_s7.licensePoint;
+delete from afr_s7.raceCalendar;
+delete from afr_s7.qualiResult;
+delete from afr_s7.raceResult;
+delete from afr_s7.raceDirector;
+delete from afr_s7.LANusername;

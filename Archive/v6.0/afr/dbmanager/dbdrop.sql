@@ -1,0 +1,11 @@
+drop table qualiraceFL;
+drop table qualiResult;
+drop table raceResult;
+drop table raceDirector;
+drop table licensePoint;
+drop table driverLeaderBoard;
+drop table constructorsLeaderBoard;
+drop table driverTransfer;
+drop table raceCalendar;
+drop table teamList;
+drop table driverList;

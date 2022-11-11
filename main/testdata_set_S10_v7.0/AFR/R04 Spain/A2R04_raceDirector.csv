@@ -1,0 +1,9 @@
+casedate,driverName,driverGroup,GP,penalty,penaltyLP,penaltyWarning,qualiBan,raceBan,PenaltyDescription
+2022/10/15,firezai,A2,Spain,"Warning, qualiban",-2,1,1,0,Blocking flying lap
+2022/10/15,KINGBOB,A2,Spain,"Warning, Time penalty",0,0.5,0,0,Causing a collision and forcing another driver off the track
+2022/10/15,dasu,A2,Spain,Warinng,0,0.5,0,0,Causing a collision
+2022/10/15,HanyueYY,A2,Spain,"Warning, Time penalty",-2,0,0,0,Causing a severe collision
+2022/10/15,Mikko,A2,Spain,qualiban,0,0,-1,0,Execution of qualiban
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,

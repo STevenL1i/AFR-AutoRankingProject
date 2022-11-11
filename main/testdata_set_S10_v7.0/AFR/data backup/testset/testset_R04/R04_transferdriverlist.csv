@@ -1,0 +1,12 @@
+driverName,team_from,driverGroup_from,team_to,driverGroup_to,driverStatus,description,transferTime,tokenUsed
+LandoRicciardo,Reserve,A3,Reserve,A1,reserved driver,driver upgrade,2022/10/11,0
+Alick,Reserve,A1,QGod,A1,1st driver,driver grouped,2022/10/11,0
+Quick Nick,Reserve,A1,QGod,A1,2ed driver,driver grouped,2022/10/11,0
+333,3b,A1,Reserve,A1,reserved driver,team dismissed,2022/10/11,0
+bomber-20,3b,A1,Reserve,A1,reserved driver,team dismissed,2022/10/11,0
+bomber-20,Reserve,A1,ABC,A1,1st driver,driver grouped,2022/10/11,1
+SHZ,Reserve,A1,ABC,A1,2ed driver,driver grouped,2022/10/11,0
+guagua,Reserve,A2,NIO333,A2,2ed driver,driver grouped,2022/10/11,0
+STeven L2i,NIO333,A2,NIO333,A2,3rd driver,driver grouped,2022/10/11,0
+i4foru,Reserve,A2,fass,A2,1st driver,driver grouped,2022/10/11,0
+PPJACK,Reserve,A2,fass,A2,2ed driver,driver grouped,2022/10/11,0

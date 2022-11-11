@@ -1,0 +1,7 @@
+{
+    "host": "118.89.25.198",
+    "port": "12306",
+    "user": "telemetry",
+    "password": "123456",
+    "database": "f1_2020"
+}

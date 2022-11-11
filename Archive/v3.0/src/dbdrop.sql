@@ -1,0 +1,11 @@
+drop table afr_s8.qualiResult;
+drop table afr_s8.raceResult;
+drop table afr_s8.qualiraceFL;
+drop table afr_s8.raceDirector;
+drop table afr_s8.licensePoint;
+drop table afr_s8.driverLeaderBoard;
+drop table afr_s8.constructorsLeaderBoard;
+drop table afr_s8.driverTransfer;
+drop table afr_s8.LANusername;
+drop table afr_s8.raceCalendar;
+drop table afr_s8.driverList;

@@ -1,0 +1,70 @@
+Round,raceDate,GP_CHN,GP_ENG,driverGroup,raceStatus
+1,2021/8/12,巴林,Bahrain,A3,TO BE GO
+1,2021/8/13,巴林,Bahrain,A2,TO BE GO
+1,2021/8/14,巴林,Bahrain,A1,TO BE GO
+2,2021/8/19,阿塞拜疆,Azerbaijan,A3,TO BE GO
+2,2021/8/20,阿塞拜疆,Azerbaijan,A2,TO BE GO
+2,2021/8/21,阿塞拜疆,Azerbaijan,A1,TO BE GO
+3,2021/8/26,加拿大,Canada,A3,TO BE GO
+3,2021/8/27,加拿大,Canada,A2,TO BE GO
+3,2021/8/28,加拿大,Canada,A1,TO BE GO
+4,2021/9/2,法国,France,A3,TO BE GO
+4,2021/9/3,法国,France,A2,TO BE GO
+4,2021/9/4,法国,France,A1,TO BE GO
+5,2021/9/9,奥地利,Austria,A3,TO BE GO
+5,2021/9/10,奥地利,Austria,A2,TO BE GO
+5,2021/9/11,奥地利,Austria,A1,TO BE GO
+,2021/9/16,中秋,Mid-Aut Fes,A3,SEASON BREAK
+,2021/9/17,中秋,Mid-Aut Fes,A2,SEASON BREAK
+,2021/9/18,中秋,Mid-Aut Fes,A1,SEASON BREAK
+6,2021/9/23,英国,Britain,A3,TO BE GO
+6,2021/9/24,英国,Britain,A2,TO BE GO
+6,2021/9/25,英国,Britain,A1,TO BE GO
+,2021/9/30,国庆,National Day,A3,SEASON BREAK
+,2021/10/1,国庆,National Day,A2,SEASON BREAK
+,2021/10/2,国庆,National Day,A1,SEASON BREAK
+,2021/10/7,国庆,National Day,A3,SEASON BREAK
+,2021/10/8,国庆,National Day,A2,SEASON BREAK
+,2021/10/9,国庆,National Day,A1,SEASON BREAK
+7,2021/10/14,匈牙利,Hungary,A3,TO BE GO
+7,2021/10/15,匈牙利,Hungary,A2,TO BE GO
+7,2021/10/16,匈牙利,Hungary,A1,TO BE GO
+8,2021/10/21,比利时,Belgium,A3,TO BE GO
+8,2021/10/22,比利时,Belgium,A2,TO BE GO
+8,2021/10/23,比利时,Belgium,A1,TO BE GO
+9,2021/10/28,荷兰,Netherlands,A3,TO BE GO
+9,2021/10/29,荷兰,Netherlands,A2,TO BE GO
+9,2021/10/30,荷兰,Netherlands,A1,TO BE GO
+10,2021/11/4,意大利,Italy,A3,TO BE GO
+10,2021/11/5,意大利,Italy,A2,TO BE GO
+10,2021/11/6,意大利,Italy,A1,TO BE GO
+,2021/11/11,秋歇,Autumn Break,A3,SEASON BREAK
+,2021/11/12,秋歇,Autumn Break,A2,SEASON BREAK
+,2021/11/13,秋歇,Autumn Break,A1,SEASON BREAK
+11,2021/11/18,俄罗斯,Russia,A3,TO BE GO
+11,2021/11/19,俄罗斯,Russia,A2,TO BE GO
+11,2021/11/20,俄罗斯,Russia,A1,TO BE GO
+12,2021/11/25,新加坡,Singapore,A3,TO BE GO
+12,2021/11/26,新加坡,Singapore,A2,TO BE GO
+12,2021/11/27,新加坡,Singapore,A1,TO BE GO
+13,2021/12/2,日本,Japan,A3,TO BE GO
+13,2021/12/3,日本,Japan,A2,TO BE GO
+13,2021/12/4,日本,Japan,A1,TO BE GO
+14,2021/12/9,美国,USA,A3,TO BE GO
+14,2021/12/10,美国,USA,A2,TO BE GO
+14,2021/12/11,美国,USA,A1,TO BE GO
+15,2021/12/16,墨西哥,Mexico,A3,TO BE GO
+15,2021/12/17,墨西哥,Mexico,A2,TO BE GO
+15,2021/12/18,墨西哥,Mexico,A1,TO BE GO
+16,2021/12/23,阿布扎比,Abu Dhabi,A3,TO BE GO
+16,2021/12/24,阿布扎比,Abu Dhabi,A2,TO BE GO
+16,2021/12/25,阿布扎比,Abu Dhabi,A1,TO BE GO
+,2021/12/30,元旦,New Years Day,A3,SEASON BREAK
+,2021/12/31,元旦,New Years Day,A2,SEASON BREAK
+,2022/1/1,元旦,New Years Day,A1,SEASON BREAK
+17,2022/1/6,中国,China,A3,TO BE GO
+17,2022/1/7,中国,China,A2,TO BE GO
+17,2022/1/8,中国,China,A1,TO BE GO
+18,2022/1/13,巴西,Brazil,A3,TO BE GO
+18,2022/1/14,巴西,Brazil,A2,TO BE GO
+18,2022/1/15,巴西,Brazil,A1,TO BE GO

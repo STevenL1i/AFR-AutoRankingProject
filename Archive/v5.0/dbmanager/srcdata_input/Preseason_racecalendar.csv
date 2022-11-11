@@ -1,0 +1,51 @@
+Round,raceDate,GP_CHN,GP_ENG,driverGroup,raceStatus
+1,2022/2/11,巴林,Bahrain,A1,TO BE GO
+1,2022/2/12,巴林,Bahrain,A2,TO BE GO
+2,2022/2/18,沙特阿拉伯,Saudi Arabia,A1,TO BE GO
+2,2022/2/19,沙特阿拉伯,Saudi Arabia,A2,TO BE GO
+,2022/2/25,春歇,Spring Break,A1,SEASON BREAK
+,2022/2/26,春歇,Spring Break,A2,SEASON BREAK
+3,2022/3/04,圣马力诺,San Marino,A1,TO BE GO
+3,2022/3/05,圣马力诺,San Marino,A2,TO BE GO
+4,2022/3/11,葡萄牙,Portugal,A1,TO BE GO
+4,2022/3/12,葡萄牙,Portugal,A2,TO BE GO
+5,2022/3/18,阿塞拜疆,Azerbaijan,A1,TO BE GO
+5,2022/3/19,阿塞拜疆,Azerbaijan,A2,TO BE GO
+6,2022/3/25,加拿大,Canada,A1,TO BE GO
+6,2022/3/26,加拿大,Canada,A2,TO BE GO
+,2022/4/01,清明,Qingming Fest.,A1,SEASON BREAK
+,2022/4/02,清明,Qingming Fest.,A2,SEASON BREAK
+7,2022/4/08,法国,France,A1,TO BE GO
+7,2022/4/09,法国,France,A2,TO BE GO
+8,2022/4/15,奥地利,Austria,A1,TO BE GO
+8,2022/4/16,奥地利,Austria,A2,TO BE GO
+9,2022/4/22,英国,Britain,A1,TO BE GO
+9,2022/4/23,英国,Britain,A2,TO BE GO
+,2022/4/29,五一,Labour Day,A1,SEASON BREAK
+,2022/4/30,五一,Labour Day,A2,SEASON BREAK
+10,2022/5/06,匈牙利,Hungary,A1,TO BE GO
+10,2022/5/07,匈牙利,Hungary,A2,TO BE GO
+11,2022/5/13,比利时,Belgium,A1,TO BE GO
+11,2022/5/14,比利时,Belgium,A2,TO BE GO
+12,2022/5/20,荷兰,Netherlands,A1,TO BE GO
+12,2022/5/21,荷兰,Netherlands,A2,TO BE GO
+13,2022/5/27,意大利,Italy,A1,TO BE GO
+13,2022/5/28,意大利,Italy,A2,TO BE GO
+,2022/6/03,端午,Dragon Boat Fest.,A1,SEASON BREAK
+,2022/6/04,端午,Dragon Boat Fest.,A2,SEASON BREAK
+14,2022/6/10,俄罗斯,Russia,A1,TO BE GO
+14,2022/6/11,俄罗斯,Russia,A2,TO BE GO
+15,2022/6/17,新加坡,Singapore,A1,TO BE GO
+15,2022/6/18,新加坡,Singapore,A2,TO BE GO
+16,2022/6/24,日本,Japan,A1,TO BE GO
+16,2022/6/25,日本,Japan,A2,TO BE GO
+17,2022/7/01,中国,China,A1,TO BE GO
+17,2022/7/02,中国,China,A2,TO BE GO
+,2022/7/08,夏休,Summer Break,A1,SEASON BREAK
+,2022/7/09,夏休,Summer Break,A2,SEASON BREAK
+18,2022/7/15,美国,USA,A1,TO BE GO
+18,2022/7/16,美国,USA,A2,TO BE GO
+19,2022/7/22,墨西哥,Mexico,A1,TO BE GO
+19,2022/7/23,墨西哥,Mexico,A2,TO BE GO
+20,2022/7/29,巴西,Brazil,A1,TO BE GO
+20,2022/7/30,巴西,Brazil,A2,TO BE GO

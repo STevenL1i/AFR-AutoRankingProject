@@ -1,0 +1,86 @@
+gp_dict = {
+    "AUS": "Australia",
+    "BHR": "Bahrain",
+    "VNM": "Vietnam",
+    "CHN": "China",
+    "NLD": "Netherlands",
+    "ESP": "Spain",
+    "MCO": "Monaco",
+    "AZE": "Azerbaijan",
+    "CAN": "Canada",
+    "FRA": "France",
+    "AUT": "Austria",
+    "GBR": "Britain",
+    "HUN": "Hungary",
+    "BEL": "Belgium",
+    "ITA": "Italy",
+    "SGP": "Singapore",
+    "RUS": "Russia",
+    "JPN": "Japan",
+    "USA": "USA",
+    "MEX": "Mexico",
+    "BRA": "Brazil",
+    "UAE": "Abu Dhabi",
+    "SMR": "San Marino",
+    "PRT": "Portugal"
+}
+points_dict = {
+    1: 25,
+    2: 18,
+    3: 15,
+    4: 12,
+    5: 10,
+    6: 8,
+    7: 6,
+    8: 4,
+    9: 2,
+    10: 1,
+    11: 0,
+    12: 0,
+    13: 0,
+    14: 0,
+    15: 0,
+    16: 0,
+    17: 0,
+    18: 0,
+    19: 0,
+    20: 0,
+    -1: 0,
+    -2: 0,
+    -3: 0,
+    -4: 0,
+    None: 0
+}
+flag_dict = {
+    "Australia" : "flags/Australia.png",
+    "Bahrain" : "flags/Bahrain.png",
+    "Vietnam" : "flags/Vietnam.png",
+    "China" : "flags/China.png",
+    "Netherlands" : "flags/Netherlands.png",
+    "Spain" : "flags/Spain.png",
+    "Monaco" : "flags/Monaco.png",
+    "Azerbaijan" : "flags/Azerbaijan.png",
+    "Canada" : "flags/Canada.png",
+    "France" : "flags/France.png",
+    "Austria" : "flags/Austria.png",
+    "Britain" : "flags/Britain.png",
+    "Hungary" : "flags/Hungary.png",
+    "Belgium" : "flags/Belgium.png",
+    "Italy" : "flags/Italy.png",
+    "Singapore" : "flags/Singapore.png",
+    "Russia" : "flags/Russia.png",
+    "Japan" : "flags/Japan.png",
+    "USA" : "flags/USA.png",
+    "Mexico" : "flags/Mexico.png",
+    "Brazil" : "flags/Brazil.png",
+    "Abu Dhabi" : "flags/Abu Dhabi.png",
+    "San Marino" : "flags/San Marino.png",
+    "Portugal" : "flags/Portugal.png"
+}
+
+def get_key(my_dict, val):
+    for key, value in my_dict.items():
+        if val == value:
+            return key
+    return "key doesnt exist"
+

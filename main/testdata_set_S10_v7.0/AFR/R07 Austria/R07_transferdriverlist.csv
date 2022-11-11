@@ -1,0 +1,3 @@
+driverName,team_from,driverGroup_from,team_to,driverGroup_to,driverStatus,description,transferTime,tokenUsed
+Kogasa,Pit Lane Killer,A1,Reserve,A2,reserved driver,driver reallocated,2022/11/2,0
+wen,Reserve,A3,Reserve,A2,reserved driver,driver upgrade,2022/11/2,0

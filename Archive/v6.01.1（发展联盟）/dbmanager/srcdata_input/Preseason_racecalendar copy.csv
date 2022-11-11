@@ -1,0 +1,26 @@
+Round,raceDate,GP_CHN,GP_ENG,driverGroup,raceStatus
+1,2022/10/10,巴林,Bahrain,East,TO BE GO
+1,2022/10/11,比利时,Belgium,West,TO BE GO
+1,2022/10/12,意大利,Italy,South,TO BE GO
+1,2022/10/13,法国,France,North,TO BE GO
+1,2022/10/14,西班牙,Spain,Middle,TO BE GO
+2,2022/10/24,巴林,Bahrain,West,TO BE GO
+2,2022/10/25,比利时,Belgium,South,TO BE GO
+2,2022/10/26,意大利,Italy,North,TO BE GO
+2,2022/10/27,法国,France,Middle,TO BE GO
+2,2022/10/28,西班牙,Spain,East,TO BE GO
+3,2022/11/7,巴林,Bahrain,South,TO BE GO
+3,2022/11/8,比利时,Belgium,North,TO BE GO
+3,2022/11/9,意大利,Italy,Middle,TO BE GO
+3,2022/11/10,法国,France,East,TO BE GO
+3,2022/11/11,西班牙,Spain,West,TO BE GO
+4,2022/11/21,巴林,Bahrain,North,TO BE GO
+4,2022/11/22,比利时,Belgium,Middle,TO BE GO
+4,2022/11/23,意大利,Italy,East,TO BE GO
+4,2022/11/24,法国,France,West,TO BE GO
+4,2022/11/25,西班牙,Spain,South,TO BE GO
+5,2022/12/5,巴林,Bahrain,Middle,TO BE GO
+5,2022/12/6,比利时,Belgium,East,TO BE GO
+5,2022/12/7,意大利,Italy,West,TO BE GO
+5,2022/12/8,法国,France,South,TO BE GO
+5,2022/12/9,西班牙,Spain,North,TO BE GO

@@ -1,0 +1,10 @@
+case#,casedate,driverName,driverGroup,GP,penalty,penaltyLP,penaltyWarning,qualiBan,raceBan,PenaltyDescription
+,2022/11/5,firezai,A2,Austria,Qualiying ban,0,0,-1,0,Execution of qualiban
+,2022/11/5,KINGBOB,A2,Austria,Qualiying ban,0,0,-1,0,Execution of qualiban
+,2022/11/5,Promise,A2,Austria,10 second stop and go penalty,-2,1,0,0,Causing a severe collision
+,2022/11/5,Go7D3n WEST 999,A2,Austria,Warning,0,0.5,0,0,Causing a collision
+,2022/11/5,Kogasa ,A2,Austria,10 second stop and go penalty,-2,1,0,0,Causing a severe collision
+,2022/11/5,HanyueYY ,A2,Austria,10 second time penalty,-2,0,0,0,Causing a severe collision
+,2022/11/5,HanyueYY ,A2,Austria,5 second time penalty,-1,1,0,0,Dangerous driving
+,2022/11/5,Mikko,A2,Austria,3 second time penalty,0,0,0,0,Causing a collision
+,2022/11/5,jack,A2,Austria,10 second stop and go penalty,-2,0,0,0,Causing a severe collision
