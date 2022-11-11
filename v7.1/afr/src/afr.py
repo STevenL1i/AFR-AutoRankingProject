@@ -14,8 +14,7 @@ try:
     os.mkdir("log")
 except FileExistsError:
     pass
-logf = open(logpath, "w")
-logf.write("\n\n")
+logf = open(logpath, "a")
 logf.write(func.delimiter_string("Program launching", 50) + "\n")
 logf.write(func.delimiter_string("Generating log", 50) + "\n")
 logf.write(f'Time: {today.strftime("%Y-%m-%d %H:%M:%S")}\n')
@@ -212,6 +211,7 @@ def main():
             if choice == '0':
                 print()
                 input("请按Enter键以退出............")
+                func.logging(logpath, "Program exiting with code 0......", end="\n\n\n\n\n\n")
                 return 0
 
             else:
