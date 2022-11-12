@@ -10,10 +10,10 @@
             "request": "launch",
             //"program": "${workspaceFolder}/v6.0/afr/dbmanager/dbmanager.py",
             //"cwd": "${workspaceFolder}/v6.0/afr/dbmanager",
-            //"program": "${workspaceFolder}/v7.1/afr/src/afr.py",
-            //"cwd": "${workspaceFolder}/v7.1/afr/src",
-            "program": "${file}",
-            "cwd": "${fileDirname}",
+            "program": "${workspaceFolder}/v7.1/afr/src/afr.py",
+            "cwd": "${workspaceFolder}/v7.1/afr/src",
+            //"program": "${file}",
+            //"cwd": "${fileDirname}",
 
             "console": "integratedTerminal"
         }

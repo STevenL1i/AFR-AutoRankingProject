@@ -732,6 +732,44 @@ def racedirector(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
 
 
 
+def lanuserlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection):
+    cursor = db.cursor()
+    lanlist = workbook.add_worksheet("LAN列表")
+    func.logging(logpath, func.delimiter_string("Exporting LAN userlist", 60), end="\n\n")
+    print(func.delimiter_string("Exporting LAN userlist", 60), end="\n\n")
+
+    # setting header row height and column width
+    lanlist.set_column(0,2, 22)
+
+    # writing header
+    lanlist.write(0,0, "游戏id", workbook.add_format(format["default"]["header_12"]))
+    lanlist.write(0,1, "LAN用户名", workbook.add_format(format["default"]["header_12"]))
+    lanlist.write(0,2, "密码", workbook.add_format(format["default"]["header_12"]))
+
+    # fetch LAN account list
+    query = "SELECT * FROM afr_elo.LANusername ORDER BY username ASC;"
+    func.logging(logpath, "Fetching LAN userlist......", end="\n\n")
+    print("Fetching LAN userlist......\n")
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    # writing LAN userlist
+    print("Writing LAN userlist......")
+    rowcursor = 1; colcursor = 0
+    for account in result:
+        status = account[3]
+        func.logging(logpath, f'Writing LAN user {account[1]}-{status}......')
+        for i in range(0,3):
+            lanlist.write(rowcursor, colcursor+i, account[i], workbook.add_format(format["LANusername"][status]))
+        rowcursor += 1
+
+    func.logging(logpath)
+    func.logging(logpath, func.delimiter_string("END LAN userlist", 60), end="\n\n\n\n\n\n")
+    print()
+    print(func.delimiter_string("END LAN userlist", 60), end="\n\n")
+
+
+
 
 
 def main(db:mysql.connector.MySQLConnection):
@@ -796,8 +834,27 @@ def main(db:mysql.connector.MySQLConnection):
         racedirector(workbook, db)                  # passed
 
         workbook.close()
-        func.logging(logpath, f'Classification table save to file "{filename}" complete', end="\n\n\n\n\n\n")
-        print(f'Classification table save to file "{filename}" complete')
+        func.logging(logpath, f'Classification table save to file "{filename}" complete', end="\n\n\n\n")
+        print(f'Classification table save to file "{filename}" complete\n\n\n')
+
+
+
+        # seperate LAN userlist table
+        func.logging(logpath, func.delimiter_string("Downloading LAN userlist Table", 60), end="\n\n")
+
+        filename = f'{leaguename} LAN账号列表.xlsx'
+        func.logging(logpath, f'Exporting LAN userlist table to file "{filename}"......', end="\n\n")
+        print(f'Exporting LAN userlist table to file "{filename}"......\n')
+        lanworkbook = xlsxwriter.Workbook(filename)        
+
+        lanuserlist(lanworkbook, db)
+
+        lanworkbook.close()
+        func.logging(logpath, f'LAN userlist table save to file "{filename}" complete', end="\n\n\n\n\n\n")
+        print(f'LAN userlist table save to file "{filename}" complete')
+
+
+
     
 
     except Exception as e:
