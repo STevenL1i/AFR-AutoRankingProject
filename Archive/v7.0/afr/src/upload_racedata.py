@@ -8,7 +8,6 @@ import mysql.connector
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
 settingsf.close()
-logpath = settings["default"]["log"]
 
 # upload qualiying result
 def upload_quali(db:mysql.connector.MySQLConnection):
@@ -16,7 +15,6 @@ def upload_quali(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
 
     try:
-        func.logging(logpath, func.delimiter_string("User uploading qualiying data", 60), end="\n\n\n")
         root = tkinter.Tk()
         root.withdraw()
         filepath = filedialog.askopenfilename()
@@ -47,12 +45,12 @@ def upload_quali(db:mysql.connector.MySQLConnection):
                 tyre = None
             
             record += 1
+            print(f'Uploading records {record}......')
 
             try:
                 query = "INSERT INTO qualiResult VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
                 val = (drivergroup, gp, position, drivername, team, fl, tyre, status)
-                func.logging(logpath, f'UPLOAD: qualiresult {drivergroup}-{gp}-{position}-{drivername}......')
-                print(f'UPLOAD: qualiresult {drivergroup}-{gp}-{position}-{drivername}......')
+                print(f'Uploading qualiresult {drivergroup}-{gp}-{position}-{drivername}......')
                 cursor.execute(query, val)
 
                 report["success"] += 1
@@ -61,7 +59,7 @@ def upload_quali(db:mysql.connector.MySQLConnection):
                 # duplicate:
                 # Duplicate entry 'A1-Bahrain-1' for key 'qualiResult.PRIMARY'
                 if str(e).find("Duplicate entry") != -1 and str(e).find("qualiResult.PRIMARY") != -1:
-                    func.logging(logpath, f'WARNING: Quali record {drivergroup}-{gp}-{position} already exist......')
+                    print(f'Quali record {drivergroup}-{gp}-{position} already exist......')
                     if tyre != None:
                         tyre = "\"" + tyre + "\""
                     else:
@@ -73,8 +71,7 @@ def upload_quali(db:mysql.connector.MySQLConnection):
                                 tyre = {tyre}, \
                                 driverStatus = "{status}" \
                             WHERE driverGroup = "{drivergroup}" AND GP = "{gp}" AND position = "{position}";'
-                    func.logging(logpath, f'UPDATE: {drivergroup}-{gp}-{position}-{drivername}......', end="\n\n")
-                    print(f'UPDATE: {drivergroup}-{gp}-{position}-{drivername}......\n')
+                    print(f'Updating record of/to {drivergroup}-{gp}-{position}-{drivername}......')
                     cursor.execute(query)
 
                     report["update"] += 1
@@ -84,34 +81,29 @@ def upload_quali(db:mysql.connector.MySQLConnection):
                 # (`afr_s10`.`qualiResult`, CONSTRAINT `qualiResult_FK1` FOREIGN KEY (`driverName`) 
                 # REFERENCES `driverList` (`driverName`) ON DELETE CASCADE ON UPDATE CASCADE)
                 elif str(e).find("foreign key constraint") != -1:
-                    func.logging(logpath, f'ERROR: drivername {drivername} doesn\'t find/match in driverlist', end="\n\n")
-                    print(f'ERROR: drivername {drivername} doesn\'t find/match in driverlist\n')
+                    print(f'drivername {drivername} doesn\'t find/match in driverlist, please check data and try again.')
                     report["failed"] += 1
 
+            print()
 
         db.commit()
         qualif.close()
-
-        func.logging(logpath)
-        func.logging(logpath, f'排位成绩上传报告（共{record}条）:')
-        func.logging(logpath, f'    {report["success"]:<3}条成绩新增')
-        func.logging(logpath, f'    {report["update"]:<3}条成绩更新')
-        func.logging(logpath, f'    {report["failed"]:<3}条上传失败，请查看日志信息')
-        func.logging(logpath, "排位成绩上传完成，稍后请记得将文件上传到赛会群备份", end="\n\n\n\n\n\n")
         
         print()
         print(f'排位成绩上传报告（共{record}条）:')
         print(f'    {report["success"]:<3}条成绩新增')
         print(f'    {report["update"]:<3}条成绩更新')
-        print(f'    {report["failed"]:<3}条上传失败，请查看日志信息')
-        print("排位成绩上传完成，稍后请记得将文件上传到赛会群备份")
+        print(f'    {report["failed"]:<3}条上传失败，详细查看上方日志')
+        print("排位成绩上传成功，稍后请记得将文件上传到赛会群备份")
 
 
     except Exception as e:
-        func.logging(logpath, traceback.format_exc())
-        func.logging(logpath, "Error: " + str(e), end="\n\n")
+        if settings["general"]["DEBUG_MODE"] == True:
+            print()
+            print(traceback.format_exc())
+            print()
         print("错误提示：" + str(e))
-        print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")
+        print("数据上传失败，请检查上传文件数据是否正确，或咨询管理员")
 
 
 
@@ -121,7 +113,6 @@ def upload_race(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
 
     try:
-        func.logging(logpath, func.delimiter_string("User uploading race data", 60), end="\n\n\n")
         root = tkinter.Tk()
         root.withdraw()
         filepath = filedialog.askopenfilename()
@@ -152,12 +143,12 @@ def upload_race(db:mysql.connector.MySQLConnection):
                 fl = None
             
             record += 1
+            print(f'Uploading records {record}......')
 
             try:
                 query = "INSERT INTO raceResult VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 val = (drivergroup, gp, finishposition, drivername, team, startposition, fl, gap, status)
-                func.logging(logpath, f'UPLOAD: raceresult {drivergroup}-{gp}-{finishposition}-{drivername}......')
-                print(f'UPLOAD: raceresult {drivergroup}-{gp}-{finishposition}-{drivername}......')
+                print(f'Uploading raceresult {drivergroup}-{gp}-{finishposition}-{drivername}......')
                 cursor.execute(query, val)
 
                 report["success"] += 1
@@ -166,7 +157,7 @@ def upload_race(db:mysql.connector.MySQLConnection):
                 # duplicate:
                 # Duplicate entry 'A1-Bahrain-1' for key 'raceResult.PRIMARY'
                 if str(e).find("Duplicate entry") != -1 and str(e).find("raceResult.PRIMARY") != -1:
-                    func.logging(logpath, f'WARNING: Race record {drivergroup}-{gp}-{finishposition} already exist......')
+                    print(f'Race record {drivergroup}-{gp}-{finishposition} already exist......')
                     query = f'UPDATE raceResult \
                             SET driverName = "{drivername}", \
                                 team = "{team}", \
@@ -175,8 +166,7 @@ def upload_race(db:mysql.connector.MySQLConnection):
                                 gap = "{gap}", \
                                 driverStatus = "{status}" \
                             WHERE driverGroup = "{drivergroup}" AND GP = "{gp}" AND finishPosition = "{finishposition}";'
-                    func.logging(logpath, f'UPDATE: {drivergroup}-{gp}-{finishposition}-{drivername}......', end="\n\n")
-                    print(f'UPDATE: {drivergroup}-{gp}-{finishposition}-{drivername}......\n')
+                    print(f'Updating record of/to {drivergroup}-{gp}-{finishposition}-{drivername}......')
                     cursor.execute(query)
 
                     report["update"] += 1
@@ -186,15 +176,15 @@ def upload_race(db:mysql.connector.MySQLConnection):
                 # (`afr_s10`.`raceResult`, CONSTRAINT `raceResult_FK1` FOREIGN KEY (`driverName`) 
                 # REFERENCES `driverList` (`driverName`) ON DELETE CASCADE ON UPDATE CASCADE)
                 elif str(e).find("foreign key constraint") != -1:
-                    func.logging(logpath, f'ERROR: drivername {drivername} doesn\'t find/match in driverlist', end="\n\n")
-                    print(f'ERROR: drivername {drivername} doesn\'t find/match in driverlist\n')
+                    print(f'drivername {drivername} doesn\'t find/match in driverlist, please check data and try again.')
                     report["failed"] += 1
             
             
             therace = [drivergroup, gp]
             if (therace in uploadracelist) == False:
                 uploadracelist.append(therace)
-
+            
+            print()
         
         # update race status
         for race in uploadracelist:
@@ -203,33 +193,27 @@ def upload_race(db:mysql.connector.MySQLConnection):
             query = f'UPDATE raceCalendar \
                     SET raceStatus = "FINISHED" \
                     WHERE GP_ENG = "{gp}" AND driverGroup = "{drivergroup}";'
-            func.logging(logpath, f'UPDATE: race status of {drivergroup}-{gp}......')
-            print(f'UPDATE: race status of {drivergroup}-{gp}......')
+            print(f'Updating race status of {drivergroup}-{gp}......')
             cursor.execute(query)
         db.commit()
         
         racef.close()
-
-        func.logging(logpath)
-        func.logging(logpath, f'正赛成绩上传报告（共{record}条）:')
-        func.logging(logpath, f'    {report["success"]:<3}条成绩新增')
-        func.logging(logpath, f'    {report["update"]:<3}条成绩更新')
-        func.logging(logpath, f'    {report["failed"]:<3}条上传失败，请查看日志信息')
-        func.logging(logpath, "正赛成绩上传完成，稍后请记得将文件上传到赛会群备份", end="\n\n\n\n\n\n")
         
         print()
         print(f'正赛成绩上传报告（共{record}条）:')
         print(f'    {report["success"]:<3}条成绩新增')
         print(f'    {report["update"]:<3}条成绩更新')
-        print(f'    {report["failed"]:<3}条上传失败，请查看日志信息')
-        print("正赛成绩上传完成，稍后请记得将文件上传到赛会群备份")
+        print(f'    {report["failed"]:<3}条上传失败，详细查看上方日志')
+        print("正赛成绩上传成功，稍后请记得将文件上传到赛会群备份")
 
     
     except Exception as e:
-        func.logging(logpath, traceback.format_exc())
-        func.logging(logpath, "Error: " + str(e), end="\n\n")
+        if settings["general"]["DEBUG_MODE"] == True:
+            print()
+            print(traceback.format_exc())
+            print()
         print("错误提示：" + str(e))
-        print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")
+        print("数据上传失败，请检查上传文件数据是否正确，或咨询管理员")
 
 
 
@@ -239,7 +223,6 @@ def upload_rd(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
 
     try:
-        func.logging(logpath, func.delimiter_string("User uploading race director data", 60), end="\n\n\n")
         root = tkinter.Tk()
         root.withdraw()
         filepath = filedialog.askopenfilename()
@@ -277,6 +260,7 @@ def upload_rd(db:mysql.connector.MySQLConnection):
                 raceban = 0
 
             record += 1
+            print(f'Uploading records {record}......')
 
             if date != datetemp:
                 datetemp = date
@@ -291,8 +275,7 @@ def upload_rd(db:mysql.connector.MySQLConnection):
 
                 query = "INSERT INTO raceDirector VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 val = (casenum, date, drivername, drivergroup, gp, penalty, penaltyLP, penaltywarning, qualiban, raceban, description)
-                func.logging(logpath, f'UPLOAD: race director {casenum}-{drivergroup}-{gp}-{drivername}......')
-                print(f'UPLOAD: race director {casenum}-{drivergroup}-{gp}-{drivername}......')
+                print(f'Uploading race director {casenum}-{drivergroup}-{gp}-{drivername}......')
                 cursor.execute(query, val)
 
                 report["success"] += 1
@@ -301,8 +284,7 @@ def upload_rd(db:mysql.connector.MySQLConnection):
                 # duplicate:
                 # Duplicate entry 'CaseNumber-CaseDate for key 'raceDirector.PRIMARY'
                 if str(e).find("Duplicate entry") != -1 and str(e).find("raceDirector.PRIMARY") != -1:
-                    func.logging(logpath, f'WARNING: Record {casenum}-{drivergroup}-{gp}-{drivername} already exist......')
-                    print(f'Record {casenum}-{drivergroup}-{gp}-{drivername} already exist......')
+                    print(f'Race director record {casenum}-{drivergroup}-{gp}-{drivername} already exist......')
                     query = f'UPDATE raceDirector \
                             SET driverName = "{drivername}", \
                                 driverGroup = "{drivergroup}", \
@@ -314,8 +296,7 @@ def upload_rd(db:mysql.connector.MySQLConnection):
                                 raceBan = "{raceban}", \
                                 PenaltyDescription = "{description}" \
                             WHERE CaseNumber = "{casenum}" AND CaseDate = "{date}";'
-                    func.logging(logpath, f'UPDATE: {casenum}-{drivergroup}-{gp}-{drivername}......', end="\n\n")
-                    print(f'UPDATE: {casenum}-{drivergroup}-{gp}-{drivername}......\n')
+                    print(f'Updating record of/to {casenum}-{drivergroup}-{gp}-{drivername}......')
                     cursor.execute(query)
 
                     report["update"] += 1
@@ -325,26 +306,20 @@ def upload_rd(db:mysql.connector.MySQLConnection):
                 # (`afr_s10`.`raceDirector`, CONSTRAINT `raceDirector_FK1` FOREIGN KEY (`driverName`) 
                 # REFERENCES `driverList` (`driverName`) ON DELETE CASCADE ON UPDATE CASCADE)
                 elif str(e).find("foreign key constraint") != -1:
-                    func.logging(logpath, f'ERROR: drivername {drivername} doesn\'t find/match in driverlist', end="\n\n")
-                    print(f'ERROR: drivername {drivername} doesn\'t find/match in driverlist\n')
+                    print(f'drivername {drivername} doesn\'t find/match in driverlist, please check data and try again.')
                     report["failed"] += 1
+
+            print()
         
         db.commit()
         rdf.close()
         
-        func.logging(logpath)
-        func.logging(logpath, f'判罚数据上传报告（共{record}条）:')
-        func.logging(logpath, f'    {report["success"]:<3}条判罚新增')
-        func.logging(logpath, f'    {report["update"]:<3}条判罚更新')
-        func.logging(logpath, f'    {report["failed"]:<3}条上传失败，请查看日志信息')
-        func.logging(logpath, "判罚数据上传完成，稍后请记得将文件上传到赛会群备份", end="\n\n\n\n\n\n")
-
         print()
         print(f'判罚数据上传报告（共{record}条）:')
         print(f'    {report["success"]:<3}条判罚新增')
         print(f'    {report["update"]:<3}条判罚更新')
-        print(f'    {report["failed"]:<3}条上传失败，请查看日志信息')
-        print("判罚数据上传完成，稍后请记得将文件上传到赛会群备份")
+        print(f'    {report["failed"]:<3}条上传失败，详细查看上方日志')
+        print("判罚数据上传成功，稍后请记得将文件上传到赛会群备份")
 
 
     except Exception as e:
@@ -353,4 +328,4 @@ def upload_rd(db:mysql.connector.MySQLConnection):
             print(traceback.format_exc())
             print()
         print("错误提示：" + str(e))
-        print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")
+        print("数据上传失败，请检查上传文件数据是否正确，或咨询管理员")

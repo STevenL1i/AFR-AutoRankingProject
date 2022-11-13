@@ -42,7 +42,10 @@ CREATE TABLE constructorsLeaderBoard (
     team            varchar(30)     NOT NULL,
     driverGroup     varchar(7)      NOT NULL,
     totalPoints     smallint(4)     NOT NULL,
-    PRIMARY KEY (team,driverGroup)
+    PRIMARY KEY (team,driverGroup),
+    constraint constructorsLeaderBoard_fk
+        foreign key (team, driverGroup) 
+            references teamList (teamName, driverGroup) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

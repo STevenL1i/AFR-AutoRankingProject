@@ -2,7 +2,7 @@ import csv
 import json
 import connectserver
 import deffunc as func
-logpath = "log/log.log"
+
 
 try:
     db = connectserver.connectserver("server.json", "db")
@@ -23,11 +23,9 @@ def dbload_basic():
     root.withdraw()
     filepath = filedialog.askopenfilename()
     """
-    func.logging(logpath, "Initializing database......", end="\n\n")
     print("initializing database......")
 
     # upload race calendar
-    func.logging(logpath, "initializing race calendar......")
     print("initializing race calendar......\n")
     try:
         filename = loadingsetup["raceCalendar"]
@@ -50,19 +48,17 @@ def dbload_basic():
             query = "INSERT INTO raceCalendar VALUES \
                     (%s, %s, %s, %s, %s, %s);"
             val = (round, racedate, gpchn, gpeng, group, status)
-            func.logging(logpath, f'Uploading race: {racedate:<10} {group:<3} {gpchn:<9} {gpeng}.........')
+            print(f'Uploading race: {racedate:<10} {group:<3} {gpchn:<6} {gpeng}.........')
             cursor.execute(query, val)
 
-        func.logging(logpath)
+        
         race.close()
 
     except FileNotFoundError:
-        func.logging(logpath, f'Cannot find file {filepath}, please check your "loadingconfig.json"')
         print(f'Cannot find file {filepath}, please check your "loadingconfig.json"')
         raise AttributeError("race calendar must be initialized")
     except AttributeError:
         raise AttributeError("race calendar must be initialized")
-    
     
     
     # upload constructor leader board
@@ -82,19 +78,16 @@ def dbload_basic():
             query = "INSERT INTO constructorsLeaderBoard (team, driverGroup, totalPoints) \
                         VALUES (%s, %s, %s);"
             val = (team, group, totalpoints)
-            func.logging(logpath, f'Uploading team: {group:<3} {team}.........')
+            print(f'Uploading team: {group:<3} {team}.........')
             cursor.execute(query, val)
 
-        func.logging(logpath)        
+        
         driver.close()
     
     except FileNotFoundError:
-        func.logging(logpath, f'Cannot find file {filepath}, please check your "loadingconfig.json"')
         raise FileNotFoundError(f'Cannot find file {filepath}, please check your "loadingconfig.json"')
     except AttributeError as e:
-        func.logging(logpath, str(e))
         print(str(e))
-
 
 
     # upload LAN account (optional)
@@ -124,15 +117,12 @@ def dbload_basic():
     except FileNotFoundError:
         raise FileNotFoundError(f'Cannot find file {filepath}, please check your "loadingconfig.json"')
     except AttributeError as e:
-        func.logging(logpath, str(e))
         print(str(e))
-    
     
     db.commit()
 
     # Initialize date
     dbInitialize()
-    func.logging(logpath, "season/database initialization complete!!!\n")
     print("season/database initialization complete!!!")
 
 
@@ -162,7 +152,6 @@ def dbInitialize():
 
 
     # Initialize driver and constructor leaderboard and license point board
-    func.logging(logpath, "initialze driver and constructor leaderboard.........")
     print("initialze driver and constructor leaderboard.........")
     query = "SELECT DISTINCT(Round), GP_CHN, GP_ENG FROM raceCalendar WHERE Round is not null;"
     cursor.execute(query)
@@ -183,7 +172,7 @@ def dbInitialize():
     for race in result:
         race = list(race)
         gpkey = func.get_key(gpdict, race[2])
-        func.logging(logpath, f'inserting column {gpkey}')
+        print(f'inserting column {gpkey}')
         query = f'ALTER TABLE driverLeaderBoard ADD {gpkey} tinyint;'
         cursor.execute(query)
         for i in range(1,3):
@@ -192,8 +181,7 @@ def dbInitialize():
             
         query = f'ALTER TABLE licensePoint ADD {gpkey} tinyint;'
         cursor.execute(query)
-    
-    func.logging(logpath)
+        
 
     query = "ALTER TABLE driverLeaderBoard ADD totalPoints smallint;"
     cursor.execute(query)
@@ -210,7 +198,6 @@ def dbInitialize():
     cursor.execute(query)
     result = cursor.fetchall()
 
-    func.logging(logpath, "initialize qualirace FL table.........")
     print("initialize qualirace FL table.........")
     for race in result:
         # race: tuple (GP_ENG, driverGroup)
@@ -219,7 +206,7 @@ def dbInitialize():
         cursor.execute(query, val)
     db.commit()
     
-    func.logging(logpath)
+
     
     
 

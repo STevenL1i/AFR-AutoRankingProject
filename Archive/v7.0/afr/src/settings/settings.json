@@ -1,8 +1,6 @@
 {
-    "default": {
-        "leaguename": "AFR",
-        "seasonname": "S10",
-        "log": "log/log.log",
+    "general": 
+    {
         "DEBUG_MODE": true
     },
 

@@ -1,26 +1,6 @@
-import os, json, datetime, traceback
 import deffunc as func
 import connectserver
 serverconfig = "server.json"
-VERSION = "AFR v7.1"
-
-settingsf = open("settings/settings.json", "r", encoding='utf-8')
-settings:dict = json.load(settingsf)
-settingsf.close()
-logpath = settings["default"]["log"]
-# generating log file
-today = datetime.datetime.today()
-try:
-    os.mkdir("log")
-except FileExistsError:
-    pass
-logf = open(logpath, "a")
-logf.write(func.delimiter_string("Program launching", 50) + "\n")
-logf.write(func.delimiter_string("Generating log", 50) + "\n")
-logf.write(f'Time: {today.strftime("%Y-%m-%d %H:%M:%S")}\n')
-logf.write(f'Program Version: {VERSION}\n')
-logf.write(func.get_sysinfo() + "\n")
-logf.close()
 
 import upload_driverdata
 # welcome_newdriver(db):mysql.connector.MySQLConnection         # passed
@@ -44,22 +24,16 @@ import RaceResultTable
 def main():
     try:
         db = connectserver.connectserver(serverconfig, "db")
-    except Exception as e:
-        errmsg = "Database connection unreachable, please try again......"
-        func.logging(logpath, traceback.format_exc(), end="\n")
-        func.logging(logpath, str(e), end="\n")
-        func.logging(logpath, errmsg, end="\n\n")
-        input("\n" + errmsg + "\n")
-        func.logging(logpath, "Program exiting with code 0......\n")
+    except Exception:
+        input("\nDatabase connection unreachable, please try again......\n")
         exit(0)
 
     while True:
-        print(f'\n欢迎来到AFR联赛积分管理系统 ({VERSION})\n')
+        print("\n欢迎来到AFR联赛积分管理系统 (v7.0)\n")
         menu = ["上传排位成绩", "上传正赛成绩", "上传判罚数据",
                 "上传新车手", "上传新车队", "上传转会记录",
                 "更新比赛状态", "更新比赛数据", "校准积分", 
-                "下载最新积分统计表", "下载最新比赛结算表", "下载LAN账号列表",
-                "查看教程文档"]
+                "下载最新积分统计表", "下载最新比赛结算表", "查看教程文档"]
         for i in range(0,len(menu)):
             print(f'{i+1}.{menu[i]}')
         print()
@@ -197,23 +171,12 @@ def main():
                 print()
                 input("请按Enter回到主菜单\n")
                 break
+            
+                
+            
 
 
-            if choice == '12':
-                print()
-                print("你选择了“下载LAN账号列表”")
-                test = input("请按Enter以下载LAN账号列表，输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
-                    break
-                ClassificationTable.lanuserlist(db)
-                print()
-                input("请按Enter回到主菜单\n")
-                break
-
-
-
-
-            elif choice == '13':
+            elif choice == '12':
                 print("功能仍在开发中......请暂时手动打开文档阅读\n")
                 input("请按Enter回到主菜单\n")
                 break
@@ -223,7 +186,6 @@ def main():
             if choice == '0':
                 print()
                 input("请按Enter键以退出............")
-                func.logging(logpath, "Program exiting with code 0......", end="\n\n\n\n\n\n")
                 return 0
 
             else:

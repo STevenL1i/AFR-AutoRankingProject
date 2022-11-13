@@ -2,10 +2,12 @@ import datetime, csv, json, tkinter, traceback
 from tkinter import filedialog
 
 import mysql.connector
+import deffunc as func
 
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
 settingsf.close()
+logpath = settings["default"]["log"]
 
 # upload new driver
 def welcome_newdriver(db:mysql.connector.MySQLConnection):
@@ -13,6 +15,7 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
 
     try:
+        func.logging(logpath, func.delimiter_string("User uploading newdriver data", 60), end="\n\n\n")
         root = tkinter.Tk()
         root.withdraw()
         filepath = filedialog.askopenfilename()
@@ -49,14 +52,14 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
                 raceban = 0
 
             record += 1
-            print(f'Uploading records {record}.........')
 
             try:
                 # update the driverlist
                 query = "INSERT INTO driverList VALUES \
                         (%s, %s, %s, %s, %s, %s);"
                 val = (drivername, team, group, status, jointime, 1)
-                print(f'Uploading driver {drivername}.........')
+                func.logging(logpath, f'UPLOAD: driver {record}-{drivername}.........')
+                print(f'UPLOAD: driver {record}-{drivername}.........')
                 cursor.execute(query, val)
 
                 # update the driverLeaderBoard
@@ -92,44 +95,49 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
                     # upload to LANusername table
                     query = "INSERT INTO afr_elo.LANusername VALUES (%s, %s, %s, %s);"
                     val = (drivername, username, pwd, "STANDBY")
-                    print(f'Creating LAN account for {drivername}-{username}......')
+                    func.logging(logpath, f'UPLOAD: LAN account for {drivername}-{username}......')
                     cursor.execute(query, val)
                 
                 except mysql.connector.errors.IntegrityError:
                     query = f'UPDATE afr_elo.LANusername SET password = "{pwd}" \
                             WHERE username = "{username}";'
-                    print(f'User account exists, updating password......')
+                    func.logging(logpath, f'WARNING: User account exists, updating password......', end="\n\n")
                     cursor.execute(query)
 
                 except ValueError as e:
-                    print(str(e))
+                    func.logging(logpath, str(e), end="\n\n")
                 
                 report["success"] += 1
-                print()
             
             except mysql.connector.errors.IntegrityError:
                 report["skip"] += 1
-                print("driver already existed, skipping to next driver............\n")
+                func.logging(logpath, "WARNING: driver already existed............", end="\n\n")
+                print("WARNING: driver already existed............\n")
 
 
         db.commit()
         newdriverf.close()
+
+        func.logging(logpath)
+        func.logging(logpath, f'车手上传报告（共{record}条）:')
+        func.logging(logpath, f'    {report["success"]:<3}位新增上传')
+        func.logging(logpath, f'    {report["skip"]:<3}位已上传，更新其LAN账号信息')
+        func.logging(logpath, f'    {report["failed"]:<3}位上传失败，请查看日志信息')
+        func.logging(logpath, "新车手数据上传完成，稍后请记得将文件上传到赛会群备份", end="\n\n\n\n\n\n")
 
         print()
         print(f'车手上传报告（共{record}条）:')
         print(f'    {report["success"]:<3}位新增上传')
         print(f'    {report["skip"]:<3}位已上传，更新其LAN账号信息')
         print(f'    {report["failed"]:<3}位上传失败')
-        print("新车手数据上传成功，稍后请记得将文件上传到赛会群备份")
+        print("新车手数据上传完成，稍后请记得将文件上传到赛会群备份")
 
 
     except Exception as e:
-        if settings["general"]["DEBUG_MODE"] == True:
-            print()
-            print(traceback.format_exc())
-            print()
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
         print("错误提示：" + str(e))
-        print("数据上传失败，请检查上传文件数据是否正确，或咨询管理员")
+        print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")
 
 
 
@@ -139,6 +147,7 @@ def welcome_newteam(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
 
     try:
+        func.logging(logpath, func.delimiter_string("User uploading newteam data", 60), end="\n\n\n")
         root = tkinter.Tk()
         root.withdraw()
         filepath = filedialog.askopenfilename()
@@ -157,14 +166,14 @@ def welcome_newteam(db:mysql.connector.MySQLConnection):
                 break
 
             record += 1
-            print(f'Uploading records {record}......')
 
             try:
                 query = "INSERT INTO teamList \
                         (teamName, teamColor, driverGroup) \
                         VALUES (%s, %s, %s);"
                 val = (teamname, teamcolor, group)
-                print(f'Uploading team {group}-{teamname}......')
+                func.logging(logpath, f'UPLOAD: team {record}-{group}-{teamname}......')
+                print(f'UPLOAD: team {record}-{group}-{teamname}......')
                 cursor.execute(query, val)
 
                 query = "INSERT INTO constructorsLeaderBoard \
@@ -178,31 +187,36 @@ def welcome_newteam(db:mysql.connector.MySQLConnection):
                 query = f'UPDATE teamList \
                         SET teamColor ="{teamcolor}" \
                         WHERE teamName = "{teamname}" AND driverGroup = "{group}";'
-                print(f'Team {group}-{teamname} already exist, updating teamcolor to {teamcolor}......')
+                func.logging(logpath, f'WARNING: Team {group}-{teamname} already exist\nUPDATE: teamcolor to {teamcolor}......', end="\n\n")
+                print(f'WARNING: Team {group}-{teamname} already exist\nUPDATE: teamcolor to {teamcolor}......\n')
                 cursor.execute(query)
                 
                 report["update"] += 1
-            
-            print()
+        
 
         db.commit()
         newteamf.close()
+
+        func.logging(logpath)
+        func.logging(logpath, f'车队上传报告（共{record}条）:')
+        func.logging(logpath, f'    {report["success"]:<3}支新增上传')
+        func.logging(logpath, f'    {report["update"]:<3}支已上传，更新其车队信息')
+        func.logging(logpath, f'    {report["failed"]:<3}支上传失败，请查看日志信息')
+        func.logging(logpath, "新车队数据上传完成，稍后请记得将文件上传到赛会群备份", end="\n\n\n\n\n\n")
 
         print()
         print(f'车队上传报告（共{record}条）:')
         print(f'    {report["success"]:<3}支新增上传')
         print(f'    {report["update"]:<3}支已上传，更新其车队信息')
         print(f'    {report["failed"]:<3}支上传失败')
-        print("新车队数据上传成功，稍后请记得将文件上传到赛会群备份")
+        print("新车队数据上传完成，稍后请记得将文件上传到赛会群备份")
 
 
     except Exception as e:
-        if settings["general"]["DEBUG_MODE"] == True:
-            print()
-            print(traceback.format_exc())
-            print()
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
         print("错误提示：" + str(e))
-        print("数据上传失败，请检查上传文件数据是否正确，或咨询管理员")
+        print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")
 
 
 
@@ -212,6 +226,7 @@ def transfer_driver(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
 
     try:
+        func.logging(logpath, func.delimiter_string("User uploading transferdriver data", 60), end="\n\n\n")
         root = tkinter.Tk()
         root.withdraw()
         filepath = filedialog.askopenfilename()
@@ -242,13 +257,14 @@ def transfer_driver(db:mysql.connector.MySQLConnection):
                 transfertime = datetime.datetime.today().strftime('%Y-%m-%d')
             
             record += 1
-            print(f'Uploading records {record}......')
 
             try:
                 # inserting transfer record to driverTransfer table
                 query = "INSERT INTO driverTransfer VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
                 val = (drivername, team_from, drivergroup_from, team_to, drivergroup_to,
                     description, transfertime, tokenused)
+                func.logging(logpath, f'UPLOAD: Transfering driver {drivername} to {drivergroup_to}-{team_to}.........')
+                print(f'UPLOAD: Transfering driver {drivername} to {drivergroup_to}-{team_to}.........')
                 cursor.execute(query, val)
 
                 # update driverList table
@@ -258,14 +274,13 @@ def transfer_driver(db:mysql.connector.MySQLConnection):
                             driverStatus = "{status}", \
                             transferToken = transferToken - {tokenused} \
                         WHERE driverName = "{drivername}" AND driverGroup = "{drivergroup_from}";'
-                print(f'Transfering driver {drivername} to {drivergroup_to}-{team_to}.........')
                 cursor.execute(query)
 
                 # update licensePoint table
                 query = f'UPDATE licensePoint \
                         SET driverGroup = "{drivergroup_to}" \
                         WHERE driverName = "{drivername}";'
-                print(f'Updating {drivername}\'s license point profile.........')
+                func.logging(logpath, f'UPDATE: {drivername}\'s license point profile.........')
                 cursor.execute(query)
 
                 # create/update profile in driverLeaderBoard
@@ -274,7 +289,7 @@ def transfer_driver(db:mysql.connector.MySQLConnection):
                             (driverName, team, driverGroup, totalPoints) \
                             VALUES (%s, %s, %s, %s);"
                     val = (drivername, team_to, drivergroup_to, 0)
-                    print(f'Creating/Updating {drivername}\'s driver leaderboard profile.........')
+                    func.logging(logpath, f'UPDATE: {drivername}\'s driver leaderboard profile.........')
                     cursor.execute(query, val)
                 
                 except mysql.connector.errors.IntegrityError as e:
@@ -284,7 +299,6 @@ def transfer_driver(db:mysql.connector.MySQLConnection):
                         query = f'UPDATE driverLeaderBoard \
                                 SET team = "{team_to}" \
                                 WHERE driverName = "{drivername}" AND driverGroup = "{drivergroup_to}";'
-                        print(f'{drivergroup_to}-{drivername} driver leaderboard profile already exist, updating profile......')
                         cursor.execute(query)
                         db.commit()
 
@@ -297,31 +311,37 @@ def transfer_driver(db:mysql.connector.MySQLConnection):
                 cursor.execute(query)
                 db.commit()
 
+                func.logging(logpath)
                 report["success"] += 1
-                print()
 
             except mysql.connector.errors.IntegrityError as e:
                 if str(e).find("Duplicate entry") != -1 and str(e).find("driverTransfer.PRIMARY") != -1:
                     report["skip"] += 1
-                    print(f'{drivername} transfer from {drivergroup_from}-{team_from} to {drivergroup_to}-{team_to} already exist, skipping to next transfer............\n')
+                    func.logging(logpath, f'WARNING: transfer record already exist, skipping to next transfer............', end="\n\n")
+                    print(f'WARNING: transfer record already exist, skipping to next transfer............\n')
                 else:
                     raise mysql.connector.errors.IntegrityError(str(e))
         
         db.commit()
         transferdriverf.close()
 
+        func.logging(logpath)
+        func.logging(logpath, f'转会上传报告（共{record}条）:')
+        func.logging(logpath, f'    {report["success"]:<3}条新增转会')
+        func.logging(logpath, f'    {report["skip"]:<3}条已上传转会（跳过）')
+        func.logging(logpath, f'    {report["failed"]:<3}条上传失败，请查看日志信息')
+        func.logging(logpath, "车手转会记录上传完成，稍后请记得将文件上传到赛会群备份", end="\n\n\n\n\n\n")
+
         print()
         print(f'转会上传报告（共{record}条）:')
         print(f'    {report["success"]:<3}条新增转会')
         print(f'    {report["skip"]:<3}条已上传转会（跳过）')
         print(f'    {report["failed"]:<3}条上传失败')
-        print("车手转会记录上传成功，稍后请记得将文件上传到赛会群备份")
+        print("车手转会记录上传完成，稍后请记得将文件上传到赛会群备份")
 
 
     except Exception as e:
-        if settings["general"]["DEBUG_MODE"] == True:
-            print()
-            print(traceback.format_exc())
-            print()
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
         print("错误提示：" + str(e))
-        print("数据上传失败，请检查上传文件数据是否正确，或咨询管理员")
+        print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")

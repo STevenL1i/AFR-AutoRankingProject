@@ -1,24 +1,7 @@
-import os, datetime, traceback
-import deffunc as func
+import traceback
 import connectserver
 import mysql.connector
 import dbload as dbl
-
-VERSION = "AFR v7.1 DBmanager"
-logpath = "log/log.log"
-# generating log file
-today = datetime.datetime.today()
-try:
-    os.mkdir("log")
-except FileExistsError:
-    pass
-logf = open(logpath, "a")
-logf.write(func.delimiter_string("Program launching", 50) + "\n")
-logf.write(func.delimiter_string("Generating log", 50) + "\n")
-logf.write(f'Time: {today.strftime("%Y-%m-%d %H:%M:%S")}\n')
-logf.write(f'Program Version: {VERSION}\n')
-logf.write(func.get_sysinfo() + "\n")
-logf.close()
 
 try:
     db = connectserver.connectserver("server.json", "db")
@@ -36,15 +19,11 @@ def dbcreate():
         cursor.execute(query)
         db.commit()
 
-        func.logging(logpath, f'new database "{dbname}" created successfully\n\n', "\n\n")
         print(f'new database "{dbname}" created successfully')
         print("please remember to change \"server.json\" file before further action \n")
 
-    except mysql.connector.errors.DatabaseError as e:
-        errmsg = f'Database "{dbname}" already exist......'
-        func.logging(logpath, traceback.format_exc())
-        func.logging(logpath, str(e) + "\n" + errmsg + "\n")
-        print(errmsg)
+    except mysql.connector.errors.DatabaseError:
+        print(f'Database "{dbname}" already exist......')
         print("please change \"server.json\" file for further action \n")
 
 
@@ -58,14 +37,10 @@ def dbdelete():
         cursor.execute(query)
         db.commit()
 
-        func.logging(logpath, f'database "{dbname}" deleted......\n\n')
         print(f'database "{dbname}" deleted......')
 
-    except mysql.connector.errors.DatabaseError as e:
-        errmsg = f'database "{dbname}" not exist\nit may already deleted in previous action......'
-        func.logging(traceback.format_exc() + "\n")
-        func.logging(str(e) + "\n" + errmsg + "\n")
-        print(errmsg)
+    except mysql.connector.errors.DatabaseError:
+        print(f'database "{dbname}" not exist\nit may already deleted in previous action......')
 
 
 
@@ -77,11 +52,9 @@ def dbinitialize():
 
     for i in range(0, len(query)-1):
         token = query[i].split(" ")
-        func.logging(logpath, f'creating table {token[2]}......')
         print(f'creating table {token[2]}......')
         cursor.execute(query[i])
-
-    func.logging(logpath)
+    
     print()
 
     dbl.dbload_basic()
@@ -116,13 +89,8 @@ def dbdrop():
 
     for i in range(0, len(query)-1):
         token = query[i].split(" ")
-        func.logging(logpath, f'deleting table {token[-1].replace(";","")}......')
         print(f'deleting table {token[-1].replace(";","")}......')
         cursor.execute(query[i])
-    
-    func.logging(logpath)
-    print()
-
     db.commit()
 
 
@@ -144,18 +112,11 @@ def main():
             try:
                 dbinitialize()
             except Exception as e:
-                errmsg = "database initialize failed, please check your input data and settings to try again"
-                func.logging(logpath, traceback.format_exc() + "\n")
-                func.logging(logpath, str(e) + "\n" + errmsg + "\n")
                 print(str(e))
-                print(errmsg)
+                print("database initialize failed, please check your input data and settings to try again")
             finally:
                 input("press enter back to main menu")
         
-
-
-
-
         elif choice == '2':
             try:
                 # dbload()
@@ -174,15 +135,10 @@ def main():
             finally:
                 input("press enter back to main menu")
         
-
-
-
         elif choice == '4':
             try:
                 dbdrop()
             except Exception as e:
-                func.logging(logpath, traceback.format_exc() + "\n")
-                func.logging(logpath, str(e) + "\n" + errmsg + "\n\n")
                 print(str(e))
             finally:
                 input("press enter back to main menu")
@@ -203,12 +159,7 @@ def main():
             finally:
                 input("press enter back to main menu")
         
-
-
         elif choice == '0':
-            logf = open(logpath, "a")
-            func.logging(logpath, "Program exiting with code 0......", end="\n\n\n\n\n\n")
-            logf.close()
             break
         
 
