@@ -10,6 +10,8 @@ import deffunc as func
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
 settingsf.close()
+# log
+logpath = settings["default"]["log"]
 
 
 
@@ -64,6 +66,7 @@ def raceflvalidator(resultlist:list):
 
 def resettable(db:mysql.connector.MySQLConnection):
     cursor = db.cursor()
+    func.logging(logpath, func.delimiter_string(f'Resetting points data', 60), end="\n\n")
     print(func.delimiter_string(f'Resetting points data', 60), end="\n\n")
 
     # get all the race list (raceCalendar)
@@ -77,7 +80,8 @@ def resettable(db:mysql.connector.MySQLConnection):
         gpkey = func.get_key(settings["content"]["gp"], race[2])
         query += f'{gpkey} = null, '
     query += "totalPoints = 0"
-    print(f'Resetting driver leaderboard......\n')
+    func.logging(logpath, f'Resetting driver leaderboard......')
+    print(f'Resetting driver leaderboard......')
     cursor.execute(query)
     db.commit()
 
@@ -88,7 +92,8 @@ def resettable(db:mysql.connector.MySQLConnection):
         gpkey = func.get_key(settings["content"]["gp"], race[2])
         query += f'{gpkey}_1 = null, {gpkey}_2 = null, '
     query += "totalPoints = 0;"
-    print(f'Resetting constructors leaderboard......\n')
+    func.logging(logpath, f'Resetting constructors leaderboard......')
+    print(f'Resetting constructors leaderboard......')
     cursor.execute(query)
     db.commit()
 
@@ -99,10 +104,21 @@ def resettable(db:mysql.connector.MySQLConnection):
         gpkey = func.get_key(settings["content"]["gp"], race[2])
         query += f'{gpkey} = null, '
     query += "warning = 0.0, totalLicensePoint = 12, qualiBan = 0, raceBan = 0;"
-    print(f'Resetting licensePoint......\n')
+    func.logging(logpath, f'Resetting licensePoint......')
+    print(f'Resetting licensePoint......')
     cursor.execute(query)
     db.commit()
 
+    # reset qualirace FL
+    query = "DELETE FROM qualiraceFL;"
+    func.logging(logpath, f'Resetting qualiraceFL......')
+    print(f'Resetting qualiraceFL......')
+    cursor.execute(query)
+    db.commit()
+
+    func.logging(logpath)
+    func.logging(logpath, func.delimiter_string(f'END Reset points data', 60), end="\n\n\n\n\n\n")
+    print()
     print(func.delimiter_string(f'END Reset points data', 60), end="\n\n\n\n\n\n")
 
 
@@ -117,17 +133,21 @@ def update_leaderboard(db:mysql.connector.MySQLConnection, race):
             ORDER BY Round ASC;'
     """
 
-    print(f'Updating {group}-{gp}......')
+    func.logging(logpath, func.delimiter_string(f'Updating {group}-{gp}', 50), end="\n\n")
+    print(func.delimiter_string(f'Updating {group}-{gp}', 50), end="\n\n")
     gpkey = func.get_key(settings["content"]["gp"], gp)
 
     # get the race result of the race
     f = open("bin/get_result_race_gp_group.sql", "r")
     query = f.read().replace("GROUP", group).replace("RACE", gp)
     f.close()
-    print(f'Fetching race result data {group}-{gp}......')
+    func.logging(logpath, f'FETCH: race result data {group}-{gp}......')
+    print(f'Fetching race result data {group}-{gp}......\n')
     cursor.execute(query)
     result = cursor.fetchall()
+    func.logging(logpath, f'Total: {len(result)} drivers', end="\n\n")
     
+    print(f'Updating leaderboard for {group}-{gp}......\n')
     for driver in result:
         drivername = driver[3]; team = driver[4]; status = driver[8]
         if status == "FINISHED":
@@ -160,7 +180,7 @@ def update_leaderboard(db:mysql.connector.MySQLConnection, race):
         query = f'UPDATE driverLeaderBoard \
                 SET {gpkey} = {finishpos} \
                 WHERE driverName = "{drivername}" AND driverGroup = "{driver[0]}";'
-        print(f'Updating driverleaderboard {group}-{gpkey}-{drivername}......')
+        func.logging(logpath, f'UPDATE: driverleaderboard {group}-{gpkey}-{drivername}......')
         cursor.execute(query)
         db.commit()
 
@@ -180,7 +200,7 @@ def update_leaderboard(db:mysql.connector.MySQLConnection, race):
             query = f'UPDATE constructorsLeaderBoard \
                     SET {gpk} = {finishpos} \
                     WHERE driverGroup = "{group}" and team = "{team}";'
-            print(f'Updating constructorleaderboard {group}-{gpkey}-{drivername}......')
+            func.logging(logpath, f'UPDATE: constructorleaderboard {group}-{gpkey}-{drivername}......')
             cursor.execute(query)
             db.commit()
         
@@ -192,12 +212,13 @@ def update_leaderboard(db:mysql.connector.MySQLConnection, race):
         query = f'UPDATE licensePoint \
                 SET {gpkey} = 0 \
                 WHERE driverName = "{drivername}";'
-        print(f'Updating licensepoint {group}-{gpkey}-{drivername}......')
+        func.logging(logpath, f'UPDATE: licensepoint {group}-{gpkey}-{drivername}......')
         cursor.execute(query)
         db.commit()
 
+        func.logging(logpath)
 
-    print()
+    func.logging(logpath)
 
 
 
@@ -237,7 +258,7 @@ def update_qualiracefl(db:mysql.connector.MySQLConnection, race):
                 SET qualiFLdriver = "{drivername}", \
                     qualiFLteam = "{team}" \
                 WHERE driverGroup = "{group}" AND GP = "{gp}";'
-        print(f'Updating pole position {group}-{gp}-{drivername}......')
+        func.logging(logpath, f'UPDATE pole position {group}-{gp}-{drivername}......')
         cursor.execute(query)
     db.commit()
 
@@ -249,11 +270,11 @@ def update_qualiracefl(db:mysql.connector.MySQLConnection, race):
                 raceFLteam = "{flteam}", \
                 raceFLvalidation = {flvalidation} \
             WHERE driverGroup = "{group}" AND GP = "{gp}";'
-    print(f'Updating race fastestlap {group}-{gp}-{fldriver}-{flvalidation}......')
+    func.logging(logpath, f'UPDATE: race fastestlap {group}-{gp}-{fldriver}-{flvalidation}......', end="\n\n")
     cursor.execute(query)
     db.commit()
 
-    print()
+    func.logging(logpath)
 
 
 
@@ -262,18 +283,20 @@ def update_qualiracefl(db:mysql.connector.MySQLConnection, race):
 
 def calculate_driver(db:mysql.connector.MySQLConnection, group:str):
     cursor = db.cursor()
+    func.logging(logpath, func.delimiter_string(f'{group} driver points', 50), end="\n\n")
 
     # get full driverleaderboard
     f = open("bin/get_leaderboard_driver_group.sql", "r")
     query = f.read().replace("GROUP", group)
     f.close()
-    print(f'Fetching driver leaderboard of {group}......')
+    func.logging(logpath, f'FETCH: driver leaderboard of {group}......', end="\n\n")
+    print(f'Fetching driver leaderboard of {group}......\n')
     cursor.execute(query)
     result = cursor.fetchall()
-
+    
+    print(f'Calculating driver points {group}......')
     for driver in result:
         drivername = driver[0]
-        print(f'Calculating points {group}-{drivername}......')
         totalpoints = 0
         for i in range(3, len(driver)):
             try:
@@ -284,7 +307,7 @@ def calculate_driver(db:mysql.connector.MySQLConnection, group:str):
         query = f'UPDATE driverLeaderBoard \
                 SET totalPoints = {totalpoints} \
                 WHERE driverName = "{drivername}" AND driverGroup = "{group}";'
-        print(f'Updating driverleaderboard {group}-{drivername}-{totalpoints}......')
+        func.logging(logpath, f'UPDATE: driverleaderboard {group}-{drivername}-{totalpoints}......')
         cursor.execute(query)
     db.commit()
 
@@ -292,18 +315,20 @@ def calculate_driver(db:mysql.connector.MySQLConnection, group:str):
 
 def calculate_constructors(db:mysql.connector.MySQLConnection, group:str):
     cursor = db.cursor()
+    func.logging(logpath, func.delimiter_string(f'{group} constructors points', 50), end="\n\n")
 
     # get full constructorsleaderboard
     f = open("bin/get_leaderboard_constructors_group.sql", "r")
     query = f.read().replace("GROUP", group)
     f.close()
-    print(f'Fetching constructors leaderboard of {group}......')
+    func.logging(logpath, f'FETCH: constructors leaderboard of {group}......', end="\n\n")
+    print(f'Fetching constructors leaderboard of {group}......', end="\n\n")
     cursor.execute(query)
     result = cursor.fetchall()
 
+    print(f'Calculating constructors points {group}......')
     for team in result:
         teamname = team[0]
-        print(f'Calculating points {group}-{teamname}......')
         totalpoints = 0
         for i in range(2, len(team)):
             try:
@@ -314,7 +339,7 @@ def calculate_constructors(db:mysql.connector.MySQLConnection, group:str):
         query = f'UPDATE constructorsLeaderBoard \
                 SET totalPoints = {totalpoints} \
                 WHERE team = "{teamname}" AND driverGroup = "{group}";'
-        print(f'Updating constructorsleaderboard {group}-{teamname}-{totalpoints}......')
+        func.logging(logpath, f'UPDATE: constructorsleaderboard {group}-{teamname}-{totalpoints}......')
         cursor.execute(query)
     db.commit()
 
@@ -322,18 +347,18 @@ def calculate_constructors(db:mysql.connector.MySQLConnection, group:str):
 
 def calculate_licensepoint(db:mysql.connector.MySQLConnection, group:str):
     cursor = db.cursor()
-
-    print(f'Updating license point......')
-    
+    func.logging(logpath, func.delimiter_string(f'{group} license points', 50), end="\n\n")
 
     # get race director record
     f = open("bin/get_racedirector_gp_group.sql", "r")
     query = f.read().replace("GROUP", group).replace(" AND GP = \"RACE\"", "")
     f.close()
-    print(f'Fetching race director data......')
+    func.logging(logpath, f'FETCH: race director data {group}......', end="\n\n")
+    print(f'Fetching race director data {group}......\n')
     cursor.execute(query)
     result = cursor.fetchall()
 
+    print(f'Calculating license point {group}......')
     for record in result:
         gpkey = func.get_key(settings["content"]["gp"], record[3])
         name = record[1]; lp = record[4]; warning = record[5]; qb = record[6]; rb = record[7]
@@ -344,7 +369,7 @@ def calculate_licensepoint(db:mysql.connector.MySQLConnection, group:str):
                     qualiBan = qualiBan + {qb}, \
                     raceBan = raceBan + {rb} \
                 WHERE driverName = "{name}";'
-        print(f'Updating race director {record[0]}-{group}-{name}......')
+        func.logging(logpath, f'UPDATE: race director {record[0]}-{group}-{name}......')
         cursor.execute(query)
     db.commit()
 
@@ -352,39 +377,44 @@ def calculate_licensepoint(db:mysql.connector.MySQLConnection, group:str):
 
 def calculate_qualiraceFL(db:mysql.connector.MySQLConnection, group:str):
     cursor = db.cursor()
+    func.logging(logpath, func.delimiter_string(f'{group} pole & raceFL points', 50), end="\n\n")
 
     query = f'SELECT GP, driverGroup, qualiFLdriver, qualiFLteam, \
             raceFLdriver, raceFLteam, raceFLvalidation \
             FROM qualiraceFL \
             WHERE driverGroup = "{group}";'
-    print(f'Fetching qualiraceFL data......')
+    func.logging(logpath, f'FETCH: qualiraceFL data......', end="\n\n")
+    print(f'Fetching qualiraceFL data......\n')
     cursor.execute(query)
     result = cursor.fetchall()
 
+    print(f'Calculating pole & raceFL points {group}......')
     for race in result:
         query = f'UPDATE driverLeaderBoard \
                 SET totalPoints = totalPoints + 1 \
                 WHERE driverName = "{race[2]}" AND driverGroup = "{race[1]}";'
-        print(f'Updating pole points {race[1]}-{race[0]}-{race[2]}......')
+        func.logging(logpath, f'UPDATE: pole points {race[1]}-{race[0]}-{race[2]}......')
         cursor.execute(query)
 
         query = f'UPDATE constructorsLeaderBoard \
                 SET totalPoints = totalPoints + 1 \
                 WHERE team = "{race[3]}" AND driverGroup = "{race[1]}";'
-        print(f'Updating pole points {race[1]}-{race[0]}-{race[3]}......')
+        func.logging(logpath, f'UPDATE: pole points {race[1]}-{race[0]}-{race[3]}......')
         cursor.execute(query)
 
         query = f'UPDATE driverLeaderBoard \
                 SET totalPoints = totalPoints + {race[6]} \
                 WHERE driverName = "{race[4]}" AND driverGroup = "{race[1]}";'
-        print(f'Updating raceFL points {race[1]}-{race[0]}-{race[4]}......')
+        func.logging(logpath, f'UPDATE: raceFL points {race[1]}-{race[0]}-{race[4]}-{race[6]}......')
         cursor.execute(query)
 
         query = f'UPDATE constructorsLeaderBoard \
                 SET totalPoints = totalPoints + {race[6]} \
                 WHERE team = "{race[5]}" AND driverGroup = "{race[1]}";'
-        print(f'Updating raceFL points {race[1]}-{race[0]}-{race[5]}......')
+        func.logging(logpath, f'UPDATE: raceFL points {race[1]}-{race[0]}-{race[5]}-{race[6]}......')
         cursor.execute(query)
+
+        func.logging(logpath)
     
     db.commit()
 
@@ -392,18 +422,17 @@ def calculate_qualiraceFL(db:mysql.connector.MySQLConnection, group:str):
 
 
 
-
-
-
 def recalibration(db:mysql.connector.MySQLConnection, group:str):
     cursor = db.cursor()
-    print(func.delimiter_string(f'Recalibrating points {group}', 60), end="\n\n")
+    func.logging(logpath, func.delimiter_string(f'Recalibrating points {group}', 70), end="\n\n")
+    print(func.delimiter_string(f'Recalibrating points {group}', 70), end="\n\n")
 
     # get the race list
     # (only will calculate the points which raceStatus = "FINISHED")
     f = open("bin/get_racelist_group_status.sql", "r")
     query = f.read().replace("GROUP", group).replace("STATUS", "FINISHED")
     f.close()
+    func.logging(logpath, "FETCH: finished race list......", end="\n\n")
     print("Fetching finished race list......\n")
     cursor.execute(query)
     donerace = cursor.fetchall()
@@ -416,27 +445,35 @@ def recalibration(db:mysql.connector.MySQLConnection, group:str):
         # 2. update / marking qualiraceFL
         # (also just recording, add points later on)
         update_qualiracefl(db, race)
-    # '''
+
+        print()
+    
     # calculate totalpoints for every table
     # driverleaderboard, constructorleaderboard, licensepoint
-    
+    func.logging(logpath, func.delimiter_string("Calculating total points", 60), end="\n\n")
+    print(func.delimiter_string("Calculating total points", 60), end="\n\n")
     # 1. driver total points
     calculate_driver(db, group)
+    func.logging(logpath)
     print()
 
     # 2. constructor total points
     calculate_constructors(db, group)
+    func.logging(logpath)
     print()
 
     # 3. pole & racefl extra points
     calculate_qualiraceFL(db, group)
+    func.logging(logpath)
     print()
 
     # 4. update & calculate license points
     calculate_licensepoint(db, group)
-    print()
-
-    print(func.delimiter_string(f'END Recalibration {group}', 60), end="\n\n\n\n")
+    func.logging(logpath)
+    print("\n")
+    
+    func.logging(logpath, func.delimiter_string(f'END Recalibration {group}', 70), end="\n\n\n\n")
+    print(func.delimiter_string(f'END Recalibration {group}', 70), end="\n\n\n\n")
 
 
 def main(db:mysql.connector.MySQLConnection):
@@ -454,12 +491,10 @@ def main(db:mysql.connector.MySQLConnection):
 
 
     except Exception as e:
-        if settings["general"]["DEBUG_MODE"] == True:
-            print()
-            print(traceback.format_exc())
-            print()
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n")
         print("错误提示：" + str(e))
-        print("积分校准失败，推荐咨询管理员寻求解决......")
+        print("积分校准失败，推荐查看日志咨询管理员寻求解决......")
 
 
 """

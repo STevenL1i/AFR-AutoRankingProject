@@ -536,6 +536,42 @@
         }
     },
 
+    "LANusername": {
+        "ACTIVE": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "STANDBY": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#FFFF00",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "DISABLED": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#FF0000",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "RACE COORDINATOR": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#00FF00",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "DEFAULT": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "text_wrap": true,
+            "valign": "vcenter"
+        }
+    },
+
     "default": {
         "header_11": {
             "font_size": 11,

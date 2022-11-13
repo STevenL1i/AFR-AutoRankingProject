@@ -1,11 +1,13 @@
 import json, traceback
 import mysql.connector
 
+import deffunc as func
 import upload_racedata
 
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
 settingsf.close()
+logpath = settings["default"]["log"]
 
 
 def askuser_race() -> tuple[str, str]:
@@ -80,10 +82,8 @@ def checkstatus_race(db, status, round, group):
         db.commit()
         print(f'race status updating complete...')
     except Exception as e:
-        if settings["general"]["DEBUG_MODE"] == True:
-            print()
-            print(traceback.format_exc())
-            print()
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
         print("错误提示：" + str(e))
         print("比赛状态更新失败，请检查步骤是否操作正确，此功能问题推荐咨询管理员")
 

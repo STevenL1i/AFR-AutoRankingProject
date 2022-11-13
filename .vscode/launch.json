@@ -10,14 +10,8 @@
             "request": "launch",
             //"program": "${workspaceFolder}/v6.0/afr/dbmanager/dbmanager.py",
             //"cwd": "${workspaceFolder}/v6.0/afr/dbmanager",
-            //"program": "${workspaceFolder}/v6.0/afr/src/afr.py",
-            //"cwd": "${workspaceFolder}/v6.0/afr/src",
-
-            //"program": "${workspaceFolder}/v6.0/afec/dbmanager/dbmanager.py",
-            //"cwd": "${workspaceFolder}/v6.0/afec/dbmanager",
-            //"program": "${workspaceFolder}/v6.0/afec/src/afec.py",
-            //"cwd": "${workspaceFolder}/v6.0/afec/src/",
-
+            //"program": "${workspaceFolder}/v7.1/afr/src/afr.py",
+            //"cwd": "${workspaceFolder}/v7.1/afr/src",
             "program": "${file}",
             "cwd": "${fileDirname}",
 
