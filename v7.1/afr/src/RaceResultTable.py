@@ -15,10 +15,6 @@ settingsf.close()
 formatf = open("settings/format.json", "r", encoding='utf-8')
 format:dict = json.load(formatf)
 formatf.close()
-# server cfg
-serverf = open("server.json", "r", encoding='utf-8')
-servercfg:dict = json.load(serverf)
-serverf.close()
 # log
 logpath = settings["default"]["log"]
 
@@ -332,8 +328,9 @@ def main(db:mysql.connector.MySQLConnection):
             round = 0
             gp = "Pre-Season"
         
-        leaguename = servercfg["db"].split("_")[0].upper()
-        seasonname = servercfg["db"].split("_")[1].upper()
+        # get season name/number
+        leaguename = settings["default"]["leaguename"]
+        seasonname = settings["default"]["seasonname"]
         
 
         filename = f'{leaguename} {seasonname} 成绩结算（R{round:02} {gp}）.xlsx'

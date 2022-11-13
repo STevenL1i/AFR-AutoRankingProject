@@ -58,7 +58,7 @@ def main():
         menu = ["上传排位成绩", "上传正赛成绩", "上传判罚数据",
                 "上传新车手", "上传新车队", "上传转会记录",
                 "更新比赛状态", "更新比赛数据", "校准积分", 
-                "下载最新积分统计表", "下载最新比赛结算表",
+                "下载最新积分统计表", "下载最新比赛结算表", "下载LAN账号列表",
                 "查看教程文档"]
         for i in range(0,len(menu)):
             print(f'{i+1}.{menu[i]}')
@@ -199,10 +199,21 @@ def main():
                 break
 
 
+            if choice == '12':
+                print()
+                print("你选择了“下载LAN账号列表”")
+                test = input("请按Enter以下载LAN账号列表，输入q回到主菜单 ")
+                if test == 'q' or test == 'Q':
+                    break
+                ClassificationTable.lanuserlist(db)
+                print()
+                input("请按Enter回到主菜单\n")
+                break
 
 
 
-            elif choice == '12':
+
+            elif choice == '13':
                 print("功能仍在开发中......请暂时手动打开文档阅读\n")
                 input("请按Enter回到主菜单\n")
                 break

@@ -732,41 +732,70 @@ def racedirector(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
 
 
 
-def lanuserlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection):
-    cursor = db.cursor()
-    lanlist = workbook.add_worksheet("LAN列表")
-    func.logging(logpath, func.delimiter_string("Exporting LAN userlist", 60), end="\n\n")
-    print(func.delimiter_string("Exporting LAN userlist", 60), end="\n\n")
 
-    # setting header row height and column width
-    lanlist.set_column(0,2, 22)
 
-    # writing header
-    lanlist.write(0,0, "游戏id", workbook.add_format(format["default"]["header_12"]))
-    lanlist.write(0,1, "LAN用户名", workbook.add_format(format["default"]["header_12"]))
-    lanlist.write(0,2, "密码", workbook.add_format(format["default"]["header_12"]))
 
-    # fetch LAN account list
-    query = "SELECT * FROM afr_elo.LANusername ORDER BY username ASC;"
-    func.logging(logpath, "Fetching LAN userlist......", end="\n\n")
-    print("Fetching LAN userlist......\n")
-    cursor.execute(query)
-    result = cursor.fetchall()
 
-    # writing LAN userlist
-    print("Writing LAN userlist......")
-    rowcursor = 1; colcursor = 0
-    for account in result:
-        status = account[3]
-        func.logging(logpath, f'Writing LAN user {account[1]}-{status}......')
-        for i in range(0,3):
-            lanlist.write(rowcursor, colcursor+i, account[i], workbook.add_format(format["LANusername"][status]))
-        rowcursor += 1
 
-    func.logging(logpath)
-    func.logging(logpath, func.delimiter_string("END LAN userlist", 60), end="\n\n\n\n\n\n")
-    print()
-    print(func.delimiter_string("END LAN userlist", 60), end="\n\n")
+def lanuserlist(db:mysql.connector.MySQLConnection):
+    try:
+        cursor = db.cursor()
+
+        # seperate LAN userlist table
+        func.logging(logpath, func.delimiter_string("User downloading LAN userlist Table", 60), end="\n\n")
+
+        filename = f'{settings["default"]["leaguename"]} LAN账号列表.xlsx'
+        func.logging(logpath, f'Exporting LAN userlist table to file "{filename}"......', end="\n\n")
+        print(f'Exporting LAN userlist table to file "{filename}"......\n')
+        workbook = xlsxwriter.Workbook(filename)        
+
+        # lanuserlist(lanworkbook, db)
+
+        lanlist = workbook.add_worksheet("LAN列表")
+        func.logging(logpath, func.delimiter_string("Exporting LAN userlist", 60), end="\n\n")
+        print(func.delimiter_string("Exporting LAN userlist", 60), end="\n\n")
+
+        # setting header row height and column width
+        lanlist.set_column(0,2, 22)
+
+        # writing header
+        lanlist.write(0,0, "游戏id", workbook.add_format(format["default"]["header_12"]))
+        lanlist.write(0,1, "LAN用户名", workbook.add_format(format["default"]["header_12"]))
+        lanlist.write(0,2, "密码", workbook.add_format(format["default"]["header_12"]))
+
+        # fetch LAN account list
+        query = "SELECT * FROM afr_elo.LANusername ORDER BY username ASC;"
+        func.logging(logpath, "Fetching LAN userlist......", end="\n\n")
+        print("Fetching LAN userlist......\n")
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        # writing LAN userlist
+        print("Writing LAN userlist......")
+        rowcursor = 1; colcursor = 0
+        for account in result:
+            status = account[3]
+            func.logging(logpath, f'Writing LAN user {account[1]}-{status}......')
+            for i in range(0,3):
+                lanlist.write(rowcursor, colcursor+i, account[i], workbook.add_format(format["LANusername"][status]))
+            rowcursor += 1
+
+        func.logging(logpath)
+        func.logging(logpath, func.delimiter_string("END LAN userlist", 60), end="\n\n\n\n\n\n")
+        print()
+        print(func.delimiter_string("END LAN userlist", 60), end="\n\n")
+
+
+        workbook.close()
+        func.logging(logpath, f'LAN userlist table save to file "{filename}" complete', end="\n\n\n\n\n\n")
+        print(f'LAN userlist table save to file "{filename}" complete')
+
+    
+    except Exception as e:
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
+        print("错误提示：" + str(e))
+        print("LAN账号列表下载失败，推荐咨询管理员寻求解决......")
 
 
 
@@ -810,11 +839,8 @@ def main(db:mysql.connector.MySQLConnection):
 
         
         # get season name/number
-        serverf = open("server.json", "r")
-        servercfg = json.load(serverf)
-        serverf.close()
-        leaguename = servercfg["db"].split("_")[0].upper()
-        seasonname = servercfg["db"].split("_")[1].upper()
+        leaguename = settings["default"]["leaguename"]
+        seasonname = settings["default"]["seasonname"]
 
         # create the excel file
         print()
@@ -834,28 +860,9 @@ def main(db:mysql.connector.MySQLConnection):
         racedirector(workbook, db)                  # passed
 
         workbook.close()
-        func.logging(logpath, f'Classification table save to file "{filename}" complete', end="\n\n\n\n")
-        print(f'Classification table save to file "{filename}" complete\n\n\n')
+        func.logging(logpath, f'Classification table save to file "{filename}" complete', end="\n\n\n\n\n\n")
+        print(f'Classification table save to file "{filename}" complete\n\n')
 
-
-
-        # seperate LAN userlist table
-        func.logging(logpath, func.delimiter_string("Downloading LAN userlist Table", 60), end="\n\n")
-
-        filename = f'{leaguename} LAN账号列表.xlsx'
-        func.logging(logpath, f'Exporting LAN userlist table to file "{filename}"......', end="\n\n")
-        print(f'Exporting LAN userlist table to file "{filename}"......\n')
-        lanworkbook = xlsxwriter.Workbook(filename)        
-
-        lanuserlist(lanworkbook, db)
-
-        lanworkbook.close()
-        func.logging(logpath, f'LAN userlist table save to file "{filename}" complete', end="\n\n\n\n\n\n")
-        print(f'LAN userlist table save to file "{filename}" complete')
-
-
-
-    
 
     except Exception as e:
         func.logging(logpath, traceback.format_exc())
