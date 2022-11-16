@@ -382,7 +382,7 @@ def leaderboard_driver(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCon
             if race[0] == None or race[5] == "CANCELLED":
                 continue
             if race[5] == "FINISHED":
-                racedonelist.append(race)
+                racedonelist.append(race[3])
             
             leaderboard.set_column(colcursor, colcursor, 9)
             leaderboard.insert_image(0, colcursor, settings["content"]["flags"][race[3]], {'x_scale':0.96, 'y_scale':0.98})
@@ -401,6 +401,20 @@ def leaderboard_driver(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCon
         cursor.execute(query)
         func.logging(logpath, f'Fetching driverleaderboard of {group}......')
         result = cursor.fetchall()
+
+        # get driver's pole and raceFL
+        query = f'SELECT GP, driverGroup, qualiFLdriver \
+                FROM qualiraceFL \
+                WHERE driverGroup = "{group}";'
+        cursor.execute(query)
+        poleresult = cursor.fetchall()
+
+        query = f'SELECT GP, driverGroup, raceFLdriver, raceFLvalidation \
+                FROM qualiraceFL \
+                WHERE driverGroup = "{group}";'
+        cursor.execute(query)
+        raceFLresult = cursor.fetchall()
+
 
         for i in range(0, len(result)):
             driver = list(result[i])
@@ -423,26 +437,51 @@ def leaderboard_driver(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCon
             # writing result of every race
             colcursor = 2
             for j in range(3, 3+len(racedonelist)):
+                race = racedonelist[j-3]
+                f = None
+
                 if driver[j] == None:
-                    leaderboard.write(i+1, colcursor, "DNA", workbook.add_format(format["pointsformat"]["dna"]))
+                    f = workbook.add_format(format["pointsformat"]["dna"])
+                    driver[j] = "DNA"
                 elif driver[j] == 1:
-                    leaderboard.write(i+1, colcursor, driver[j], workbook.add_format(format["pointsformat"]["P1"]))
+                    f = workbook.add_format(format["pointsformat"]["P1"])
                 elif driver[j] == 2:
-                    leaderboard.write(i+1, colcursor, driver[j], workbook.add_format(format["pointsformat"]["P2"]))
+                    f = workbook.add_format(format["pointsformat"]["P2"])
                 elif driver[j] == 3:
-                    leaderboard.write(i+1, colcursor, driver[j], workbook.add_format(format["pointsformat"]["P3"]))
+                    f = workbook.add_format(format["pointsformat"]["P3"])
                 elif settings["race"]["points"][str(driver[j])] > 0 and driver[j] > 0:
-                    leaderboard.write(i+1, colcursor, driver[j], workbook.add_format(format["pointsformat"]["points"]))
+                    f = workbook.add_format(format["pointsformat"]["points"])
                 elif settings["race"]["points"][str(driver[j])] == 0 and driver[j] > 0:
-                    leaderboard.write(i+1, colcursor, driver[j], workbook.add_format(format["pointsformat"]["outpoint"]))
+                    f = workbook.add_format(format["pointsformat"]["outpoint"])
                 elif driver[j] == -1:
-                    leaderboard.write(i+1, colcursor, "RET", workbook.add_format(format["pointsformat"]["retired"]))
+                    f = workbook.add_format(format["pointsformat"]["retired"])
+                    driver[j] = "RET"
                 elif driver[j] == -2:
-                    leaderboard.write(i+1, colcursor, "DNF", workbook.add_format(format["pointsformat"]["dnf"]))
+                    f = workbook.add_format(format["pointsformat"]["dnf"])
+                    driver[j] = "DNF"
                 elif driver[j] == -3:
-                    leaderboard.write(i+1, colcursor, "DSQ", workbook.add_format(format["pointsformat"]["dsq"]))
+                    f = workbook.add_format(format["pointsformat"]["dsq"])
+                    driver[j] = "DSQ"
                 elif driver[j] == -4:
-                    leaderboard.write(i+1, colcursor, "DNS", workbook.add_format(format["pointsformat"]["dns"]))
+                    f = workbook.add_format(format["pointsformat"]["dns"])
+                    driver[j] = "DNS"
+
+                # marking pole
+                for pole in poleresult:
+                    if pole[0] == race and pole[2] == driver[0]:
+                        f.set_bold(True)
+                
+                # marking raceFL
+                for raceFL in raceFLresult:
+                    if raceFL[0] == race and raceFL[2] == driver[0]:
+                        f.set_italic(True)
+
+                        if raceFL[3] == 0:
+                            f.set_underline(True)
+
+
+
+                leaderboard.write(i+1, colcursor, driver[j], f)
                 
                 colcursor += 1
 
@@ -856,7 +895,7 @@ def main(db:mysql.connector.MySQLConnection):
         leaderboard_driver(workbook, db)            # passed, pole & fl unmarked
         leaderboard_constructors(workbook, db)      # passed
         licensepoint(workbook, db)                  # passed
-        # seasonstats(workbook, db)                   # not develop for now   
+        # seasonstats(workbook, db)                 # not develop for now   
         racedirector(workbook, db)                  # passed
 
         workbook.close()
