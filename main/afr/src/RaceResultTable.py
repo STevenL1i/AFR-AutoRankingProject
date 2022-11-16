@@ -334,7 +334,7 @@ def main(db:mysql.connector.MySQLConnection):
         
 
         filename = f'{leaguename} {seasonname} 成绩结算（R{round:02} {gp}）.xlsx'
-        func.logging(logpath, f'Exporting Race result table to {filename}......', end="\n\n")
+        func.logging(logpath, f'Exporting Race result table to "{filename}"......', end="\n\n")
         print(f'Exporting Race result table to {filename}......\n')
         workbook = xlsxwriter.Workbook(filename)
 

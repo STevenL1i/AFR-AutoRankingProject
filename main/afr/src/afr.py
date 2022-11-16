@@ -171,6 +171,13 @@ def main():
                     break
                 pointsrecalibration.main(db)
                 print()
+                test = input("按Enter继续下载积分和结算表，输入q回到主菜单")
+                if test == 'q' or test == 'Q':
+                    break
+                ClassificationTable.main(db)
+                print()
+                RaceResultTable.main(db)
+                print()
                 input("请按Enter回到主菜单\n")
                 break
 
