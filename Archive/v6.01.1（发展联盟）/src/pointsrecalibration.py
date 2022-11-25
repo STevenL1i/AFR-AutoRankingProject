@@ -68,6 +68,7 @@ def recalibreation(drivergroup:str, db:object, cursor:object):
 
     # calculating points of every race
     for i in range(0, len(race_list)):
+        print(f'recalibrating {race_list[i]}......')
         # firstly clear all the record at tempraceResult table
         query = "DELETE FROM tempraceResult;"
         cursor.execute(query)
