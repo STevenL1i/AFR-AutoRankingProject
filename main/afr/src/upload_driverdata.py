@@ -89,7 +89,7 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
                             username += c
                         elif ord(c) >= 97 and ord(c) <= 122:
                             username += c
-                        elif ord(c) >= 48 and ord(c) >= 57:
+                        elif ord(c) >= 48 and ord(c) <= 57:
                             username += c
                     
                     # upload to LANusername table
