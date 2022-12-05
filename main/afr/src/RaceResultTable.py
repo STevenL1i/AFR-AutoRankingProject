@@ -98,7 +98,7 @@ def get_raceresulttable(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCo
                     driver[4] = "Reserve_leaderboard"
                 raceresult.write(rowcursor, colcursor+1, driver[3], workbook.add_format(format["driverformat"][driver[4]]))
             # lap time
-            if driver[5] == None or driver[5].replace(" ","") == "":
+            if driver[5] == None or driver[5] == "None":
                 driver[5] = "--:--.---"
             raceresult.write(rowcursor, colcursor+2, driver[5], workbook.add_format(format["raceresultformat"]["laptimeformat"]))
             # tyre
@@ -294,7 +294,7 @@ def get_raceresulttable(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCo
         # drivername
         raceresult.write(rowcursor, colcursor+1, driver[3], workbook.add_format(format["driverformat"][driver[0]]))
         # lap time
-        if driver[5] == None:
+        if driver[5] == None or driver[5] == "None":
             driver[5] = "-:--.---"
         raceresult.write(rowcursor, colcursor+2, driver[5], workbook.add_format(format["raceresultformat"]["laptimeformat"]))
         # tyre
