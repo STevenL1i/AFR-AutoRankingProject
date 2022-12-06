@@ -348,9 +348,7 @@ def upload_rd(db:mysql.connector.MySQLConnection):
 
 
     except Exception as e:
-        if settings["general"]["DEBUG_MODE"] == True:
-            print()
-            print(traceback.format_exc())
-            print()
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
         print("错误提示：" + str(e))
         print("数据上传失败，请检查上传文件数据是否正确，或查看日志咨询管理员")
