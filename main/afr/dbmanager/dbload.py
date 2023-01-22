@@ -137,6 +137,7 @@ def dbload_basic():
 
 
 def dbInitialize():
+    """
     # Initialize RaceDirector table
     query = "SELECT * FROM raceCalendar WHERE Round = '1' AND driverGroup = 'A2' ORDER BY Round ASC;"
     cursor.execute(query)
@@ -146,7 +147,6 @@ def dbInitialize():
     group = result[4]
     date = result[1]
 
-    """
     print("initialize the driverlist (prefix header driver).........")
     query = "INSERT INTO driverList VALUES (%s, %s, %s, %s, %s, %s);"
     val = ("Race Director", "Reserve", "A3", "reserved driver", "2022-01-01", 0)

@@ -4,7 +4,7 @@ import connectserver
 import mysql.connector
 import dbload as dbl
 
-VERSION = "AFR v7.1 DBmanager"
+VERSION = "AFR v8.0 DBmanager"
 logpath = "log/log.log"
 # generating log file
 today = datetime.datetime.today()
