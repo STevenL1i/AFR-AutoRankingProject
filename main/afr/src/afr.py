@@ -2,7 +2,7 @@ import os, json, datetime, traceback
 import deffunc as func
 import connectserver
 serverconfig = "server.json"
-VERSION = "AFR v7.1"
+VERSION = "AFR v7.2"
 
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
@@ -65,42 +65,50 @@ def main():
         print()
         print("0.退出")
         print()
-        choice = input("请输入你所要选择的功能： ")
-        while True:
+        choices = input("请输入你所要选择的功能： ")
+        choices_list = choices.split(" ")
+        for choice in choices_list:
+        # while True:
             if choice == '1':
                 print()
                 print("你选择了“上传排位成绩”")
-                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 upload_racedata.upload_quali(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
             if choice == '2':
                 print()
                 print("你选择了“上传正赛成绩”")
-                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 upload_racedata.upload_race(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
             if choice == '3':
                 print()
                 print("你选择了“上传判罚数据”")
-                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 upload_racedata.upload_rd(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
 
@@ -108,37 +116,45 @@ def main():
             if choice == '4':
                 print()
                 print("你选择了“上传新车手”")
-                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 upload_driverdata.welcome_newdriver(db)
                 print()
+                ClassificationTable.lanuserlist(db)
+                print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
             if choice == '5':
                 print()
                 print("你选择了“上传新车队”")
-                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 upload_driverdata.welcome_newteam(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
             
 
             if choice == '6':
                 print()
                 print("你选择了“上传转会记录”")
-                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以上传文件（记住别选错文件了）输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 upload_driverdata.transfer_driver(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
 
@@ -149,7 +165,7 @@ def main():
                 update_racedata.update_racestatus(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
                 
             
             if choice == '8':
@@ -158,7 +174,7 @@ def main():
                 update_racedata.update_eventresult(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
 
@@ -166,56 +182,66 @@ def main():
             if choice == '9':
                 print()
                 print("你选择了“校准积分”")
-                test = input("请按Enter以下载最新积分榜，输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以下载最新积分榜，输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 pointsrecalibration.main(db)
                 print()
-                test = input("按Enter继续下载积分和结算表，输入q回到主菜单")
-                if test == 'q' or test == 'Q':
+                test = input("按Enter继续下载积分和结算表，输入q回到上一级，输入Q回到主菜单")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 ClassificationTable.main(db)
                 print()
                 RaceResultTable.main(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
             if choice == '10':
                 print()
                 print("你选择了“下载最新积分统计表”")
-                test = input("请按Enter以下载最新积分榜，输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以下载最新积分榜，输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 ClassificationTable.main(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
             if choice == '11':
                 print()
                 print("你选择了“下载最新积分统计表”")
-                test = input("请按Enter以下载最新积分榜，输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以下载最新积分榜，输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 RaceResultTable.main(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
             if choice == '12':
                 print()
                 print("你选择了“下载LAN账号列表”")
-                test = input("请按Enter以下载LAN账号列表，输入q回到主菜单 ")
-                if test == 'q' or test == 'Q':
+                test = input("请按Enter以下载LAN账号列表，输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
                     break
                 ClassificationTable.lanuserlist(db)
                 print()
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
 
@@ -223,7 +249,7 @@ def main():
             elif choice == '13':
                 print("功能仍在开发中......请暂时手动打开文档阅读\n")
                 input("请按Enter回到主菜单\n")
-                break
+                continue
 
 
 
@@ -234,7 +260,7 @@ def main():
                 return 0
 
             else:
-                break
+                continue
             
 
 
