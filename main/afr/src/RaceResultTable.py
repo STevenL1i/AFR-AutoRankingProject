@@ -268,7 +268,7 @@ def get_raceresulttable(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCo
             team, fastestLap, tyre, driverStatus \
             FROM qualiResult \
             WHERE GP = "{gp}" \
-            ORDER BY fastestLap ASC;'
+            ORDER BY -fastestLap DESC, fastestLap ASC;'
     func.logging(logpath, f'Fetching qualiying data Whole-{gp}......', end="\n\n")
     print(f'Fetching qualiying data Whole-{gp}......\n')
     cursor.execute(query)

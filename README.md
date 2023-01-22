@@ -1,7 +1,7 @@
 AFR Auto Ranking Project
 
-CURRENT VERSION:            v7.1
-UNDER DEVELOPMENT:          v7.1
+CURRENT VERSION:            v7.2
+UNDER DEVELOPMENT:          v7.2
 SPECIAL VERSION:            v6.01.1 (SVS发展联盟)
 
 This ranking system is design for AFR racing league

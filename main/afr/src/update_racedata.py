@@ -11,10 +11,10 @@ logpath = settings["default"]["log"]
 
 
 def askuser_race() -> tuple[str, str]:
-    round = input("请输入比赛站数（比如输入12代表第12站）, 输入q回到主菜单：")
+    round = input("请输入比赛站数（比如输入12代表第12站）, 输入q回到上一级：")
     if round == "q" or round == "Q":
         return None, None
-    group = input("请输入组别, 输入q回到主菜单：")
+    group = input("请输入组别, 输入q回到上一级：")
     if group == 'q' or group == 'Q':
         return None, None
     
@@ -183,7 +183,7 @@ def update_eventresult(db:mysql.connector.MySQLConnection):
             continue
         
         cleardata_event(db, gpeng, group, event_type)
-        test = input(f'\n原比赛记录已清除，按Enter重新上传{hint}数据，输入q回到主菜单\n')
+        test = input(f'\n原比赛记录已清除，按Enter重新上传{hint}数据，输入q回到上一级\n')
         if test == 'q' or test == 'Q':
             break
 
