@@ -12,7 +12,7 @@ logpath = settings["default"]["log"]
 
 # upload qualiying result
 def upload_quali(db:mysql.connector.MySQLConnection):
-    # db = connectserver.connectserver("server.json", "db")
+    # db = dbconnect.connect_with_conf("server.json", "db")
     cursor = db.cursor()
 
     try:
@@ -120,7 +120,7 @@ def upload_quali(db:mysql.connector.MySQLConnection):
 
 # upload race result
 def upload_race(db:mysql.connector.MySQLConnection):
-    # db = connectserver.connectserver("server.json", "db")
+    # db = dbconnect.connect_with_conf("server.json", "db")
     cursor = db.cursor()
 
     try:
@@ -242,7 +242,7 @@ def upload_race(db:mysql.connector.MySQLConnection):
 
 # upload qualiying result
 def upload_rd(db:mysql.connector.MySQLConnection):
-    # db = connectserver.connectserver("server.json", "db")
+    # db = dbconnect.connect_with_conf("server.json", "db")
     cursor = db.cursor()
 
     try:

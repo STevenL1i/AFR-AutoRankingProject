@@ -1,8 +1,7 @@
-from functools import update_wrapper
 import json, traceback
 
 import mysql.connector
-import connectserver
+import dbconnect
 import deffunc as func
 
 # loading all the necessary json settings
@@ -499,5 +498,5 @@ def main(db:mysql.connector.MySQLConnection):
 
 """
 if __name__ == "__main__":
-    main(connectserver.connectserver("server.json", "db"))
+    main(dbconnect.connect_with_conf("server.json", "db"))
 """

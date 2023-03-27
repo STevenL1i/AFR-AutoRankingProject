@@ -1,6 +1,6 @@
 import os, datetime, traceback
 import deffunc as func
-import connectserver
+import dbconnect
 import mysql.connector
 import dbload as dbl
 
@@ -12,7 +12,7 @@ try:
     os.mkdir("log")
 except FileExistsError:
     pass
-logf = open(logpath, "a")
+logf = open(logpath, "w")
 logf.write(func.delimiter_string("Program launching", 50) + "\n")
 logf.write(func.delimiter_string("Generating log", 50) + "\n")
 logf.write(f'Time: {today.strftime("%Y-%m-%d %H:%M:%S")}\n')
@@ -21,9 +21,9 @@ logf.write(func.get_sysinfo() + "\n")
 logf.close()
 
 try:
-    db = connectserver.connectserver("server.json", "db")
+    db = dbconnect.connect_with_conf("server.json", "db")
 except Exception:
-    db = connectserver.connectserver("server.json")
+    db = dbconnect.connect_with_conf("server.json")
 cursor = db.cursor()
 
 def dbcreate():

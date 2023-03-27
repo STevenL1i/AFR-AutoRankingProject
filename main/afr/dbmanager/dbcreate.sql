@@ -144,3 +144,19 @@ create table driverTransfer (
         foreign key (driverName) references driverList (driverName)
             on update cascade on delete cascade
 );
+
+create table registTable (
+    driverName  varchar(30) not null,
+    team        varchar(30) not null,
+    driverGroup varchar(7)  not null,
+    GP          varchar(20) not null,
+    raceGroup   varchar(7)  not null,
+    registTime  datetime    not null,
+    primary key (driverName, GP, raceGroup),
+    constraint registTable_fk1
+        foreign key (driverName) references driverList (driverName)
+            on update cascade on delete cascade,
+    constraint registTable_fk2
+        foreign key (GP, raceGroup) references raceCalendar (GP_ENG, driverGroup)
+            on update cascade on delete cascade
+);

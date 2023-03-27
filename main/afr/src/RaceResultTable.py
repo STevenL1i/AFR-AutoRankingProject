@@ -2,7 +2,7 @@ import json, traceback, xlsxwriter
 from datetime import datetime
 
 import mysql.connector
-import connectserver
+import dbconnect
 import deffunc as func
 
 
@@ -170,7 +170,7 @@ def get_raceresulttable(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCo
             raceresult.write(rowcursor, colcursor+2, driver[7], workbook.add_format(format["raceresultformat"]["puredata"]))
             # starting grid
             raceresult.write(rowcursor, colcursor+3, driver[5], workbook.add_format(format["raceresultformat"]["puredata"]))
-            poschange = driver[2] - driver[5]
+            poschange = driver[5] - driver[2]
             if poschange > 0:
                 raceresult.write(rowcursor, colcursor+4, f'+{poschange}', workbook.add_format(format["raceresultformat"]["posup"]))
             elif poschange == 0:
@@ -387,5 +387,5 @@ def main(db:mysql.connector.MySQLConnection):
 
 """
 if __name__ == "__main__":
-    main(connectserver.connectserver("server.json", "db"))
+    main(dbconnect.connect_with_conf("server.json", "db"))
 """

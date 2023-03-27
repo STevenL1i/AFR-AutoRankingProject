@@ -1,13 +1,13 @@
 import csv
 import json
-import connectserver
+import dbconnect
 import deffunc as func
 logpath = "log/log.log"
 
 try:
-    db = connectserver.connectserver("server.json", "db")
+    db = dbconnect.connect_with_conf("server.json", "db")
 except Exception:
-    db = connectserver.connectserver("server.json")
+    db = dbconnect.connect_with_conf("server.json")
 cursor = db.cursor()
 
 

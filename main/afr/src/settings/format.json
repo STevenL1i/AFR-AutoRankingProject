@@ -220,6 +220,37 @@
         }
     },
 
+    "registformat": {
+        "reserved": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00FF00",
+            "valign": "vcenter"
+        },
+        "crossgroup": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#E26B0A",
+            "valign": "vcenter"
+        },
+        "qb": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "valign": "vcenter"
+        },
+        "rb": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "valign": "vcenter"
+        }
+    },
+
     "racecalendar": {
         "bigheader": {
             "font_size": 26,
@@ -543,10 +574,17 @@
             "text_wrap": true,
             "valign": "vcenter"
         },
-        "STANDBY": {
+        "STANDBY FOR ADDING": {
             "font_size": 12,
             "font_name": "Dengxian",
             "bg_color": "#FFFF00",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "STANDBY FOR CHECKING": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#9933FF",
             "text_wrap": true,
             "valign": "vcenter"
         },
