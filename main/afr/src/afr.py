@@ -41,6 +41,8 @@ import pointsrecalibration
 import ClassificationTable
 import RaceResultTable
 
+
+
 def main():
     try:
         db = dbconnect.connect_with_conf(serverconfig, "db")
@@ -59,7 +61,7 @@ def main():
                 "上传新车手", "上传新车队", "上传转会记录",
                 "更新比赛状态", "更新比赛数据", "校准积分", 
                 "下载最新积分统计表", "下载最新比赛结算表",
-                "下载报名统计表", "下载LAN账号列表","查看教程文档"]
+                "下载报名统计表", "下载LAN账号列表", "查看教程文档"]
         for i in range(0,len(menu)):
             print(f'{i+1}.{menu[i]}')
         print()

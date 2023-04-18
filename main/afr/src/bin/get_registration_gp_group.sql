@@ -3,6 +3,7 @@ SELECT registTable.driverName, registTable.driverGroup, registTable.team, teamLi
 FROM registTable
     LEFT JOIN licensePoint on registTable.driverName = licensePoint.driverName
     LEFT JOIN teamList on registTable.team = teamList.teamName
+                      and registTable.driverGroup = teamList.driverGroup
 
 WHERE registTable.raceGroup = "GROUP" AND registTable.GP = "RACE"
 ORDER BY registTable.driverGroup ASC,
