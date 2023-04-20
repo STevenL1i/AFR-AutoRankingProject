@@ -2,7 +2,8 @@ import json, traceback, xlsxwriter
 from datetime import datetime
 
 import mysql.connector
-import connectserver
+import paramiko
+import dbconnect
 import deffunc as func
 
 # loading all the necessary json settings
@@ -85,7 +86,7 @@ def driverlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection)
             for team in teamlist:
                 # get driverlist of this team
                 f = open("bin/get_driverlist_group-team.sql", "r")
-                query = f.read().replace("GROUP", group).replace("THETEAM",team)
+                query = f.read().replace("GROUP", group).replace("THETEAM", team)
                 f.close()
                 func.logging(logpath, f'Fetching driverlist data of {group}-{team}......')
                 cursor.execute(query)
@@ -294,8 +295,10 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
                 # write totalpoints
             leaderboard.write(i+1, 3, driver[4], workbook.add_format(format["default"]["header_11"]))
                 # write licensepoint
-            leaderboard.write(i+1, 4, driver[5], workbook.add_format(format["pointsformat"][licensepoint_dict[driver[5]]]))
-
+            if driver[5] >= 0:
+                leaderboard.write(i+1, 4, driver[5], workbook.add_format(format["pointsformat"][licensepoint_dict[driver[5]]]))
+            else:
+                leaderboard.write(i+1, 4, 0, workbook.add_format(format["pointsformat"][licensepoint_dict[0]]))
                 # write quali/race ban (if driver has)
             if driver[8] > 0:
                 leaderboard.write(i+1, 5, f'Race to be DSQ x{driver[8]}', workbook.add_format(format["pointsformat"]["trigger"]))
@@ -672,7 +675,10 @@ def licensepoint(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
                     lpboard.write(rowcursor, colcursor, driver[j], workbook.add_format(format["default"]["header_11"]))
                 colcursor += 1
 
-            lpboard.write(rowcursor, colcursor, driver[-3], workbook.add_format(format["pointsformat"][licensepoint_dict[driver[-3]]]))
+            if driver[-3] >= 0:
+                lpboard.write(rowcursor, colcursor, driver[-3], workbook.add_format(format["pointsformat"][licensepoint_dict[driver[-3]]]))
+            else:
+                lpboard.write(rowcursor, colcursor, 0, workbook.add_format(format["pointsformat"][licensepoint_dict[0]]))
 
             rowcursor += 1
         
@@ -771,11 +777,7 @@ def racedirector(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
 
 
 
-
-
-
-
-
+# this funcion is disabled for current context
 def lanuserlist(db:mysql.connector.MySQLConnection):
     try:
         cursor = db.cursor()
@@ -786,7 +788,7 @@ def lanuserlist(db:mysql.connector.MySQLConnection):
         filename = f'{settings["default"]["leaguename"]} LAN账号列表.xlsx'
         func.logging(logpath, f'Exporting LAN userlist table to file "{filename}"......', end="\n\n")
         print(f'Exporting LAN userlist table to file "{filename}"......\n')
-        workbook = xlsxwriter.Workbook(filename)        
+        workbook = xlsxwriter.Workbook(filename)
 
         # lanuserlist(lanworkbook, db)
 
@@ -803,7 +805,7 @@ def lanuserlist(db:mysql.connector.MySQLConnection):
         lanlist.write(0,2, "密码", workbook.add_format(format["default"]["header_12"]))
 
         # fetch LAN account list
-        query = "SELECT * FROM afr_elo.LANusername ORDER BY username ASC;"
+        query = "SELECT * FROM afr_db.LANusername ORDER BY username ASC;"
         func.logging(logpath, "Fetching LAN userlist......", end="\n\n")
         print("Fetching LAN userlist......\n")
         cursor.execute(query)
@@ -838,6 +840,157 @@ def lanuserlist(db:mysql.connector.MySQLConnection):
 
 
 
+def registlist(db:mysql.connector.MySQLConnection):
+    try:
+        cursor = db.cursor()
+
+        func.logging(logpath, func.delimiter_string("User downloading registration of today's race", 60), end="\n\n")
+
+        func.logging(logpath, "Searching for race event information......", end="\n\n")
+        print("正在查找比赛信息......", end="\n\n")
+
+        today = datetime.today()
+        today = datetime(2023, 4, 8, 19, 00, 00)     #--- this is for testing ---
+        today_date = today.strftime("%Y-%m-%d")
+        today_time = today.strftime("%H:%M")
+
+        
+        # looking for the race event TODAY
+        query = f'SELECT * FROM raceCalendar \
+                WHERE raceDate = "{today_date}";'
+        cursor.execute(query)
+        race = cursor.fetchall()
+        if len(race) == 0:
+            func.logging(logpath, "Unable to find race event of today", end="\n\n\n\n\n\n")
+            print("没有找到在今日进行的比赛，请在比赛当天再试")
+            return -1
+        
+        func.logging(logpath, f'Today\'s race: R{race[0][0]:02}-{race[0][4]}-{race[0][3]}', end="\n\n")
+        print(f'今日比赛：R{race[0][0]:02}-{race[0][4]}-{race[0][2]}', end="\n\n")
+        
+
+        # check registration deadline
+        query = f'SELECT * FROM afr_db.League_Info \
+                WHERE field = "regist_DL_time";'
+        cursor.execute(query)
+        result = cursor.fetchall()
+        regDLtime = result[0][1]
+
+        if regDLtime > today_time:
+            func.logging(logpath, "WARNING: Currently still ahead of regist deadline time", end="\n\n")
+            print("注意：当前时间未到达报名截止时间......", end="\n\n")
+        
+
+        test = input("请按Enter以下载今日比赛报名表，输入q回到主菜单 ")
+        if test == 'q' or test == "Q":
+            func.logging(logpath, "", end="\n\n\n\n")
+            return 0
+        print()
+
+        filename = f'{settings["default"]["leaguename"]} R{race[0][0]}-{race[0][4]}-{race[0][2]} 报名表.xlsx'
+        func.logging(logpath, f'Exporting registration to file {filename}', end="\n\n")
+        print(f'Exporting registration to file {filename}', end="\n\n")
+        
+
+
+        # writing registration to file
+        workbook = xlsxwriter.Workbook(filename)
+        reglist = workbook.add_worksheet(f'R{race[0][0]:02}-{race[0][4]}-{race[0][3]}')
+        func.logging(logpath, func.delimiter_string("Exporting registration data", 60), end="\n\n")
+        print(func.delimiter_string("Exporting registration data", 60), end="\n\n")
+
+        # setting row height and column width
+        reglist.set_column(0,1, 14)
+        for i in range(0, 50):
+            reglist.set_row(i, 15)
+        
+        # writing header
+        reglist.merge_range(0,0, 0,1, f'{race[0][2]}', workbook.add_format(format["default"]["header_11"]))
+
+        # writing team column header
+        func.logging(logpath, "Writing team column header")
+        print("Writing team column header")
+
+        rowcursor = 1
+        colcursor = 0
+        teamlist = settings["content"]["teamorder"]
+        for team in teamlist:
+            f = open("bin/get_driverlist_group-team.sql", "r")
+            query = f.read().replace("GROUP", race[0][4]).replace("THETEAM", team)
+            f.close()
+            cursor.execute(query)
+            result = cursor.fetchall()
+
+            reglist.write(rowcursor, colcursor, settings["content"]["codename"][team], workbook.add_format(format["driverformat"][team]))
+            try:
+                reglist.write(rowcursor+1, colcursor, result[0][2], workbook.add_format(format["driverformat"][team]))
+            except IndexError:
+                reglist.write(rowcursor+1, colcursor, None, workbook.add_format(format["driverformat"][team]))
+            
+            rowcursor += 2
+
+        reglist.write(rowcursor, colcursor, "Race Director", workbook.add_format(format["default"]["default_11"]))
+        reglist.write(rowcursor+1, colcursor, "OB", workbook.add_format(format["default"]["default_11"]))
+        reglist.write(rowcursor+2, colcursor, "OB", workbook.add_format(format["default"]["default_11"]))
+        rowcursor += 4
+
+        # writing registration data
+        func.logging(logpath, "Writing registration data......")
+        print("Writing registration data......")
+
+        f = open("bin/get_registration_gp_group.sql", "r")
+        query = f.read().replace("GROUP", race[0][4]).replace("RACE", race[0][3])
+        f.close()
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        i = 1
+        for reg in result:
+            func.logging(logpath, f'Writing regist: {i}-{reg[0]}-{reg[4]}......')
+            i += 1
+
+            try:
+                reglist.write(rowcursor, colcursor, reg[2], workbook.add_format(format["driverformat"][reg[3]]))
+            except KeyError:
+                reglist.write(rowcursor, colcursor, reg[2], workbook.add_format(format["default"]["default_11"]))
+            
+            if reg[6] != 0:
+                reglist.write(rowcursor, colcursor+1, reg[0], workbook.add_format(format["registformat"]["rb"]))
+            elif reg[5] != 0:
+                reglist.write(rowcursor, colcursor+1, reg[0], workbook.add_format(format["registformat"]["qb"]))
+            elif race[0][4] != reg[1]:
+                reglist.write(rowcursor, colcursor, reg[1], workbook.add_format(format["default"]["default_11"]))
+                reglist.write(rowcursor, colcursor+1, reg[0], workbook.add_format(format["registformat"]["crossgroup"]))
+            elif reg[2] == "Reserve":
+                reglist.write(rowcursor, colcursor+1, reg[0], workbook.add_format(format["registformat"]["reserved"]))
+            else:
+                reglist.write(rowcursor, colcursor+1, reg[0], workbook.add_format(format["default"]["default_11"]))
+            
+            rowcursor += 1
+
+        
+        func.logging(logpath)
+        func.logging(logpath, func.delimiter_string("END registration data", 60), end="\n\n\n\n\n\n")
+        print()
+        print(func.delimiter_string("END registration data", 60), end="\n\n")
+
+        workbook.close()
+        func.logging(logpath, f'Registration save to file "{filename}" complete', end="\n\n\n\n\n\n")
+        print(f'Registration save to file "{filename}" complete')
+    
+
+
+    except Exception as e:
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
+        print("错误提示：" + str(e))
+        print("今日比赛报名表下载失败，推荐咨询管理员寻求解决......")
+
+
+    
+
+    
 
 
 def main(db:mysql.connector.MySQLConnection):
@@ -900,7 +1053,7 @@ def main(db:mysql.connector.MySQLConnection):
 
         workbook.close()
         func.logging(logpath, f'Classification table save to file "{filename}" complete', end="\n\n\n\n\n\n")
-        print(f'Classification table save to file "{filename}" complete\n\n')
+        print(f'Classification table save to file "{filename}" complete')
 
 
     except Exception as e:
@@ -912,5 +1065,5 @@ def main(db:mysql.connector.MySQLConnection):
 
 """
 if __name__ == "__main__":
-    main(connectserver.connectserver("server.json", "db"))
+    main(dbconnect.connect_with_conf("server.json", "db"))
 """

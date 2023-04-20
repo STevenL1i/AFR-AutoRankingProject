@@ -144,3 +144,46 @@ create table driverTransfer (
         foreign key (driverName) references driverList (driverName)
             on update cascade on delete cascade
 );
+
+create table registTable (
+    driverName  varchar(30) not null,
+    team        varchar(30) not null,
+    driverGroup varchar(7)  not null,
+    GP          varchar(20) not null,
+    raceGroup   varchar(7)  not null,
+    registTime  datetime    not null,
+    primary key (driverName, GP, raceGroup),
+    constraint registTable_fk1
+        foreign key (driverName) references driverList (driverName)
+            on update cascade on delete cascade,
+    constraint registTable_fk2
+        foreign key (GP, raceGroup) references raceCalendar (GP_ENG, driverGroup)
+            on update cascade on delete cascade
+);
+
+
+
+
+
+create or replace view get_raceResult as
+select raceResult.* 
+from raceResult join raceCalendar on raceResult.driverGroup = raceCalendar.driverGroup
+                                 and raceResult.GP = raceCalendar.GP_ENG
+where raceCalendar.raceStatus = "FINISHED"
+order by raceCalendar.Round, raceCalendar.driverGroup, raceResult.finishPosition;
+
+
+create or replace view get_qualiResult as
+select qualiResult.*
+from qualiResult join raceCalendar on qualiResult.driverGroup = raceCalendar.driverGroup
+                                  and qualiResult.GP = raceCalendar.GP_ENG
+where raceCalendar.raceStatus = "FINISHED"
+order by raceCalendar.Round, raceCalendar.driverGroup, qualiResult.position;
+
+
+create or replace view get_raceDirector as
+select raceDirector.*
+from raceDirector join raceCalendar on raceDirector.driverGroup = raceCalendar.driverGroup
+                                   and raceDirector.GP = raceCalendar.GP_ENG
+where raceCalendar.raceStatus = "FINISHED"
+order by raceCalendar.Round, raceDirector.CaseNumber;

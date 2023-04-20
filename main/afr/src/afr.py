@@ -1,8 +1,8 @@
 import os, json, datetime, traceback
 import deffunc as func
-import connectserver
+import dbconnect
 serverconfig = "server.json"
-VERSION = "AFR v7.2"
+VERSION = "AFR v8.0 (beta v7.4)"
 
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
@@ -14,7 +14,7 @@ try:
     os.mkdir("log")
 except FileExistsError:
     pass
-logf = open(logpath, "a")
+logf = open(logpath, "w")
 logf.write(func.delimiter_string("Program launching", 50) + "\n")
 logf.write(func.delimiter_string("Generating log", 50) + "\n")
 logf.write(f'Time: {today.strftime("%Y-%m-%d %H:%M:%S")}\n')
@@ -41,9 +41,11 @@ import pointsrecalibration
 import ClassificationTable
 import RaceResultTable
 
+
+
 def main():
     try:
-        db = connectserver.connectserver(serverconfig, "db")
+        db = dbconnect.connect_with_conf(serverconfig, "db")
     except Exception as e:
         errmsg = "Database connection unreachable, please try again......"
         func.logging(logpath, traceback.format_exc(), end="\n")
@@ -58,8 +60,8 @@ def main():
         menu = ["上传排位成绩", "上传正赛成绩", "上传判罚数据",
                 "上传新车手", "上传新车队", "上传转会记录",
                 "更新比赛状态", "更新比赛数据", "校准积分", 
-                "下载最新积分统计表", "下载最新比赛结算表", "下载LAN账号列表",
-                "查看教程文档"]
+                "下载最新积分统计表", "下载最新比赛结算表",
+                "下载报名统计表", "下载LAN账号列表", "查看教程文档"]
         for i in range(0,len(menu)):
             print(f'{i+1}.{menu[i]}')
         print()
@@ -122,8 +124,6 @@ def main():
                 elif test == 'Q':
                     break
                 upload_driverdata.welcome_newdriver(db)
-                print()
-                ClassificationTable.lanuserlist(db)
                 print()
                 input("请按Enter回到主菜单\n")
                 continue
@@ -232,21 +232,36 @@ def main():
 
             if choice == '12':
                 print()
+                print("你选择了“下载报名统计表”")
+                test = input("请按Enter以下载今日比赛报名统计表，输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
+                    break
+                print()
+                ClassificationTable.registlist(db)
+                print()
+                input("请按Enter回到主菜单\n")
+                continue
+
+
+            if choice == '13':
+                print()
                 print("你选择了“下载LAN账号列表”")
                 test = input("请按Enter以下载LAN账号列表，输入q回到上一级，输入Q回到主菜单 ")
                 if test == 'q':
                     continue
                 elif test == 'Q':
                     break
+                print()
                 ClassificationTable.lanuserlist(db)
                 print()
                 input("请按Enter回到主菜单\n")
                 continue
+            
 
 
-
-
-            elif choice == '13':
+            elif choice == '14':
                 print("功能仍在开发中......请暂时手动打开文档阅读\n")
                 input("请按Enter回到主菜单\n")
                 continue
@@ -256,7 +271,7 @@ def main():
             if choice == '0':
                 print()
                 input("请按Enter键以退出............")
-                func.logging(logpath, "Program exiting with code 0......", end="\n\n\n\n\n\n")
+                func.logging(logpath, "\n\n\n\n\n\nProgram exiting with code 0......", end="\n\n")
                 return 0
 
             else:

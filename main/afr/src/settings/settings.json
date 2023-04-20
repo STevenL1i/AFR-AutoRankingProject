@@ -1,7 +1,7 @@
 {
     "default": {
         "leaguename": "AFR",
-        "seasonname": "S10",
+        "seasonname": "S11",
         "log": "log/log.log",
         "DEBUG_MODE": true
     },
@@ -45,8 +45,7 @@
         }
     },
 
-    "drivergroup":
-    {
+    "drivergroup": {
         "order": ["A1","A2","A3"],
         "enable_team": {
             "A1": true,
@@ -55,8 +54,7 @@
         }
     },
 
-    "content":
-    {
+    "content": {
         "teamorder": [
             "Mercedes AMG",
             "Red Bull Racing",
@@ -94,7 +92,8 @@
             "Abu Dhabi" : "flags/Abu Dhabi.png",
             "San Marino" : "flags/San Marino.png",
             "Portugal" : "flags/Portugal.png",
-            "Saudi Arabia": "flags/Saudi Arabia.png"
+            "Saudi Arabia": "flags/Saudi Arabia.png",
+            "Miami": "flags/Miami.png"
         },
         "gp": {
             "AUS": "Australia",
@@ -121,7 +120,8 @@
             "UAE": "Abu Dhabi",
             "SMR": "San Marino",
             "PRT": "Portugal",
-            "SAU": "Saudi Arabia"
+            "SAU": "Saudi Arabia",
+            "MIA": "Miami"
         },
         "warning": {
             "0.5": "△",

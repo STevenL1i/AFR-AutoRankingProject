@@ -11,7 +11,7 @@ logpath = settings["default"]["log"]
 
 # upload new driver
 def welcome_newdriver(db:mysql.connector.MySQLConnection):
-    # db = connectserver.connectserver("server.json", "db")
+    # db = dbconnect.connect_with_conf("server.json", "db")
     cursor = db.cursor()
 
     try:
@@ -84,7 +84,7 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
                     try:
                         # driver may choose not to create account
                         if pwd.replace(" ","") == "" or pwd == "null" or pwd == "none" or pwd == "no":
-                            raise ValueError("User don't need a new LAN account")
+                            pwd = "123456"
 
                         # username will be driver id, but only retain alphabets and numbers
                         username = ""
@@ -97,13 +97,15 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
                                 username += c
                         
                         # upload to LANusername table
-                        query = "INSERT INTO afr_elo.LANusername VALUES (%s, %s, %s, %s);"
-                        val = (drivername, username, pwd, "STANDBY")
+                        query = "INSERT INTO afr_db.LANusername \
+                                (driverName, username, password, accountStatus) VALUES (%s, %s, %s, %s);"
+                        val = (drivername, username, pwd, "STANDBY FOR ADDING")
                         func.logging(logpath, f'UPLOAD: LAN account for {drivername}-{username}......')
                         cursor.execute(query, val)
                     
                     except mysql.connector.errors.IntegrityError:
-                        query = f'UPDATE afr_elo.LANusername SET password = "{pwd}" \
+                        query = f'UPDATE afr_db.LANusername \
+                                SET password = "{pwd}", accountStatus = "STANDBY FOR CHECKING" \
                                 WHERE username = "{username}";'
                         func.logging(logpath, f'WARNING: User account exists, updating password......', end="\n\n")
                         cursor.execute(query)
@@ -146,7 +148,7 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
 
 # upload new team
 def welcome_newteam(db:mysql.connector.MySQLConnection):
-    # db = connectserver.connectserver("server.json", "db")
+    # db = dbconnect.connect_with_conf("server.json", "db")
     cursor = db.cursor()
 
     try:
@@ -229,7 +231,7 @@ def welcome_newteam(db:mysql.connector.MySQLConnection):
 
 # upload transfer driver
 def transfer_driver(db:mysql.connector.MySQLConnection):
-    # db = connectserver.connectserver("server.json", "db")
+    # db = dbconnect.connect_with_conf("server.json", "db")
     cursor = db.cursor()
 
     try:
