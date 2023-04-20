@@ -32,7 +32,7 @@
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#0080FF",
+            "bg_color": "#FF66B2",
             "valign": "vcenter"
         },
         "Alpha Tauri": {
@@ -150,7 +150,7 @@
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#0080FF",
+            "bg_color": "#FF66B2",
             "bold": true,
             "valign": "vcenter"
         },
