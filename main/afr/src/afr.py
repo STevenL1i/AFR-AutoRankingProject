@@ -2,7 +2,7 @@ import os, json, datetime, traceback
 import deffunc as func
 import dbconnect
 serverconfig = "server.json"
-VERSION = "AFR v8.0 (beta v7.4)"
+VERSION = "AFR v8.0"
 
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
