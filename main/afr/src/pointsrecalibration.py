@@ -579,6 +579,7 @@ def main(db:mysql.connector.MySQLConnection):
         print("积分校准失败，推荐查看日志咨询管理员寻求解决......")
 
 
-
+"""
 if __name__ == "__main__":
     main(dbconnect.connect_with_conf("server.json", "db"))
+"""
