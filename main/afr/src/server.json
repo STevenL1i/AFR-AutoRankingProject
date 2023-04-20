@@ -3,5 +3,5 @@
     "port": 3306,
     "user": "StevenLi",
     "password": "ABC@1120ab",
-    "db": "afr_s11"
+    "db": "afr_s11_testing"
 }

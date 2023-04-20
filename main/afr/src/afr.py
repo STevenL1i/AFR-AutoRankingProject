@@ -271,7 +271,7 @@ def main():
             if choice == '0':
                 print()
                 input("请按Enter键以退出............")
-                func.logging(logpath, "Program exiting with code 0......", end="\n\n\n\n\n\n")
+                func.logging(logpath, "\n\n\n\n\n\nProgram exiting with code 0......", end="\n\n")
                 return 0
 
             else:

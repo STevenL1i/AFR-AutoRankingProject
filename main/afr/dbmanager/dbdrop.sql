@@ -1,3 +1,4 @@
+drop table if exists registTable;
 drop table if exists qualiraceFL;
 drop table if exists qualiResult;
 drop table if exists raceResult;

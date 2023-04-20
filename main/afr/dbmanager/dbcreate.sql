@@ -160,3 +160,30 @@ create table registTable (
         foreign key (GP, raceGroup) references raceCalendar (GP_ENG, driverGroup)
             on update cascade on delete cascade
 );
+
+
+
+
+
+create or replace view get_raceResult as
+select raceResult.* 
+from raceResult join raceCalendar on raceResult.driverGroup = raceCalendar.driverGroup
+                                 and raceResult.GP = raceCalendar.GP_ENG
+where raceCalendar.raceStatus = "FINISHED"
+order by raceCalendar.Round, raceCalendar.driverGroup, raceResult.finishPosition;
+
+
+create or replace view get_qualiResult as
+select qualiResult.*
+from qualiResult join raceCalendar on qualiResult.driverGroup = raceCalendar.driverGroup
+                                  and qualiResult.GP = raceCalendar.GP_ENG
+where raceCalendar.raceStatus = "FINISHED"
+order by raceCalendar.Round, raceCalendar.driverGroup, qualiResult.position;
+
+
+create or replace view get_raceDirector as
+select raceDirector.*
+from raceDirector join raceCalendar on raceDirector.driverGroup = raceCalendar.driverGroup
+                                   and raceDirector.GP = raceCalendar.GP_ENG
+where raceCalendar.raceStatus = "FINISHED"
+order by raceCalendar.Round, raceDirector.CaseNumber;
