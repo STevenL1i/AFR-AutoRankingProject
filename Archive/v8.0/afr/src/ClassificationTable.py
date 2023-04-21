@@ -850,7 +850,7 @@ def registlist(db:mysql.connector.MySQLConnection):
         print("正在查找比赛信息......", end="\n\n")
 
         today = datetime.today()
-        today = datetime(2023, 4, 8, 19, 00, 00)     #--- this is for testing ---
+        # today = datetime(2023, 4, 8, 19, 00, 00)     --- this is for testing ---
         today_date = today.strftime("%Y-%m-%d")
         today_time = today.strftime("%H:%M")
 
