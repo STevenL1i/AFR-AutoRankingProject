@@ -187,3 +187,58 @@ from raceDirector join raceCalendar on raceDirector.driverGroup = raceCalendar.d
                                    and raceDirector.GP = raceCalendar.GP_ENG
 where raceCalendar.raceStatus = "FINISHED"
 order by raceCalendar.Round, raceDirector.CaseNumber;
+
+
+create or replace view get_driverList as
+select driverList.*, teamList.teamColor 
+from driverList left join teamList on driverList.team = teamList.teamName
+                                  and driverList.driverGroup = teamList.driverGroup;
+
+create or replace view get_raceCalendar as
+select Round, raceDate, GP_CHN, GP_ENG, driverGroup, raceStatus
+from raceCalendar
+order by raceDate ASC;
+
+
+create or replace view get_driverleaderboard_short as
+select driverLeaderBoard.driverName, driverLeaderBoard.team, teamList.teamColor,
+       driverLeaderBoard.driverGroup, driverLeaderBoard.totalPoints, licensePoint.totalLicensePoint,
+       licensePoint.warning, licensePoint.qualiBan, licensePoint.raceban
+from driverLeaderBoard join licensePoint on driverLeaderBoard.driverName = licensePoint.driverName
+                       left join teamList on driverLeaderBoard.team = teamList.teamName
+                                         and driverLeaderBoard.driverGroup = teamList.driverGroup
+order by totalPoints desc;
+
+
+create or replace view get_consleaderboard_short as
+select constructorsLeaderBoard.team, teamList.teamColor,
+       constructorsLeaderBoard.driverGroup, constructorsLeaderBoard.totalPoints
+from constructorsLeaderBoard join teamList on constructorsLeaderBoard.team = teamList.teamName
+                                          and constructorsLeaderBoard.driverGroup = teamList.driverGroup
+order by totalPoints desc;
+
+
+
+
+
+
+create or replace view get_raceDone as
+select * from raceCalendar
+where raceStatus = "FINISHED"
+order by raceDate;
+
+
+create or replace view get_registration as
+select registTable.driverName, registTable.driverGroup, registTable.team, teamList.teamColor,
+       registTable.registTime, licensePoint.qualiBan, licensePoint.raceBan,
+       registTable.raceGroup, registTable.GP
+from registTable
+    left join licensePoint on registTable.driverName = licensePoint.driverName
+    left join teamList on registTable.team = teamList.teamName
+                      and registTable.driverGroup = teamList.driverGroup
+order by registTable.driverGroup asc,
+    CASE registTable.team
+        WHEN "Reserve" THEN 2
+        ELSE 1
+        END,
+    registTable.registTime asc;

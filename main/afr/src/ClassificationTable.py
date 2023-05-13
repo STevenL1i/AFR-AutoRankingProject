@@ -20,6 +20,8 @@ logpath = settings["default"]["log"]
 
 
 
+
+
 def get_drivergrouplist(db:mysql.connector.MySQLConnection) -> list:
     cursor = db.cursor()
 
@@ -40,12 +42,230 @@ def get_drivergrouplist(db:mysql.connector.MySQLConnection) -> list:
 
 
 
-def driverlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection):
+def get_driverlist_data(db:mysql.connector.MySQLConnection) -> dict:
     cursor = db.cursor()
 
+    driverlist_data = {}
+    """
+    driverlist_data = {
+        drivergroup:
+        {
+            ### for teamed driver ###
+            teamcolor:
+            {
+                "teamname":
+                "1st driver":
+                "2ed driver":
+                "3rd driver":
+            }
+
+            ### for rest of the driver ###
+            team: [driver0, driver1, ......]
+        }
+    }
+    """
+    query = "SELECT * FROM get_driverList;"
+    func.logging(logpath, "Fetching all driver list data......")
+    print("Fetching all driver list data......")
+    cursor.execute(query)
+    result = cursor.fetchall()
+    func.logging(logpath, f'driver list data fetched: {len(result)} drivers')
+
+    for driver in result:
+        group = driver[2]
+        drivername = driver[0]
+        teamname = driver[1]
+        driverstatus = driver[3]
+        teamcolor = driver[6]
+        if teamcolor is not None:
+            try:
+                driverlist_data[group][teamcolor][driverstatus] = drivername
+            except KeyError:
+                try:
+                    driverlist_data[group][teamcolor] = {"teamname": teamname, driverstatus: drivername}
+                except KeyError:
+                    driverlist_data[group] = {}
+                    driverlist_data[group][teamcolor] = {"teamname": teamname, driverstatus: drivername}
+        
+        else:
+            try:
+                driverlist_data[group][teamname].append(drivername)
+            except KeyError:
+                try:
+                    driverlist_data[group][teamname] = [drivername]
+                except KeyError:
+                    driverlist_data[group] = {teamname: [drivername]}
+
+    return driverlist_data
+
+
+
+def get_raceCalendar_data(db:mysql.connector.MySQLConnection) -> dict:
+    cursor = db.cursor()
+
+    racecalendar_data = {}
+    """
+    racecalendar_data = {
+        drivergroup:
+        {
+            racedate:
+            {
+                "Round":
+                "GP_CHN":
+                "status":
+            }
+        }
+    }
+    """
+    query = "SELECT * FROM get_raceCalendar;"
+    func.logging(logpath, "Fetching race calendar data......")
+    print("Fetching race calendar data......")
+    cursor.execute(query)
+    result = cursor.fetchall()
+    func.logging(logpath, f'race calendar data fetched: {len(result)} races (including holiday)')
+
+    for race in result:
+        group = race[4]
+        racedate = race[1]
+        round = race[0]
+        gpchn = race[2]
+        status = race[5]
+        try:
+            racecalendar_data[group][racedate] = {"Round": round, "GP_CHN": gpchn, "status": status}
+        except KeyError:
+            racecalendar_data[group] = {}
+            racecalendar_data[group][racedate] = {"Round": round, "GP_CHN": gpchn, "status": status}
+
+    return racecalendar_data
+
+
+
+def get_shortleaderboard_data(db:mysql.connector.MySQLConnection) -> dict:
+    cursor = db.cursor()
+
+    shortleaderboard_data = {}
+    """
+    shortleaderboard_data = {
+        drivergroup:
+        {
+            "driver":
+            {
+                drivername:
+                {
+                    "team":
+                    "teamcolor":
+                    "totalpoints":
+                    "Warning":
+                    "QB":
+                    "RB":
+                    "LP":
+                }
+            },
+            "team":
+            {
+                teamname:
+                {
+                    "teamcolor":
+                    "totalpoints":
+                }
+                
+            }
+        }
+    }
+    """
+
+    # driver leaderboard short
+    query = "SELECT * FROM get_driverleaderboard_short;"
+    func.logging(logpath, "Fetching driver short leaderboard data......")
+    print("Fetching driver short leaderboard data......")
+    cursor.execute(query)
+    result = cursor.fetchall()
+    func.logging(logpath, f'driver leaderboard data fetched: {len(result)} drivers')
+
+    for driver in result:
+        group = driver[3]
+        drivername = driver[0]
+        team = driver[1]
+        teamcolor = driver[2]
+        totalpoints = driver[4]
+        warning = driver[6]
+        qb = driver[7]
+        rb = driver[8]
+        lp = driver[5]
+
+        try:
+            shortleaderboard_data[group]["driver"][drivername] = {
+                "team": team, "teamcolor": teamcolor, "totalpoints": totalpoints,
+                "Warning": warning, "QB": qb, "RB": rb, "LP": lp
+            }
+        except KeyError:
+            shortleaderboard_data[group] = {"driver": {}}
+            shortleaderboard_data[group]["driver"][drivername] = {
+                "team": team, "teamcolor": teamcolor, "totalpoints": totalpoints,
+                "Warning": warning, "QB": qb, "RB": rb, "LP": lp
+            }
+
+
+    # constrcutors leaderboard short
+    query = "SELECT * FROM get_consleaderboard_short;"
+    func.logging(logpath, "Fetching constrcutors short leaderboard data......")
+    print("Fetching constrcutors short leaderboard data......")
+    cursor.execute(query)
+    result = cursor.fetchall()
+    func.logging(logpath, f'constrcutors leaderboard data fetched: {len(result)} teams', end="\n\n")
+
+    for team in result:
+        group = team[2]
+        teamname = team[0]
+        teamcolor = team[1]
+        totalpoints = team[3]
+
+        try:
+            shortleaderboard_data[group]["team"][teamname] = {
+                "teamcolor": teamcolor, "totalpoints": totalpoints
+            }
+        except KeyError:
+            shortleaderboard_data[group]["team"] = {}
+            shortleaderboard_data[group]["team"][teamname] = {
+                "teamcolor": teamcolor, "totalpoints": totalpoints
+            }
+
+    return shortleaderboard_data
+
+
+
+def get_raceDirector(db:mysql.connector.MySQLConnection) -> list:
+    cursor = db.cursor()
+
+    racedirector_data = []
+    query = "SELECT * FROM get_raceDirector;"
+    func.logging(logpath, f'Fetching race director data......')
+    print(f'Fetching race director data......')
+    cursor.execute(query)
+    result = cursor.fetchall()
+    func.logging(logpath, f'race director data fetched: {len(result)} records')
+    for record in result:
+        racedirector_data.append(record)
+
+    return racedirector_data
+
+
+
+
+
+
+
+def driverlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection):
+    cursor = db.cursor()
     func.logging(logpath, func.delimiter_string("Exporting driverlist", length=60), end="\n\n")
     print(func.delimiter_string("Exporting driverlist", length=60), end="\n\n")
     driverlist = workbook.add_worksheet("车手名单")
+
+
+    # fetching driver list data
+    driverlist_data = get_driverlist_data(db)
+    func.logging(logpath)
+    print()
     
     # get driver group list
     grouplist = get_drivergrouplist(db)
@@ -84,40 +304,38 @@ def driverlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection)
             ### getting teamed driver ###
             rowcursor = 1
             for team in teamlist:
-                # get driverlist of this team
-                f = open("bin/get_driverlist_group-team.sql", "r")
-                query = f.read().replace("GROUP", group).replace("THETEAM", team)
-                f.close()
-                func.logging(logpath, f'Fetching driverlist data of {group}-{team}......')
-                cursor.execute(query)
-                result = cursor.fetchall()
-                
-                func.logging(logpath, f'Writing team title: {group}-{team}......')
+                # team name header
+                func.logging(logpath, f'Writing team header: {group}-{team}......')
                 driverlist.write(rowcursor, colcursor, team, workbook.add_format(format["driverformat"][team]))
                 driverlist.write(rowcursor+1, colcursor, settings["content"]["codename"][team], workbook.add_format(format["driverformat"][team]))
                 try:
-                    driverlist.write(rowcursor+2, colcursor, result[0][2], workbook.add_format(format["driverformat"][team]))
-                except IndexError:
+                    driverlist.write(rowcursor+2, colcursor, driverlist_data[group][team]["teamname"], workbook.add_format(format["driverformat"][team]))
+                except KeyError:
                     driverlist.write(rowcursor+2, colcursor, None, workbook.add_format(format["driverformat"][team]))
-                
-                for i in range(0, 3):
-                    # setting row height
-                    driverlist.set_row(rowcursor, 16)
-                    try:
-                        func.logging(logpath, f'Writing driver: {group}-{result[i][2]}-{result[i][0]}......')
-                        driverlist.write(rowcursor, colcursor+1, result[i][0], workbook.add_format(format["driverformat"][team]))
-                    except IndexError:
-                        driverlist.write(rowcursor, colcursor+1, None, workbook.add_format(format["driverformat"][team]))
-                    rowcursor += 1
-                
-                for i in range(3, len(result)):
-                    # setting row height
-                    driverlist.set_row(rowcursor, 16)
-                    func.logging(logpath, f'Writing driver: {group}-{result[i][2]}-{result[i][0]}......')
-                    driverlist.write(rowcursor, colcursor, None, workbook.add_format(format["driverformat"][team]))
-                    driverlist.write(rowcursor, colcursor+1, result[i][0], workbook.add_format(format["driverformat"][team]))
-                    rowcursor += 1
 
+                # 1st driver (if exist)
+                try:
+                    func.logging(logpath, f'Writing driver: {group}-{driverlist_data[group][team]["teamname"]}-{driverlist_data[group][team]["1st driver"]}')
+                    driverlist.write(rowcursor, colcursor+1, driverlist_data[group][team]["1st driver"], workbook.add_format(format["driverformat"][team]))
+                except KeyError:
+                    driverlist.write(rowcursor, colcursor+1, None, workbook.add_format(format["driverformat"][team]))
+                
+                # 2ed driver (if exist)
+                try:
+                    func.logging(logpath, f'Writing driver: {group}-{driverlist_data[group][team]["teamname"]}-{driverlist_data[group][team]["2ed driver"]}')
+                    driverlist.write(rowcursor+1, colcursor+1, driverlist_data[group][team]["2ed driver"], workbook.add_format(format["driverformat"][team]))
+                except KeyError:
+                    driverlist.write(rowcursor+1, colcursor+1, None, workbook.add_format(format["driverformat"][team]))
+
+                # 3rd driver (if exist)
+                try:
+                    func.logging(logpath, f'Writing driver: {group}-{driverlist_data[group][team]["teamname"]}-{driverlist_data[group][team]["3rd driver"]}')
+                    driverlist.write(rowcursor+2, colcursor+1, driverlist_data[group][team]["3rd driver"], workbook.add_format(format["driverformat"][team]))
+                except KeyError:
+                    driverlist.write(rowcursor+2, colcursor+1, None, workbook.add_format(format["driverformat"][team]))
+                
+                rowcursor += 3
+            
             colcursor += 3
             ### END getting teamed driver ###
 
@@ -132,20 +350,24 @@ def driverlist(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnection)
         else:
             driverlist.write(0, colcursor, "Reserve", workbook.add_format(format["default"]["default_11"]))
 
-
-        # get reserve driverlist
-        f = open("bin/get_driverlist_group-reserve.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
-        cursor.execute(query)
-        result = cursor.fetchall()
-
+        # writing reserved driver
         rowcursor = 1
-        for driver in result:
-            func.logging(logpath, f'Writing driver: {group}-{driver[2]}-{driver[0]}......')
-            driverlist.write(rowcursor, colcursor, driver[0], workbook.add_format(format["driverformat"][driver[2]]))
-            rowcursor += 1
+        try:
+            for driver in driverlist_data[group]["Reserve"]:
+                func.logging(logpath, f'Writing driver: {group}-Reserve-{driver}')
+                driverlist.write(rowcursor, colcursor, driver, workbook.add_format(format["driverformat"]["Reserve"]))
+                rowcursor += 1
+        except KeyError:
+            pass
         
+        try:
+            for driver in driverlist_data[group]["Retired"]:
+                func.logging(logpath, f'Writing driver: {group}-Retired-{driver}')
+                driverlist.write(rowcursor, colcursor, driver, workbook.add_format(format["driverformat"]["Retired"]))
+                rowcursor += 1
+        except KeyError:
+            pass
+
         colcursor += 2
         ### END getting reserve driver ###
 
@@ -162,6 +384,11 @@ def racecalendar(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
     func.logging(logpath, func.delimiter_string("Exporting race calendar", length=60), end="\n\n")
     print(func.delimiter_string("Exporting race calendar", length=60), end="\n\n")
     racecalendar = workbook.add_worksheet("赛程安排")
+
+    # fetching race calendar data
+    racecalendar_data = get_raceCalendar_data(db)
+    func.logging(logpath)
+    print()
 
     # get driver group list
     grouplist = get_drivergrouplist(db)
@@ -185,28 +412,25 @@ def racecalendar(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
         racecalendar.write(1, colcursor+1, "分站", workbook.add_format(format["racecalendar"]["smallheader"]))
         racecalendar.write(1, colcursor+2, "天气", workbook.add_format(format["racecalendar"]["smallheader"]))
 
-        # get the race calendar of this group
-        f = open("bin/get_racecalendar_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
-        cursor.execute(query)
-        result = cursor.fetchall()
-
-        # write the race calendar
+        # writing race calendar
         rowcursor = 2
-        for race in result:
-            func.logging(logpath, f'Writing GP {race[1].strftime("%Y-%m-%d"):<10} {group}-{race[2]}......')
+        for racedate in sorted(list(racecalendar_data[group].keys())):
+            round = racecalendar_data[group][racedate]["Round"]
+            gpchn = racecalendar_data[group][racedate]["GP_CHN"]
+            status = racecalendar_data[group][racedate]["status"]
 
             # setting row height
             racecalendar.set_row(rowcursor, 31)
 
-            # writing content
-            racecalendar.write(rowcursor, colcursor+0, race[1], workbook.add_format(format["racecalendar"][race[5]]))
-            racecalendar.write(rowcursor, colcursor+1, race[2], workbook.add_format(format["racecalendar"][race[5]]))
-            if race[0] != "" and race[0] != None:
-                racecalendar.write(rowcursor, colcursor+2, "动态", workbook.add_format(format["racecalendar"][race[5]]))
+            # wrting content
+            func.logging(logpath, f'Writing GP {racedate.strftime("%Y-%m-%d"):<10} {group}-{gpchn}......')
+            racecalendar.write(rowcursor, colcursor, racedate, workbook.add_format(format["racecalendar"][status]))
+            racecalendar.write(rowcursor, colcursor+1, gpchn, workbook.add_format(format["racecalendar"][status]))
+            if round is not None:
+                racecalendar.write(rowcursor, colcursor+2, "动态", workbook.add_format(format["racecalendar"][status]))
             else:
-                racecalendar.write(rowcursor, colcursor+2, "晴朗", workbook.add_format(format["racecalendar"][race[5]]))
+                racecalendar.write(rowcursor, colcursor+2, "晴朗", workbook.add_format(format["racecalendar"][status]))
+            
             rowcursor += 1
 
         colcursor += 4
@@ -224,14 +448,16 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
     func.logging(logpath, func.delimiter_string("Exporting leaderboard (short)", length=60), end="\n\n")
     print(func.delimiter_string("Exporting leaderboard (short)", length=60), end="\n\n")
 
+    # fetch short leaderboard data
+    shortleaderboard_data = get_shortleaderboard_data(db)
+    func.logging(logpath)
+    print()
+
     # get driver group list
     grouplist = get_drivergrouplist(db)
 
     # preparing variables
     warning_dict = settings["content"]["warning"]
-    warning_key = list(warning_dict.keys())
-    warning_key.sort(reverse=True)
-
     licensepoint_dict = func.get_LPdict(settings["race"]["licensepoint"])
 
     for group in grouplist:
@@ -239,6 +465,8 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
         func.logging(logpath, f'Writing driver leaderboard (short) of {group}......', end="\n\n")
         print(f'Writing driver leaderboard (short) of {group}......')
         
+
+        ### driver leaderboard ###
         # setting header row height and column width
         leaderboard.set_row(0, 31)
         leaderboard.set_column(0,0, 3)
@@ -253,61 +481,70 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
         leaderboard.write(0,3, "Points", workbook.add_format(format["default"]["header_11"]))
         leaderboard.write(0,4, "LP", workbook.add_format(format["default"]["header_11"]))
 
-        # get driverleaderboard (+ licensepoint)
-        f = open("bin/get_leaderboard_short_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
-        func.logging(logpath, f'Fetching driverleaderboard of {group}......')
-        cursor.execute(query)
-        result = cursor.fetchall()
 
-        for i in range(0, len(result)):
-            driver = list(result[i])
-            func.logging(logpath, f'Writing driver: {i+1}-{driver[1]}-{driver[0]}......')
-
+        # writing driver leaderboard data
+        drivers = sorted(shortleaderboard_data[group]["driver"].items(), key=lambda x: -x[1]["totalpoints"])
+        pos = 1
+        for driver in drivers:
+            drivername = driver[0]
+            driver = shortleaderboard_data[group]["driver"][drivername]
+            func.logging(logpath, f"Writing driver: {pos}-{group}-{drivername}......")
+            
             # setting row height
-            leaderboard.set_row(i+1, 18)
+            leaderboard.set_row(pos, 18)
             # writing column header (Pos.)
-            leaderboard.write(i+1, 0, i+1, workbook.add_format(format["default"]["header_11"]))
+            leaderboard.write(pos, 0, pos, workbook.add_format(format["default"]["header_11"]))
 
-            # writing driverleaderboard data
-                # drivername ( + warning appened to front)
-                    # format warning string
-            warning = float(driver[6])
-            warning_string = ""
-            for wkey in warning_key:
+            # drivername (with warning appended in front)
+            # format warning string
+            warning = float(driver["Warning"])
+            warning_str = ""
+            for wkey in sorted(warning_dict.keys(), reverse=True):
                 try:
-                    warning_string += int(warning // float(wkey)) * warning_dict[wkey]
+                    warning_str += int(warning // float(wkey)) * warning_dict[wkey]
                     warning -= int(warning // float(wkey)) * float(wkey)
                 except ZeroDivisionError:
                     continue
             
-                    # write drivername
+            # writing drivername
             try:
                 if settings["drivergroup"]["enable_team"][group] == True:
-                    leaderboard.write(i+1, 1, f'{warning_string}{driver[0]}', workbook.add_format(format["driverformat"][driver[2]]))
+                    leaderboard.write(pos, 1, f'{warning_str}{drivername}',
+                                                workbook.add_format(format["driverformat"][driver["teamcolor"]]))
                 else:
-                    leaderboard.write(i+1, 1, f'{warning_string}{driver[0]}', workbook.add_format(format["driverformat"]["Reserve"]))
+                    leaderboard.write(pos, 1, f'{warning_str}{drivername}',
+                                                workbook.add_format(format["driverformat"]["Reserve"]))
             except KeyError:
-                if driver[1] == "Reserve":
-                    driver[1] = "Reserve_leaderboard"
-                leaderboard.write(i+1, 1, f'{warning_string}{driver[0]}', workbook.add_format(format["driverformat"][driver[1]]))
-                # write totalpoints
-            leaderboard.write(i+1, 3, driver[4], workbook.add_format(format["default"]["header_11"]))
-                # write licensepoint
-            if driver[5] >= 0:
-                leaderboard.write(i+1, 4, driver[5], workbook.add_format(format["pointsformat"][licensepoint_dict[driver[5]]]))
-            else:
-                leaderboard.write(i+1, 4, 0, workbook.add_format(format["pointsformat"][licensepoint_dict[0]]))
-                # write quali/race ban (if driver has)
-            if driver[8] > 0:
-                leaderboard.write(i+1, 5, f'Race to be DSQ x{driver[8]}', workbook.add_format(format["pointsformat"]["trigger"]))
-            elif driver[7] > 0:
-                leaderboard.write(i+1, 5, f'Qualiying to be DSQ x{driver[7]}', workbook.add_format(format["pointsformat"]["trigger"]))
+                if driver["team"] == "Reserve":
+                    driver["team"] = "Reserve_leaderboard"
+                leaderboard.write(pos, 1, f'{warning_str}{drivername}',
+                                                workbook.add_format(format["driverformat"][driver["team"]]))
+            
+
+            # writing totalpoints
+            leaderboard.write(pos, 3, driver["totalpoints"], workbook.add_format(format["default"]["header_11"]))
+            
+            # writing licensepoint
+            leaderboard.write(pos, 4, driver["LP"],
+                                        workbook.add_format(format["pointsformat"][licensepoint_dict[driver["LP"]]]))
+
+            # writing quali/race ban (if driver has)
+            if driver["RB"] > 0:
+                leaderboard.write(pos, 5, f'Race to be DSQ x{driver["RB"]}',
+                                            workbook.add_format(format["pointsformat"]["trigger"]))
+            elif driver["QB"] > 0:
+                leaderboard.write(pos, 5, f'Qualiying to be DSQ x{driver["QB"]}',
+                                            workbook.add_format(format["pointsformat"]["trigger"]))
+
+            pos += 1
 
         func.logging(logpath, end="\n")
         print()
 
+
+
+        ### constructors leaderboard ###
+        # (if teams enabled in the group)
         if settings["drivergroup"]["enable_team"][group] == False:
             func.logging(logpath, f'Team feature has been disabled in drivergroup {group}', end="\n\n")
             continue
@@ -322,28 +559,28 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
         leaderboard.write(0, 8, "Team", workbook.add_format(format["default"]["header_11"]))
         leaderboard.write(0, 10, "Points", workbook.add_format(format["default"]["header_11"]))
 
-        # get constructorleaderboard
-        f = open("bin/get_leaderboard_constructors_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
-        func.logging(logpath, f'Fetching constructorsleaderboard of {group}......')
-        cursor.execute(query)
-        result = cursor.fetchall()
 
-        for i in range(0, len(result)):
-            team = result[i]
-            func.logging(logpath, f'Writing team: {i+1}-{team[1]}-{team[0]}......')
+        # writing constrcutors leaderboard data
+        teams = sorted(shortleaderboard_data[group]["team"].items(), key=lambda x: -x[1]["totalpoints"])
+        pos = 1
+        for team in teams:
+            teamname = team[0]
+            team = shortleaderboard_data[group]["team"][teamname]
+            func.logging(logpath, f'Writing team: {pos}-{group}-{teamname}......')
 
             # setting row height
-            leaderboard.set_row(i+1, 18)
+            leaderboard.set_row(pos, 18)
             # writing column header (Pos.)
-            leaderboard.write(i+1, 7, i+1, workbook.add_format(format["default"]["header_11"]))
+            leaderboard.write(pos, 7, pos, workbook.add_format(format["default"]["header_11"]))
 
-            leaderboard.write(i+1, 8, team[0], workbook.add_format(format["driverformat"][team[-1]]))
-            leaderboard.write(i+1, 10, team[-2], workbook.add_format(format["default"]["header_11"]))
+            # writing teamname
+            leaderboard.write(pos, 8, teamname, workbook.add_format(format["driverformat"][team["teamcolor"]]))
+            # writing totalpoints
+            leaderboard.write(pos, 10, team["totalpoints"], workbook.add_format(format["default"]["header_11"]))
 
-        func.logging(logpath, end="\n\n")
-    
+            pos += 1
+
+
     func.logging(logpath, func.delimiter_string("END leaderboard (short)", length=60), end="\n\n\n\n\n\n")
     print(func.delimiter_string("END leaderboard (short)", length=60), end="\n\n\n\n\n\n")
 
@@ -740,20 +977,16 @@ def racedirector(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
     colcursor += 1
 
 
-    # get race director record
-    f = open("bin/get_racedirector_all.sql", "r")
-    query = f.read()
-    f.close()
-    func.logging(logpath, f'Fetching race director data......\n')
-    print(f'Fetching race director data......\n')
-    cursor.execute(query)
-    result = cursor.fetchall()
+    # fetch race director data
+    racedirector_data = get_raceDirector(db)
+    func.logging(logpath)
+    print()
 
     print(f'Writing race director data......\n')
     rowcursor = 1
-    for i in range(0, len(result)):
+    for i in range(0, len(racedirector_data)):
         rdboard.set_row(rowcursor, 16)
-        record = result[i]
+        record = racedirector_data[i]
 
         func.logging(logpath, f'Writing {record[0]}......')
         rdboard.write(rowcursor, 0, record[0], workbook.add_format(format["default"]["default_11"]))
@@ -850,13 +1083,13 @@ def registlist(db:mysql.connector.MySQLConnection):
         print("正在查找比赛信息......", end="\n\n")
 
         today = datetime.today()
-        # today = datetime(2023, 4, 8, 19, 00, 00)     --- this is for testing ---
+        # today = datetime(2023, 4, 22, 19, 00, 00)     # --- this is for testing --- #
         today_date = today.strftime("%Y-%m-%d")
         today_time = today.strftime("%H:%M")
 
         
         # looking for the race event TODAY
-        query = f'SELECT * FROM raceCalendar \
+        query = f'SELECT * FROM get_raceCalendar \
                 WHERE raceDate = "{today_date}";'
         cursor.execute(query)
         race = cursor.fetchall()
@@ -907,6 +1140,7 @@ def registlist(db:mysql.connector.MySQLConnection):
         # writing header
         reglist.merge_range(0,0, 0,1, f'{race[0][2]}', workbook.add_format(format["default"]["header_11"]))
 
+        
         # writing team column header
         func.logging(logpath, "Writing team column header")
         print("Writing team column header")
@@ -914,34 +1148,33 @@ def registlist(db:mysql.connector.MySQLConnection):
         rowcursor = 1
         colcursor = 0
         teamlist = settings["content"]["teamorder"]
-        for team in teamlist:
-            f = open("bin/get_driverlist_group-team.sql", "r")
-            query = f.read().replace("GROUP", race[0][4]).replace("THETEAM", team)
-            f.close()
-            cursor.execute(query)
-            result = cursor.fetchall()
 
-            reglist.write(rowcursor, colcursor, settings["content"]["codename"][team], workbook.add_format(format["driverformat"][team]))
+        driverlist_data = get_driverlist_data(db)
+        for team in teamlist:
+            reglist.write(rowcursor, colcursor, settings["content"]["codename"][team],
+                                                workbook.add_format(format["driverformat"][team]))
             try:
-                reglist.write(rowcursor+1, colcursor, result[0][2], workbook.add_format(format["driverformat"][team]))
-            except IndexError:
-                reglist.write(rowcursor+1, colcursor, None, workbook.add_format(format["driverformat"][team]))
-            
+                reglist.write(rowcursor+1, colcursor, driverlist_data[race[0][4]][team]["teamname"],
+                                                workbook.add_format(format["driverformat"][team]))
+            except KeyError:
+                reglist.write(rowcursor+1, colcursor, None,
+                                                workbook.add_format(format["driverformat"][team]))
             rowcursor += 2
 
         reglist.write(rowcursor, colcursor, "Race Director", workbook.add_format(format["default"]["default_11"]))
         reglist.write(rowcursor+1, colcursor, "OB", workbook.add_format(format["default"]["default_11"]))
         reglist.write(rowcursor+2, colcursor, "OB", workbook.add_format(format["default"]["default_11"]))
         rowcursor += 4
+        
+
 
         # writing registration data
         func.logging(logpath, "Writing registration data......")
         print("Writing registration data......")
 
-        f = open("bin/get_registration_gp_group.sql", "r")
-        query = f.read().replace("GROUP", race[0][4]).replace("RACE", race[0][3])
-        f.close()
 
+        query = f'SELECT * FROM get_registration \
+                WHERE raceGroup = "{race[0][4]}" AND GP = "{race[0][3]}";'
         cursor.execute(query)
         result = cursor.fetchall()
 
@@ -1041,14 +1274,16 @@ def main(db:mysql.connector.MySQLConnection):
         print(f'Exporting Classification table to file "{filename}"......\n')
         workbook = xlsxwriter.Workbook(filename)
 
+
+
         # writing table
         driverlist(workbook, db)                    # passed
         racecalendar(workbook, db)                  # passed
         leaderboard_short(workbook, db)             # passed
-        leaderboard_driver(workbook, db)            # passed, pole & fl unmarked
-        leaderboard_constructors(workbook, db)      # passed
-        licensepoint(workbook, db)                  # passed
-        # seasonstats(workbook, db)                 # not develop for now   
+        leaderboard_driver(workbook, db)            # new version under development (pause)
+        leaderboard_constructors(workbook, db)      # new version under development (pause)
+        licensepoint(workbook, db)                  # new version under development (pause)
+        # seasonstats(workbook, db)                 # not develop for now
         racedirector(workbook, db)                  # passed
 
         workbook.close()
@@ -1063,7 +1298,7 @@ def main(db:mysql.connector.MySQLConnection):
         print("积分表下载失败，推荐咨询管理员寻求解决......")
 
 
-"""
+#"""
 if __name__ == "__main__":
     main(dbconnect.connect_with_conf("server.json", "db"))
-"""
+#"""
