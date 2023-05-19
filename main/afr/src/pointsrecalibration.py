@@ -516,6 +516,9 @@ def updatedb(db:mysql.connector.MySQLConnection,
     # func.logging(logpath, func.delimiter_string("Updating licensepoint", 50), end="\n\n")
     print("Updating licensepoint......", end="\n\n")
     for driver in licensepoint.keys():
+        if licensepoint[driver]["totalLP"] < 0:
+            licensepoint[driver]["totalLP"] = 0
+
         query = f'UPDATE licensePoint SET '
         for gp in licensepoint[driver]["GP"].keys():
             query += f'{gp} = {licensepoint[driver]["GP"][gp]}, '
