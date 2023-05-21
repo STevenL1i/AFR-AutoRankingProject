@@ -242,3 +242,25 @@ order by registTable.driverGroup asc,
         ELSE 1
         END,
     registTable.registTime asc;
+
+
+create or replace view get_leaderboard_constructors as
+select constructorsLeaderBoard.*, teamList.teamColor
+from constructorsLeaderBoard 
+    left join teamList on constructorsLeaderBoard.team = teamList.teamName
+                        and constructorsLeaderBoard.driverGroup = teamList.driverGroup
+order by totalPoints desc;
+
+
+create or replace view get_leaderboard_driver as
+select driverLeaderBoard.*, teamList.teamColor
+from driverLeaderBoard
+    left join teamList on driverLeaderBoard.team = teamList.teamName
+                      and driverLeaderBoard.driverGroup = teamList.driverGroup
+order by totalPoints desc;
+
+
+create or replace view get_licensepoint as
+select * from licensePoint;
+
+
