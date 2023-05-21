@@ -1,0 +1,700 @@
+{
+    "driverformat": {
+        "Mercedes AMG": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#33CCCC",
+            "valign": "vcenter"
+        },
+        "Red Bull Racing": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#0070C0",
+            "valign": "vcenter"
+        },
+        "Ferrari": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "valign": "vcenter"
+        },
+        "McLaren": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FFC000",
+            "valign": "vcenter"
+        },
+        "Alpine": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF66B2",
+            "valign": "vcenter"
+        },
+        "Alpha Tauri": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00B0F0",
+            "valign": "vcenter"
+        },
+        "Aston Martin": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#006633",
+            "valign": "vcenter"
+        },
+        "Williams": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#666699",
+            "valign": "vcenter"
+        },
+        "Alfa Romeo": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#800000",
+            "valign": "vcenter"
+        },
+        "Haas": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#BFBFBF",
+            "valign": "vcenter"
+        },
+        "Reserve": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "valign": "vcenter"
+        },
+        "Retired": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "valign": "vcenter"
+        },
+        "Reserve_leaderboard": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "valign": "vcenter"
+        },
+        "A1": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FFFF00",
+            "valign": "vcenter"
+        },
+        "A2": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#E26B0A",
+            "valign": "vcenter"
+        },
+        "A3": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00FF00",
+            "valign": "vcenter"
+        }
+    },
+
+    "teamformat": {
+        "Mercedes AMG": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#33CCCC",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Red Bull Racing": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#0070C0",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Ferrari": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "McLaren": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FFC000",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Alpine": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF66B2",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Alpha Tauri": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00B0F0",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Aston Martin": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#006633",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Williams": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#666699",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Alfa Romeo": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#800000",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "Haas": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#BFBFBF",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "A1": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FFFF00",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "A2": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#E26B0A",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "A3": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00FF00",
+            "align": "center",
+            "valign": "vcenter"
+        }
+    },
+
+    "registformat": {
+        "reserved": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00FF00",
+            "valign": "vcenter"
+        },
+        "crossgroup": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#E26B0A",
+            "valign": "vcenter"
+        },
+        "qb": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "valign": "vcenter"
+        },
+        "rb": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "valign": "vcenter"
+        }
+    },
+
+    "racecalendar": {
+        "bigheader": {
+            "font_size": 26,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "smallheader": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "TO BE GO": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "num_format": "yyyy/m/dd",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "ON GOING": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "bg_color": "#3399FF",
+            "num_format": "yyyy/m/dd",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "FINISHED": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "bg_color": "#00FF00",
+            "num_format": "yyyy/m/dd",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "CANCELLED": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "num_format": "yyyy/m/dd",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "SEASON BREAK": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "bg_color": "#FFFF00",
+            "num_format": "yyyy/m/dd",
+            "align": "center",
+            "valign": "vcenter"
+        }
+    },
+
+    "pointsformat": {
+        "P1": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#FFFF00",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "P2": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#EEECE1",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "P3": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#FFC000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "points": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#00B050",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "outpoint": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#538DD5",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "retired": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#7030A0",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "dnf": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#7030A0",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "dsq": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#FF0000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "dns": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#A6A6A6",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "dna": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "align": "center",
+            "valign": "vcenter"
+        },
+
+
+
+        "excellent": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#00FF00",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "good": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#92D050",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "poor": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#FFFF00",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "danger": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "bg_color": "#FF0000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "trigger": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        }
+    },
+
+    "raceresultformat": {
+        "puredata": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "text_wrap": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "laptimeformat": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "num_format": "m:ss.000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "S": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "M": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FFFF00",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "H": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "I": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00B050",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "W": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#0070C0",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "FINISHED": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "QB": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "RET": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#7030A0",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "DNF": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "DNS": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "DSQ": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "posup": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#00FF00",
+            "text_wrap": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "poshold": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "text_wrap": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "posdown": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#FF0000",
+            "text_wrap": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "flLabel": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bg_color": "#7030A0",
+            "text_wrap": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "validationLabel": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#FFFFFF",
+            "bg_color": "#000000",
+            "text_wrap": true,
+            "align": "center",
+            "valign": "vcenter"
+        }
+    },
+
+    "LANusername": {
+        "ACTIVE": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "STANDBY FOR ADDING": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#FFFF00",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "STANDBY FOR CHECKING": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#9933FF",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "DISABLED": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#FF0000",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "RACE COORDINATOR": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "bg_color": "#00FF00",
+            "text_wrap": true,
+            "valign": "vcenter"
+        },
+        "DEFAULT": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "text_wrap": true,
+            "valign": "vcenter"
+        }
+    },
+
+    "default": {
+        "header_11": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "header_11_bold": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "default_11": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "valign": "vcenter"
+        },
+        "default_11_bold": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "default_11_date": {
+            "font_size": 11,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "num_format": "yyyy/mm/dd",
+            "valign": "vcenter"
+        },
+        "header_12": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "header_12_bold": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "default_12": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "valign": "vcenter"
+        },
+        "default_12_bold": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "valign": "vcenter"
+        },
+        "header_16": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
+        "header_26_bold": {
+            "font_size": 26,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "bold": true,
+            "align": "center",
+            "valign": "vcenter"
+        }
+    }
+}
