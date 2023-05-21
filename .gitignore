@@ -3,3 +3,5 @@
 *.xlsx
 *.log
 *.pyc
+main/afr/src/server.json
+main/afr/dbmanager/server.json
