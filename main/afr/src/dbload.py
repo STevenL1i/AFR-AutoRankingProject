@@ -11,9 +11,9 @@ except Exception:
 cursor = db.cursor()
 
 
-with open("loadingconfig.json") as config:
-    loadingsetup = json.load(config)
-    item = loadingsetup.keys()
+settingsf = open("settings/settings.json", "r", encoding='utf-8')
+settings:dict = json.load(settingsf)
+settingsf.close()
 
 
 
@@ -30,10 +30,10 @@ def dbload_basic():
     func.logging(logpath, "initializing race calendar......")
     print("initializing race calendar......\n")
     try:
-        filename = loadingsetup["raceCalendar"]
+        filename = settings["dbmanager"]["loadingconfig"]["raceCalendar"]
         if filename == 0:
             raise AttributeError("race calendar missing, this must be initialized when started")
-        filepath = "srcdata_input/" + filename
+        filepath = filename
         race = open(filepath, "r", encoding='utf-8')
         reader = csv.DictReader(race)
 
@@ -67,10 +67,10 @@ def dbload_basic():
     
     # upload constructor leader board
     try:
-        filename = loadingsetup["constructorsLeaderBoard"]
+        filename = settings["dbmanager"]["loadingconfig"]["constructorsLeaderBoard"]
         if filename == 0:
             raise AttributeError("User choose not to initialize constructors leaderboard")
-        filepath = "srcdata_input/" + filename
+        filepath = filename
         driver = open(filepath, "r")
         reader = csv.DictReader(driver)
 
@@ -99,10 +99,10 @@ def dbload_basic():
 
     # upload LAN account (optional)
     try:
-        filename = loadingsetup["LANusername"]
+        filename = settings["dbmanager"]["loadingconfig"]["LANusername"]
         if filename == 0:
             raise AttributeError("User choose not to initialize LANusername table")
-        filepath = "srcdata_input/" + filename
+        filepath = filename
         driver = open(filepath, "r")
         reader = csv.DictReader(driver)
 
@@ -177,9 +177,7 @@ def dbInitialize():
     
 
     # loading gpdict
-    gp = open("gp.json", "r")
-    gpdict = json.load(gp)
-    gp.close()
+    gpdict = settings["content"]["gp"]
     for race in result:
         race = list(race)
         gpkey = func.get_key(gpdict, race[2])
@@ -226,8 +224,9 @@ def dbInitialize():
 
 def dbload():
     # LANusername
-    filepath = "srcdata_input/" + loadingsetup["LANusername"]
-    if filepath != 0:
+    filename = settings["dbmanager"]["loadingconfig"]["LANusername"]
+    if filename != 0:
+        filepath = filename
         with open(filepath, "r") as lanacct:
             reader = csv.DictReader(lanacct)
 

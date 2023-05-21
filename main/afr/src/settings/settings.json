@@ -143,5 +143,13 @@
             "Alfa Romeo": "阿尔法罗密欧",
             "Haas": "哈斯"
         }
+    },
+
+    "dbmanager": {
+        "loadingconfig": {
+            "raceCalendar": "settings/Preseason_racecalendar_winver.csv",
+            "constructorsLeaderBoard": 0,
+            "LANusername": 0
+        }
     }
 }
