@@ -1,9 +1,0 @@
-{
-    "host": "43.128.56.235",
-    "port": "3306",
-    "user": "StevenLi",
-    "password": "ABC@1120ab",
-    "afr": "afr_s9",
-    "afec": "afec_s1",
-    "elo": "default"
-}
