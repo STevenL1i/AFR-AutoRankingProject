@@ -513,6 +513,13 @@
             "align": "center",
             "valign": "vcenter"
         },
+        "DNS": {
+            "font_size": 12,
+            "font_name": "Dengxian",
+            "font_color": "#000000",
+            "align": "center",
+            "valign": "vcenter"
+        },
         "DSQ": {
             "font_size": 12,
             "font_name": "Dengxian",

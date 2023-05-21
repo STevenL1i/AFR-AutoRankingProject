@@ -1,6 +1,6 @@
 AFR Auto Ranking Project
 
-CURRENT VERSION:            v8.0
+CURRENT VERSION:            v8.1
 UNDER DEVELOPMENT:          v8.1
 SPECIAL VERSION:            v6.01.1 (SVS发展联盟)
 

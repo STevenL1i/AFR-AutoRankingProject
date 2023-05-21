@@ -1,8 +1,8 @@
-import os, json, datetime, traceback
+import os, json, datetime, traceback, time
 import deffunc as func
 import dbconnect
 serverconfig = "server.json"
-VERSION = "AFR v8.1 (beta)"
+VERSION = "AFR v8.1"
 
 settingsf = open("settings/settings.json", "r", encoding='utf-8')
 settings:dict = json.load(settingsf)
@@ -218,7 +218,7 @@ def main():
 
             if choice == '11':
                 print()
-                print("你选择了“下载最新积分统计表”")
+                print("你选择了“下载最新成绩统计表”")
                 test = input("请按Enter以下载最新积分榜，输入q回到上一级，输入Q回到主菜单 ")
                 if test == 'q':
                     continue
