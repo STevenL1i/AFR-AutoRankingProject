@@ -612,9 +612,7 @@ def leaderboard_driver(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCon
         leaderboard.write(0,1, "Driver", workbook.add_format(format["default"]["header_11"]))
 
             # writing flag header, and setting column width based on race calendar
-        f = open("bin/get_racecalendar_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
+        query = f'SELECT * FROM get_raceCalendar WHERE driverGroup = "{group}";'
         cursor.execute(query)
         result = cursor.fetchall()
         colcursor = 2
@@ -635,9 +633,8 @@ def leaderboard_driver(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCon
 
 
         # get full driver leaderboard
-        f = open("bin/get_leaderboard_driver_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
+        query = f'SELECT * FROM get_leaderboard_driver \
+                WHERE driverGroup = "{group}";'
         cursor.execute(query)
         func.logging(logpath, f'Fetching driverleaderboard of {group}......')
         result = cursor.fetchall()
@@ -765,9 +762,7 @@ def leaderboard_constructors(workbook:xlsxwriter.Workbook, db:mysql.connector.My
         leaderboard.write(0,1, "Team", workbook.add_format(format["default"]["header_11"]))
 
             # writing flag header, and setting column width based on race calendar
-        f = open("bin/get_racecalendar_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
+        query = f'SELECT * FROM get_raceCalendar WHERE driverGroup = "{group}";'
         cursor.execute(query)
         func.logging(logpath, f'Fetching constructorsleaderboard of {group}......')
         result = cursor.fetchall()
@@ -789,9 +784,8 @@ def leaderboard_constructors(workbook:xlsxwriter.Workbook, db:mysql.connector.My
 
 
         # get full constructors leaderboard
-        f = open("bin/get_leaderboard_constructors_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
+        query = f'SELECT * FROM get_leaderboard_constructors \
+                WHERE driverGroup = "{group}";'
         cursor.execute(query)
         result = cursor.fetchall()
 
@@ -869,9 +863,7 @@ def licensepoint(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
         lpboard.write(0,1, "Driver", workbook.add_format(format["default"]["header_11"]))
 
             # writing flag header, and setting column width based on race calendar
-        f = open("bin/get_racecalendar_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
+        query = f'SELECT * FROM get_raceCalendar WHERE driverGroup = "{group}";'
         cursor.execute(query)
         result = cursor.fetchall()
         colcursor = 2
@@ -891,9 +883,7 @@ def licensepoint(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConnectio
         lpboard.write(0, colcursor, "Points", workbook.add_format(format["default"]["header_11"]))
 
         # get full license point
-        f = open("bin/get_licensepoint_group.sql", "r")
-        query = f.read().replace("GROUP", group)
-        f.close()
+        query = f'SELECT * FROM get_licensepoint WHERE driverGroup = "{group}";'
         func.logging(logpath, f'Fetching license point of {group}......')
         cursor.execute(query)
         result = cursor.fetchall()
@@ -1139,6 +1129,8 @@ def registlist(db:mysql.connector.MySQLConnection):
         
         # writing header
         reglist.merge_range(0,0, 0,1, f'{race[0][2]}', workbook.add_format(format["default"]["header_11"]))
+        reglist.write(0,2, "server", workbook.add_format(format["default"]["header_11"]))
+
 
         
         # writing team column header
@@ -1298,7 +1290,7 @@ def main(db:mysql.connector.MySQLConnection):
         print("积分表下载失败，推荐咨询管理员寻求解决......")
 
 
-#"""
+"""
 if __name__ == "__main__":
     main(dbconnect.connect_with_conf("server.json", "db"))
-#"""
+"""
