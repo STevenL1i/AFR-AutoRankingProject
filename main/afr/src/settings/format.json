@@ -284,6 +284,15 @@
             "align": "center",
             "valign": "vcenter"
         },
+        "ON REGIST": {
+            "font_size": 16,
+            "font_name": "黑体",
+            "font_color": "#000000",
+            "bg_color": "#3399FF",
+            "num_format": "yyyy/m/dd",
+            "align": "center",
+            "valign": "vcenter"
+        },
         "FINISHED": {
             "font_size": 16,
             "font_name": "黑体",

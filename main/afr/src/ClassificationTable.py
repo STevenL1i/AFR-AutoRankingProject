@@ -1229,7 +1229,8 @@ def main(db:mysql.connector.MySQLConnection):
         # get latest race date
         today = datetime.today().strftime('%Y-%m-%d')
         query = f'SELECT GP_CHN, raceDate FROM raceCalendar \
-                WHERE raceStatus = "ON GOING" OR raceDate = {today} \
+                WHERE raceStatus = "ON GOING" OR raceStatus = "ON REGIST" \
+                   OR raceDate = {today} \
                 ORDER BY raceDate ASC;'
         cursor.execute(query)
         result = cursor.fetchall()
