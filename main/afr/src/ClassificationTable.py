@@ -1227,7 +1227,13 @@ def radiolist(db:mysql.connector.MySQLConnection):
         lot = {"radiolot": [], "blacklistlot": [], "deletelot": []}
         
         while True:
-            randindex = random.randint(0, len(radiolist)-1)
+            try:
+                randindex = random.randint(0, len(radiolist)-1)
+            except ValueError:
+                print("本轮歌单池已循环完毕，若需继续则需要重新开始")
+                print("记住先保存本轮抽取歌单，新开始的抽签会直接覆盖先前已导出的歌单")
+                break
+
             song = radiolist[randindex]
             print(f'歌曲： {song[1]}')
             print(f'歌手： {song[2]}')
@@ -1262,6 +1268,7 @@ def radiolist(db:mysql.connector.MySQLConnection):
             print()
 
 
+        """
         # writing radio list to csv file
         print("正在导出今日歌单......")
         radiof = open(f'AFR今日比赛歌单 {datetime.today().strftime("%m.%d")}.csv', "w", newline="", encoding="utf-8")
@@ -1273,6 +1280,32 @@ def radiolist(db:mysql.connector.MySQLConnection):
                                 "专辑": song[3], "链接": song[4]})
 
         radiof.close()
+        """
+
+        # writing radio list to xlsx file
+        print("正在导出今日歌单......")
+        workbook = xlsxwriter.Workbook(f'AFR今日比赛歌单 {datetime.today().strftime("%m.%d")}.xlsx')
+        defaultformat = workbook.add_format({"font_size":11})
+        defaultformat.set_font_name("Dengxian")
+        defaultformat.set_align("vcenter")
+        defaultformat.set_text_wrap()
+        # making xlsx sheet
+        worksheet = workbook.add_worksheet("radiolist")
+        worksheet.set_column(0,3, 20)
+        worksheet.set_column(4,4, 60)
+
+        # writing header
+        header = ["点歌车手", "歌曲", "歌手", "专辑", "链接"]
+        for i in range(len(header)):
+            worksheet.write(0, i, header[i], defaultformat)
+        
+        rowcursor = 1
+        for song in lot["radiolot"]:
+            for i in range(0,5):
+                worksheet.write(rowcursor, i, song[i], defaultformat)
+            rowcursor += 1
+
+        workbook.close()
 
         
         print("正在更新数据库歌单信息......")
@@ -1320,7 +1353,7 @@ def radiolist(db:mysql.connector.MySQLConnection):
         func.logging(logpath, traceback.format_exc())
         func.logging(logpath, "Error: " + str(e), end="\n\n")
         print("错误提示：" + str(e))
-        print("今日比赛报名表下载失败，推荐咨询管理员寻求解决......")
+        print("今日歌单抽签失败，推荐咨询管理员寻求解决......")
 
 
 
