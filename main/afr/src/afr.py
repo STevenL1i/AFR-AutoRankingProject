@@ -61,7 +61,8 @@ def main():
                 "上传新车手", "上传新车队", "上传转会记录",
                 "更新比赛状态", "更新比赛数据", "校准积分", 
                 "下载最新积分统计表", "下载最新比赛结算表",
-                "下载报名统计表", "下载LAN账号列表", "查看教程文档"]
+                "下载报名统计表", "下载LAN账号列表", "赛前点歌台",
+                "查看教程文档"]
         for i in range(0,len(menu)):
             print(f'{i+1}.{menu[i]}')
         print()
@@ -258,10 +259,26 @@ def main():
                 print()
                 input("请按Enter回到主菜单\n")
                 continue
-            
+
 
 
             elif choice == '14':
+                print()
+                print("你选择了“下载赛前电台歌单”")
+                test = input("请按Enter以开始电台歌单抽签，输入q回到上一级，输入Q回到主菜单 ")
+                if test == 'q':
+                    continue
+                elif test == 'Q':
+                    break
+                print()
+                ClassificationTable.radiolist(db)
+                print()
+                input("请按Enter回到主菜单\n")
+                continue
+
+
+
+            elif choice == '15':
                 print("功能仍在开发中......请暂时手动打开文档阅读\n")
                 input("请按Enter回到主菜单\n")
                 continue

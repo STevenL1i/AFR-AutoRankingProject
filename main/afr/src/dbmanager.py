@@ -70,7 +70,7 @@ def dbdelete():
 
 
 def dbinitialize():
-    fd = open("dbcreate.sql", "r")
+    fd = open("dbinit/dbcreate.sql", "r")
     query = fd.read()
     fd.close()
     query = query.split(";")
@@ -95,7 +95,7 @@ def dbload():
 
 
 def dbclear():
-    fd = open("dbclear.sql", "r")
+    fd = open("dbinit/dbclear.sql", "r")
     query = fd.read()
     fd.close()
     query = query.split(";")
@@ -109,7 +109,7 @@ def dbclear():
 
 
 def dbdrop():
-    fd = open("dbdrop.sql", "r")
+    fd = open("dbinit/dbdrop.sql", "r")
     query = fd.read()
     fd.close()
     query = query.split(";")
@@ -129,7 +129,7 @@ def dbdrop():
 
 def main():
     while True:
-        print("AFR Automation Table manager (AFR Version v7.0)")
+        print(f'AFR Automation Table manager ({VERSION})')
         print()
         print("1.initialize database")
         print("2.load database (undeveloped, don't use)")

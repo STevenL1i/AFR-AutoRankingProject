@@ -3,4 +3,6 @@
 *.xlsx
 *.log
 *.pyc
+test.py
+test_ui.py
 server.json

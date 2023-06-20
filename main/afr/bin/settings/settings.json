@@ -1,0 +1,155 @@
+{
+    "default": {
+        "leaguename": "AFR",
+        "seasonname": "S11",
+        "log": "log/log.log",
+        "DEBUG_MODE": true
+    },
+
+    "race": {
+        "points": {
+            "1": 25,
+            "2": 18,
+            "3": 15,
+            "4": 12,
+            "5": 10,
+            "6": 8,
+            "7": 6,
+            "8": 4,
+            "9": 2,
+            "10": 1,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "-1": 0,
+            "-2": 0,
+            "-3": 0,
+            "-4": 0,
+            "None": 0
+        },
+
+        "licensepoint": {
+            "12": "FULL",
+            "11": "excellent",
+            "7": "good",
+            "4": "poor",
+            "1": "danger",
+            "0": "trigger"
+        }
+    },
+
+    "drivergroup": {
+        "order": ["A1","A2","A3"],
+        "enable_team": {
+            "A1": true,
+            "A2": true,
+            "A3": false
+        }
+    },
+
+    "content": {
+        "teamorder": [
+            "Mercedes AMG",
+            "Red Bull Racing",
+            "Ferrari",
+            "McLaren",
+            "Alpine",
+            "Alpha Tauri",
+            "Aston Martin",
+            "Williams",
+            "Alfa Romeo",
+            "Haas"
+        ],
+        "flags": {
+            "Australia" : "flags/Australia.png",
+            "Bahrain" : "flags/Bahrain.png",
+            "Vietnam" : "flags/Vietnam.png",
+            "China" : "flags/China.png",
+            "Netherlands" : "flags/Netherlands.png",
+            "Spain" : "flags/Spain.png",
+            "Monaco" : "flags/Monaco.png",
+            "Azerbaijan" : "flags/Azerbaijan.png",
+            "Canada" : "flags/Canada.png",
+            "France" : "flags/France.png",
+            "Austria" : "flags/Austria.png",
+            "Britain" : "flags/Britain.png",
+            "Hungary" : "flags/Hungary.png",
+            "Belgium" : "flags/Belgium.png",
+            "Italy" : "flags/Italy.png",
+            "Singapore" : "flags/Singapore.png",
+            "Russia" : "flags/Russia.png",
+            "Japan" : "flags/Japan.png",
+            "USA" : "flags/USA.png",
+            "Mexico" : "flags/Mexico.png",
+            "Brazil" : "flags/Brazil.png",
+            "Abu Dhabi" : "flags/Abu Dhabi.png",
+            "San Marino" : "flags/San Marino.png",
+            "Portugal" : "flags/Portugal.png",
+            "Saudi Arabia": "flags/Saudi Arabia.png",
+            "Miami": "flags/Miami.png"
+        },
+        "gp": {
+            "AUS": "Australia",
+            "BHR": "Bahrain",
+            "VNM": "Vietnam",
+            "CHN": "China",
+            "NLD": "Netherlands",
+            "ESP": "Spain",
+            "MCO": "Monaco",
+            "AZE": "Azerbaijan",
+            "CAN": "Canada",
+            "FRA": "France",
+            "AUT": "Austria",
+            "GBR": "Britain",
+            "HUN": "Hungary",
+            "BEL": "Belgium",
+            "ITA": "Italy",
+            "SGP": "Singapore",
+            "RUS": "Russia",
+            "JPN": "Japan",
+            "USA": "USA",
+            "MEX": "Mexico",
+            "BRA": "Brazil",
+            "UAE": "Abu Dhabi",
+            "SMR": "San Marino",
+            "PRT": "Portugal",
+            "SAU": "Saudi Arabia",
+            "MIA": "Miami"
+        },
+        "warning": {
+            "0.5": "△",
+            "1": "☆",
+            "2": "★"
+        },
+        "codename": {
+            "A1": "Champions League",
+            "A2": "Challenger League",
+            "A3": "Amateur League",
+            "Mercedes AMG": "梅赛德斯AMG",
+            "Red Bull Racing": "红牛",
+            "Ferrari": "法拉利",
+            "McLaren": "迈凯伦",
+            "Alpine": "雷诺",
+            "Alpha Tauri": "小红牛",
+            "Aston Martin": "阿斯顿马丁",
+            "Williams": "威廉姆斯",
+            "Alfa Romeo": "阿尔法罗密欧",
+            "Haas": "哈斯"
+        }
+    },
+
+    "dbmanager": {
+        "loadingconfig": {
+            "raceCalendar": "settings/Preseason_racecalendar_winver.csv",
+            "constructorsLeaderBoard": 0,
+            "LANusername": 0
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import json, traceback, xlsxwriter
+import random, csv, json, traceback, xlsxwriter
 from datetime import datetime
 
 import mysql.connector
@@ -1213,9 +1213,119 @@ def registlist(db:mysql.connector.MySQLConnection):
         print("今日比赛报名表下载失败，推荐咨询管理员寻求解决......")
 
 
-    
 
-    
+def radiolist(db:mysql.connector.MySQLConnection):
+    try:
+        cursor = db.cursor()
+
+        query = "SELECT * FROM afr_db.radio \
+                WHERE timesplayed = (SELECT MIN(timesplayed) FROM afr_db.radio) \
+                ORDER BY lastplayed ASC, orderdate ASC;"
+        cursor.execute(query)
+        radiolist:list = cursor.fetchall()
+
+        lot = {"radiolot": [], "blacklistlot": [], "deletelot": []}
+        
+        while True:
+            randindex = random.randint(0, len(radiolist)-1)
+            song = radiolist[randindex]
+            print(f'歌曲： {song[1]}')
+            print(f'歌手： {song[2]}')
+            print(f'专辑： {song[3]}')
+            print(f'点播： {song[0]}')
+            choice = input("1.选\t2.跳\t3.删\t4.黑\t:")
+            if choice == "1":
+                lot["radiolot"].append(song)
+                radiolist.pop(randindex)
+                print(f'song added: "{song[1]}"')
+            elif choice == "2":
+                print(f'song skiped: "{song[1]}"')
+            elif choice == "3":
+                lot["deletelot"].append(song)
+                radiolist.pop(randindex)
+                print(f'song deleted: "{song[1]}"')
+            elif choice == "4":
+                lot["blacklistlot"].append(song[0])
+                lot["deletelot"].append(song)
+                print(f'blacklist added: "{song[0]}"')
+            else:
+                print("no action selected......")
+
+
+            choice = input("任意键继续，输入q结束，输入r重新开始: ")
+            if choice == "q" or choice == "Q":
+                break
+            elif choice == "r" or choice == "R":
+                radiolist += tuple(lot["radiolot"]) + tuple(lot["deletelot"])
+                lot = {"radiolot": [], "blacklistlot": [], "deletelot": []}
+            
+            print()
+
+
+        # writing radio list to csv file
+        print("正在导出今日歌单......")
+        radiof = open(f'AFR今日比赛歌单 {datetime.today().strftime("%m.%d")}.csv', "w", newline="", encoding="utf-8")
+        header = ["点歌车手", "歌曲", "歌手", "专辑", "链接"]
+        writer = csv.DictWriter(radiof, fieldnames=header)
+        writer.writeheader()
+        for song in lot["radiolot"]:
+            writer.writerow({"点歌车手": song[0], "歌曲": song[1], "歌手": song[2],
+                                "专辑": song[3], "链接": song[4]})
+
+        radiof.close()
+
+        
+        print("正在更新数据库歌单信息......")
+        # update database (selected song)
+        for song in lot["radiolot"]:
+            query = f'UPDATE afr_db.radio \
+                    SET timesplayed = timesplayed + 1, \
+                        lastplayed = "{datetime.today().strftime("%Y-%m-%d %H:%M")}" \
+                    WHERE driverName = "{song[0]}" AND songname = "{song[1]}" \
+                        AND artist = "{song[2]}" AND album = "{song[3]}" \
+                        AND link = "{song[4]}";'
+            cursor.execute(query)
+            db.commit()
+        
+        # update database (deleted song)
+        for song in lot["deletelot"]:
+            query = f'DELETE FROM afr_db.radio \
+                    WHERE driverName = "{song[0]}" AND songname = "{song[1]}" \
+                        AND artist = "{song[2]}" AND album = "{song[3]}" \
+                        AND link = "{song[4]}";'
+            cursor.execute(query)
+            db.commit()
+
+        # update database (blacklist)
+        for driver in lot["blacklistlot"]:
+            query = "INSERT INTO afr_db.Blacklist VALUES (%s, %s, %s, %s, %s);"
+            val = (driver, "radio ban", json.dumps({"driverid": driver}),
+                    datetime.today().strftime("%Y-%m-%d"), "radio ban")
+            cursor.execute(query, val)
+
+            query = f'DELETE FROM afr_db.radio \
+                    WHERE driverName = "{driver}";'
+            cursor.execute(query)
+            db.commit()
+
+        
+
+
+
+
+
+
+
+    except Exception as e:
+        func.logging(logpath, traceback.format_exc())
+        func.logging(logpath, "Error: " + str(e), end="\n\n")
+        print("错误提示：" + str(e))
+        print("今日比赛报名表下载失败，推荐咨询管理员寻求解决......")
+
+
+
+
+
 
 
 def main(db:mysql.connector.MySQLConnection):
