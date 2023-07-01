@@ -38,7 +38,10 @@ def dbload_basic():
         reader = csv.DictReader(race)
 
         for row in reader:
-            round = row.get("Round")
+            try:
+                round = int(row.get("Round"))
+            except ValueError:
+                round = None
             racedate = row.get("raceDate")
             gpchn = row.get("GP_CHN")
             gpeng = row.get("GP_ENG")

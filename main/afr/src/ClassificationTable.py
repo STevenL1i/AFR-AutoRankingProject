@@ -483,7 +483,10 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
 
 
         # writing driver leaderboard data
-        drivers = sorted(shortleaderboard_data[group]["driver"].items(), key=lambda x: -x[1]["totalpoints"])
+        try:
+            drivers = sorted(shortleaderboard_data[group]["driver"].items(), key=lambda x: -x[1]["totalpoints"])
+        except KeyError:
+            drivers = []
         pos = 1
         for driver in drivers:
             drivername = driver[0]
@@ -561,7 +564,10 @@ def leaderboard_short(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLConn
 
 
         # writing constrcutors leaderboard data
-        teams = sorted(shortleaderboard_data[group]["team"].items(), key=lambda x: -x[1]["totalpoints"])
+        try:
+            teams = sorted(shortleaderboard_data[group]["team"].items(), key=lambda x: -x[1]["totalpoints"])
+        except KeyError:
+            teams = []
         pos = 1
         for team in teams:
             teamname = team[0]
