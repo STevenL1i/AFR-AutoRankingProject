@@ -40,7 +40,7 @@ def dbload_basic():
         for row in reader:
             try:
                 round = int(row.get("Round"))
-            except ValueError:
+            except (ValueError, TypeError):
                 round = None
             racedate = row.get("raceDate")
             gpchn = row.get("GP_CHN")
