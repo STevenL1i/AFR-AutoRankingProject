@@ -1,70 +1,67 @@
-Round,raceDate,GP_CHN,GP_ENG,driverGroup,raceStatus
-1,2023/2/12,澳大利亚,Australia,A1,TO BE GO
-2,2023/2/19,沙特,Saudi Arabia,A1,TO BE GO
-3,2023/2/26,圣马力诺,San Marino,A1,TO BE GO
-,2023/3/5,春歇,Spring Break,A1,SEASON BREAK
-4,2023/3/12,迈阿密,Miami,A1,TO BE GO
-5,2023/3/19,阿塞拜疆,Azerbaijan,A1,TO BE GO
-6,2023/3/25,加拿大,Canada,A1,TO BE GO
-,2023/4/1,春歇,Spring Break,A1,SEASON BREAK
-7,2023/4/8,法国,France,A1,TO BE GO
-8,2023/4/15,奥地利,Austria,A1,TO BE GO
-9,2023/4/22,英国,Britain,A1,TO BE GO
-,2023/4/29,五一,Labours Day,A1,SEASON BREAK
-,2023/5/6,五一,Labours Day,A1,SEASON BREAK
-10,2023/5/13,匈牙利,Hungary,A1,TO BE GO
-11,2023/5/20,比利时,Belgium,A1,TO BE GO
-12,2023/5/27,意大利,Italy,A1,TO BE GO
-,2023/6/3,夏休,Sumber Break,A1,SEASON BREAK
-13,2023/6/10,新加坡,Singapore,A1,TO BE GO
-14,2023/6/17,日本,Japan,A1,TO BE GO
-,2023/6/24,端午,DB Fest.,A1,SEASON BREAK
-15,2023/7/1,墨西哥,Mexico,A1,TO BE GO
-16,2023/7/8,阿布扎比,Abu Dhabi,A1,TO BE GO
-17,2023/7/15,巴西,Brazil,A1,TO BE GO
-1,2023/2/11,澳大利亚,Australia,A2,TO BE GO
-2,2023/2/18,沙特,Saudi Arabia,A2,TO BE GO
-3,2023/2/25,圣马力诺,San Marino,A2,TO BE GO
-,2023/3/4,春歇,Spring Break,A2,SEASON BREAK
-4,2023/3/11,迈阿密,Miami,A2,TO BE GO
-5,2023/3/18,阿塞拜疆,Azerbaijan,A2,TO BE GO
-6,2023/3/24,加拿大,Canada,A2,TO BE GO
-,2023/3/31,春歇,晴朗,A2,SEASON BREAK
-7,2023/4/7,法国,France,A2,TO BE GO
-8,2023/4/14,奥地利,Austria,A2,TO BE GO
-9,2023/4/21,英国,Britain,A2,TO BE GO
-,2023/4/28,五一,晴朗,A2,SEASON BREAK
-,2023/5/5,五一,晴朗,A2,SEASON BREAK
-10,2023/5/12,匈牙利,Hungary,A2,TO BE GO
-11,2023/5/19,比利时,Belgium,A2,TO BE GO
-12,2023/5/26,意大利,Italy,A2,TO BE GO
-,2023/6/2,夏休,晴朗,A2,SEASON BREAK
-13,2023/6/9,新加坡,Singapore,A2,TO BE GO
-14,2023/6/16,日本,Japan,A2,TO BE GO
-,2023/6/23,端午,晴朗,A2,SEASON BREAK
-15,2023/6/30,墨西哥,Mexico,A2,TO BE GO
-16,2023/7/7,阿布扎比,Abu Dhabi,A2,TO BE GO
-17,2023/7/14,巴西,Brazil,A2,TO BE GO
-1,2023/2/10,澳大利亚,Australia,A3,TO BE GO
-2,2023/2/17,沙特,Saudi Arabia,A3,TO BE GO
-3,2023/2/24,圣马力诺,San Marino,A3,TO BE GO
-,2023/3/3,春歇,Spring Break,A3,SEASON BREAK
-4,2023/3/10,迈阿密,Miami,A3,TO BE GO
-5,2023/3/17,阿塞拜疆,Azerbaijan,A3,TO BE GO
-6,2023/3/26,加拿大,Canada,A3,TO BE GO
-,2023/4/2,春歇,晴朗,A3,SEASON BREAK
-7,2023/4/9,法国,France,A3,TO BE GO
-8,2023/4/16,奥地利,Austria,A3,TO BE GO
-9,2023/4/23,英国,Britain,A3,TO BE GO
-,2023/4/30,五一,晴朗,A3,SEASON BREAK
-,2023/5/7,五一,晴朗,A3,SEASON BREAK
-10,2023/5/14,匈牙利,Hungary,A3,TO BE GO
-11,2023/5/21,比利时,Belgium,A3,TO BE GO
-12,2023/5/28,意大利,Italy,A3,TO BE GO
-,2023/6/4,夏休,晴朗,A3,SEASON BREAK
-13,2023/6/11,新加坡,Singapore,A3,TO BE GO
-14,2023/6/18,日本,Japan,A3,TO BE GO
-,2023/6/25,端午,晴朗,A3,SEASON BREAK
-15,2023/7/2,墨西哥,Mexico,A3,TO BE GO
-16,2023/7/9,阿布扎比,Abu Dhabi,A3,TO BE GO
-17,2023/7/16,巴西,Brazil,A3,TO BE GO
+﻿Round,raceDate,GP_CHN,GP_ENG,driverGroup,raceStatus
+1,2023/7/29,巴西,Brazil,A1,TO BE GO
+2,2023/8/05,迈阿密,Miami,A1,TO BE GO
+3,2023/8/12,美国,USA,A1,TO BE GO
+4,2023/8/19,阿塞拜疆,Azerbaijan,A1,TO BE GO
+5,2023/8/26,圣马力诺,San Marino,A1,TO BE GO
+,2023/9/02,秋歇,Autumn break,A1,SEASON BREAK
+6,2023/9/09,西班牙,Spain,A1,TO BE GO
+7,2023/9/16,葡萄牙,Portugal,A1,TO BE GO
+8,2023/9/23,法国,France,A1,TO BE GO
+,2023/9/30,中秋,Mid Aut. Fest.,A1,SEASON BREAK
+,2023/10/07,国庆,National Day,A1,SEASON BREAK
+9,2023/10/14,英国,Britain,A1,TO BE GO
+10,2023/10/21,奥地利,Austria,A1,TO BE GO
+11,2023/10/28,比利时,Belgium,A1,TO BE GO
+12,2023/11/04,荷兰,Nertherlands,A1,TO BE GO
+,2023/11/11,冬歇,Winter break,A1,SEASON BREAK
+13,2023/11/18,意大利,Italy,A1,TO BE GO
+14,2023/11/25,卡塔尔,Qatar,A1,TO BE GO
+15,2023/12/02,沙特,Saudi Arabia,A1,TO BE GO
+16,2023/12/09,阿布扎比,Abu Dhabi,A1,TO BE GO
+17,2023/12/16,日本,Japan,A1,TO BE GO
+18,2023/12/23,澳大利亚,Australia,A1,TO BE GO
+1,2023/7/28,巴西,Brazil,A2,TO BE GO
+2,2023/8/04,迈阿密,Miami,A2,TO BE GO
+3,2023/8/11,美国,USA,A2,TO BE GO
+4,2023/8/18,阿塞拜疆,Azerbaijan,A2,TO BE GO
+5,2023/8/25,圣马力诺,San Marino,A2,TO BE GO
+,2023/9/01,秋歇,Autumn break,A2,SEASON BREAK
+6,2023/9/08,西班牙,Spain,A2,TO BE GO
+7,2023/9/15,葡萄牙,Portugal,A2,TO BE GO
+8,2023/9/22,法国,France,A2,TO BE GO
+,2023/9/29,中秋,Mid Aut. Fest.,A2,SEASON BREAK
+,2023/10/06,国庆,National Day,A2,SEASON BREAK
+9,2023/10/13,英国,Britain,A2,TO BE GO
+10,2023/10/20,奥地利,Austria,A2,TO BE GO
+11,2023/10/27,比利时,Belgium,A2,TO BE GO
+12,2023/11/03,荷兰,Nertherlands,A2,TO BE GO
+,2023/11/10,冬歇,Winter break,A2,SEASON BREAK
+13,2023/11/17,意大利,Italy,A2,TO BE GO
+14,2023/11/24,卡塔尔,Qatar,A2,TO BE GO
+15,2023/12/01,沙特,Saudi Arabia,A2,TO BE GO
+16,2023/12/08,阿布扎比,Abu Dhabi,A2,TO BE GO
+17,2023/12/15,日本,Japan,A2,TO BE GO
+18,2023/12/22,澳大利亚,Australia,A2,TO BE GO
+1,2023/7/30,巴西,Brazil,A3,TO BE GO
+2,2023/8/06,迈阿密,Miami,A3,TO BE GO
+3,2023/8/13,美国,USA,A3,TO BE GO
+4,2023/8/20,阿塞拜疆,Azerbaijan,A3,TO BE GO
+5,2023/8/27,圣马力诺,San Marino,A3,TO BE GO
+,2023/9/03,秋歇,Autumn break,A3,SEASON BREAK
+6,2023/9/10,西班牙,Spain,A3,TO BE GO
+7,2023/9/17,葡萄牙,Portugal,A3,TO BE GO
+8,2023/9/24,法国,France,A3,TO BE GO
+,2023/10/01,中秋,Mid Aut. Fest.,A3,SEASON BREAK
+,2023/10/08,国庆,National Day,A3,SEASON BREAK
+9,2023/10/15,英国,Britain,A3,TO BE GO
+10,2023/10/22,奥地利,Austria,A3,TO BE GO
+11,2023/10/29,比利时,Belgium,A3,TO BE GO
+12,2023/11/05,荷兰,Nertherlands,A3,TO BE GO
+,2023/11/12,冬歇,Winter break,A3,SEASON BREAK
+13,2023/11/19,意大利,Italy,A3,TO BE GO
+14,2023/11/26,卡塔尔,Qatar,A3,TO BE GO
+15,2023/12/03,沙特,Saudi Arabia,A3,TO BE GO
+16,2023/12/10,阿布扎比,Abu Dhabi,A3,TO BE GO
+17,2023/12/17,日本,Japan,A3,TO BE GO
+18,2023/12/24,澳大利亚,Australia,A3,TO BE GO

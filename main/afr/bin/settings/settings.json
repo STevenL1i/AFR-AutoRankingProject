@@ -93,7 +93,9 @@
             "San Marino" : "flags/San Marino.png",
             "Portugal" : "flags/Portugal.png",
             "Saudi Arabia": "flags/Saudi Arabia.png",
-            "Miami": "flags/Miami.png"
+            "Miami": "flags/Miami.png",
+            "Qatar": "flags/Qatar.png",
+            "Las Vegas": "flags/Las Vegas.png"
         },
         "gp": {
             "AUS": "Australia",
@@ -121,7 +123,9 @@
             "SMR": "San Marino",
             "PRT": "Portugal",
             "SAU": "Saudi Arabia",
-            "MIA": "Miami"
+            "MIA": "Miami",
+            "QAT": "Qatar",
+            "LVC": "Las Vegas"
         },
         "warning": {
             "0.5": "△",
