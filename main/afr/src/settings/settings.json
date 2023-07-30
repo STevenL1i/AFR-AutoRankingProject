@@ -1,21 +1,21 @@
 {
     "default": {
         "leaguename": "AFR",
-        "seasonname": "S11",
+        "seasonname": "S12",
         "log": "log/log.log",
         "DEBUG_MODE": true
     },
 
     "race": {
         "points": {
-            "1": 25,
-            "2": 18,
-            "3": 15,
-            "4": 12,
-            "5": 10,
-            "6": 8,
-            "7": 6,
-            "8": 4,
+            "1": 15,
+            "2": 12,
+            "3": 10,
+            "4": 8,
+            "5": 6,
+            "6": 5,
+            "7": 4,
+            "8": 3,
             "9": 2,
             "10": 1,
             "11": 0,
@@ -93,7 +93,9 @@
             "San Marino" : "flags/San Marino.png",
             "Portugal" : "flags/Portugal.png",
             "Saudi Arabia": "flags/Saudi Arabia.png",
-            "Miami": "flags/Miami.png"
+            "Miami": "flags/Miami.png",
+            "Qatar": "flags/Qatar.png",
+            "Las Vegas": "flags/Las Vegas.png"
         },
         "gp": {
             "AUS": "Australia",
@@ -121,7 +123,9 @@
             "SMR": "San Marino",
             "PRT": "Portugal",
             "SAU": "Saudi Arabia",
-            "MIA": "Miami"
+            "MIA": "Miami",
+            "QAT": "Qatar",
+            "LVC": "Las Vegas"
         },
         "warning": {
             "0.5": "△",

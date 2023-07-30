@@ -1,4 +1,4 @@
-CREATE TABLE driverList (
+create table if not exists driverList (
     driverName      varchar(30)     NOT NULL,
     team            varchar(30)     NOT NULL,
     driverGroup     varchar(7)      NOT NULL,
@@ -8,14 +8,14 @@ CREATE TABLE driverList (
     PRIMARY KEY (driverName)
 );
 
-create table teamList (
+create table if not exists teamList (
     teamName      varchar(30) not null,
     teamColor     varchar(30) not null,
     driverGroup  varchar(8)  not null,
     primary key (teamName, driverGroup)
 );
 
-CREATE TABLE raceCalendar (
+create table if not exists raceCalendar (
     Round           tinyint(2)      NULL,
     raceDate        date            NOT NULL,
     GP_CHN          varchar(5)      NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE raceCalendar (
     KEY CK1 (GP_ENG,driverGroup)
 );
 
-CREATE TABLE driverLeaderBoard (
+create table if not exists driverLeaderBoard (
     driverName      varchar(30)     NOT NULL,
     team            varchar(30)     NOT NULL,
     driverGroup     varchar(7)      NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE driverLeaderBoard (
 );
 
 
-CREATE TABLE constructorsLeaderBoard (
+create table if not exists constructorsLeaderBoard (
     team            varchar(30)     NOT NULL,
     driverGroup     varchar(7)      NOT NULL,
     totalPoints     smallint(4)     NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE constructorsLeaderBoard (
 
 
 
-CREATE TABLE licensePoint (
+create table if not exists licensePoint (
     driverName      varchar(30)     NOT NULL,
     driverGroup     varchar(7)      NOT NULL,
     warning         decimal(3,1)    DEFAULT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE licensePoint (
             REFERENCES driverList (driverName) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE qualiResult (
+create table if not exists qualiResult (
     driverGroup     varchar(7)      NOT NULL,
     GP              varchar(15)     NOT NULL,
     position        tinyint(2)      NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE qualiResult (
         REFERENCES driverList (driverName) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE raceResult (
+create table if not exists raceResult (
     driverGroup     varchar(7)      NOT NULL,
     GP              varchar(15)     NOT NULL,
     finishPosition  tinyint(2)      NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE raceResult (
 );
 
 
-CREATE TABLE qualiraceFL (
+create table if not exists qualiraceFL (
     GP                  varchar(15)     NOT NULL,
     driverGroup         varchar(7)      NOT NULL,
     qualiFLdriver       varchar(30)     DEFAULT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE qualiraceFL (
         REFERENCES raceCalendar (GP_ENG, driverGroup) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE raceDirector (
+create table if not exists raceDirector (
     CaseNumber          varchar(100)      NOT NULL,
     CaseDate            date            NOT NULL,
     driverName          varchar(30)     NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE raceDirector (
         REFERENCES raceCalendar (GP_ENG) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-create table driverTransfer (
+create table if not exists driverTransfer (
     driverName          varchar(30) not null,
     team_from           varchar(30) not null,
     driverGroup_from    varchar(2)  not null,
@@ -145,7 +145,7 @@ create table driverTransfer (
             on update cascade on delete cascade
 );
 
-create table registTable (
+create table if not exists registTable (
     driverName  varchar(30) not null,
     team        varchar(30) not null,
     driverGroup varchar(7)  not null,

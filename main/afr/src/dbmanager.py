@@ -80,6 +80,7 @@ def dbinitialize():
         func.logging(logpath, f'creating table {token[2]}......')
         print(f'creating table {token[2]}......')
         cursor.execute(query[i])
+        db.commit()
 
     func.logging(logpath)
     print()

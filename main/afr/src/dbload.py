@@ -34,7 +34,7 @@ def dbload_basic():
         if filename == 0:
             raise AttributeError("race calendar missing, this must be initialized when started")
         filepath = filename
-        race = open(filepath, "r", encoding='utf-8')
+        race = open(filepath, "r", encoding='utf-8-sig')
         reader = csv.DictReader(race)
 
         for row in reader:
