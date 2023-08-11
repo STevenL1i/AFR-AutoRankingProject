@@ -20,6 +20,13 @@ def welcome_newdriver(db:mysql.connector.MySQLConnection):
         root.withdraw()
         files = filedialog.askopenfilenames()
 
+        query = 'UPDATE afr_db.LANusername \
+                SET accountStatus = "ACTIVE" \
+                WHERE accountStatus = "STANDBY FOR ADDING" \
+                   OR accountStatus = "STANDBY FOR CHECKING";'
+        cursor.execute(query)
+        db.commit()
+
         report = {"success":0, "failed":0, "skip":0}
         for filepath in files:
             func.logging(logpath, f'file: {filepath}')

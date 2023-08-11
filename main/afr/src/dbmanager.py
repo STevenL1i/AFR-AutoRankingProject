@@ -4,7 +4,7 @@ import dbconnect
 import mysql.connector
 import dbload as dbl
 
-VERSION = "AFR v8.2 DBmanager"
+VERSION = "AFR v8.3 DBmanager"
 logpath = "log/log.log"
 # generating log file
 today = datetime.datetime.today()
@@ -77,9 +77,10 @@ def dbinitialize():
 
     for i in range(0, len(query)-1):
         token = query[i].split(" ")
-        func.logging(logpath, f'creating table {token[2]}......')
-        print(f'creating table {token[2]}......')
-        cursor.execute(query[i])
+        if token[1] == "table":
+            func.logging(logpath, f'creating table {token[5]}......')
+            print(f'creating table {token[5]}......')
+            cursor.execute(query[i])
         db.commit()
 
     func.logging(logpath)
@@ -87,6 +88,14 @@ def dbinitialize():
 
     dbl.dbload_basic()
     db.commit()
+
+    for i in range(0, len(query)-1):
+        token = query[i].split(" ")
+        if token[3] == "view":
+            func.logging(logpath, f'creating view {token[4]}......')
+            print(f'creating view {token[4]}......')
+            cursor.execute(query[i])
+        db.commit()
 
 
 
