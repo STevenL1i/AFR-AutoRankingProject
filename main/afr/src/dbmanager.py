@@ -4,7 +4,7 @@ import dbconnect
 import mysql.connector
 import dbload as dbl
 
-VERSION = "AFR v8.1 DBmanager"
+VERSION = "AFR v8.3 DBmanager"
 logpath = "log/log.log"
 # generating log file
 today = datetime.datetime.today()
@@ -70,22 +70,32 @@ def dbdelete():
 
 
 def dbinitialize():
-    fd = open("dbcreate.sql", "r")
+    fd = open("dbinit/dbcreate.sql", "r")
     query = fd.read()
     fd.close()
     query = query.split(";")
 
     for i in range(0, len(query)-1):
         token = query[i].split(" ")
-        func.logging(logpath, f'creating table {token[2]}......')
-        print(f'creating table {token[2]}......')
-        cursor.execute(query[i])
+        if token[1] == "table":
+            func.logging(logpath, f'creating table {token[5]}......')
+            print(f'creating table {token[5]}......')
+            cursor.execute(query[i])
+        db.commit()
 
     func.logging(logpath)
     print()
 
     dbl.dbload_basic()
     db.commit()
+
+    for i in range(0, len(query)-1):
+        token = query[i].split(" ")
+        if token[3] == "view":
+            func.logging(logpath, f'creating view {token[4]}......')
+            print(f'creating view {token[4]}......')
+            cursor.execute(query[i])
+        db.commit()
 
 
 
@@ -95,7 +105,7 @@ def dbload():
 
 
 def dbclear():
-    fd = open("dbclear.sql", "r")
+    fd = open("dbinit/dbclear.sql", "r")
     query = fd.read()
     fd.close()
     query = query.split(";")
@@ -109,7 +119,7 @@ def dbclear():
 
 
 def dbdrop():
-    fd = open("dbdrop.sql", "r")
+    fd = open("dbinit/dbdrop.sql", "r")
     query = fd.read()
     fd.close()
     query = query.split(";")
@@ -129,7 +139,7 @@ def dbdrop():
 
 def main():
     while True:
-        print("AFR Automation Table manager (AFR Version v7.0)")
+        print(f'AFR Automation Table manager ({VERSION})')
         print()
         print("1.initialize database")
         print("2.load database (undeveloped, don't use)")

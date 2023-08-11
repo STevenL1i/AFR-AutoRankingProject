@@ -34,11 +34,14 @@ def dbload_basic():
         if filename == 0:
             raise AttributeError("race calendar missing, this must be initialized when started")
         filepath = filename
-        race = open(filepath, "r", encoding='utf-8')
+        race = open(filepath, "r", encoding='utf-8-sig')
         reader = csv.DictReader(race)
 
         for row in reader:
-            round = row.get("Round")
+            try:
+                round = int(row.get("Round"))
+            except (ValueError, TypeError):
+                round = None
             racedate = row.get("raceDate")
             gpchn = row.get("GP_CHN")
             gpeng = row.get("GP_ENG")

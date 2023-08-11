@@ -40,17 +40,20 @@ def askuser_event_type() -> tuple[str, str] or bool:
 
 def askuser_status() -> str or bool:
     print("1. 比赛还未进行")
-    print("2. 比赛正赛进行中")
-    print("3. 比赛已完成")
-    print("4. 比赛已取消")
+    print("2. 比赛正在进行中")
+    print("3. 比赛开启报名中")
+    print("4. 比赛已完成")
+    print("5. 比赛已取消")
     choice = input("请输入你的选择，输入q回到上一级：")
     if choice == '1':
         return "TO BE GO"
     elif choice == '2':
         return "ON GOING"
     elif choice == '3':
-        return "FINISHED"
+        return "ON REGIST"
     elif choice == '4':
+        return "FINISHED"
+    elif choice == '5':
         return "CANCELLED"
     elif choice == 'q':
         return "Q"
@@ -140,7 +143,7 @@ def update_racestatus(db:mysql.connector.MySQLConnection):
                 continue
         
         status = askuser_status()
-        if status == "Q":
+        if status == "q" or status == "Q":
             continue
         elif status == False:
             input("请选择正确的选项......")
