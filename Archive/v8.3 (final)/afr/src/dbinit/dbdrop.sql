@@ -1,0 +1,25 @@
+drop table if exists registTable;
+drop table if exists qualiraceFL;
+drop table if exists qualiResult;
+drop table if exists raceResult;
+drop table if exists raceDirector;
+drop table if exists licensePoint;
+drop table if exists driverLeaderBoard;
+drop table if exists constructorsLeaderBoard;
+drop table if exists driverTransfer;
+drop table if exists raceCalendar;
+drop table if exists teamList;
+drop table if exists driverList;
+
+drop view if exists get_raceResult;
+drop view if exists get_qualiResult;
+drop view if exists get_raceDirector;
+drop view if exists get_driverList;
+drop view if exists get_raceCalendar;
+drop view if exists get_driverleaderboard_short;
+drop view if exists get_consleaderboard_short;
+drop view if exists get_raceDone;
+drop view if exists get_registration;
+drop view if exists get_leaderboard_constructors;
+drop view if exists get_leaderboard_driver;
+drop view if exists get_licensepoint;
