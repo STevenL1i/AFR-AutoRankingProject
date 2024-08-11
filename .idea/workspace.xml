@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fd69b11a-0a37-4a87-9d9c-c07ef0955bf1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/afr v8.2.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/dbinit/dbcreate.sql" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/bin/dbinit/dbcreate.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/dbinit/dbdrop.sql" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/bin/dbinit/dbdrop.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/dbmanager v8.2.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/settings/Preseason_racecalendar_winver.csv" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/bin/settings/Preseason_racecalendar_winver.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/settings/format.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/bin/settings/format.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/bin/settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/bin/settings/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/src/flags/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/src/settings/RaceCalendar_S13.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/src/settings/format.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/src/settings/format.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/afr/src/settings/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/main/afr/src/settings/settings.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2kUe1nmgH3Gq5Vle4AC3t6PS1NF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fd69b11a-0a37-4a87-9d9c-c07ef0955bf1" name="Changes" comment="" />
+      <created>1723342373133</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723342373133</updated>
+      <workItem from="1723342373135" duration="3000" />
+    </task>
+    <servers />
+  </component>
+</project>

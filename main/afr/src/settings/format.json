@@ -1,73 +1,73 @@
 {
     "driverformat": {
-        "Mercedes AMG": {
+        "Mercedes": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#33CCCC",
+            "bg_color": "#27F4D2",
             "valign": "vcenter"
         },
         "Red Bull Racing": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#0070C0",
+            "bg_color": "#3671C6",
             "valign": "vcenter"
         },
         "Ferrari": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#FF0000",
+            "bg_color": "#E42528",
             "valign": "vcenter"
         },
         "McLaren": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#FFC000",
+            "bg_color": "#FF8000",
             "valign": "vcenter"
         },
         "Alpine": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#FF66B2",
+            "bg_color": "#FF87BC",
             "valign": "vcenter"
         },
-        "Alpha Tauri": {
+        "RB": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#00B0F0",
+            "bg_color": "#6692FF",
             "valign": "vcenter"
         },
         "Aston Martin": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#006633",
+            "bg_color": "#229971",
             "valign": "vcenter"
         },
         "Williams": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#666699",
+            "bg_color": "#64C4FF",
             "valign": "vcenter"
         },
-        "Alfa Romeo": {
+        "Kick Sauber": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#800000",
+            "bg_color": "#52E252",
             "valign": "vcenter"
         },
         "Haas": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
-            "bg_color": "#BFBFBF",
+            "bg_color": "#B6BABD",
             "valign": "vcenter"
         },
         "Reserve": {
@@ -103,18 +103,11 @@
             "font_color": "#000000",
             "bg_color": "#E26B0A",
             "valign": "vcenter"
-        },
-        "A3": {
-            "font_size": 11,
-            "font_name": "Dengxian",
-            "font_color": "#000000",
-            "bg_color": "#00FF00",
-            "valign": "vcenter"
         }
     },
 
     "teamformat": {
-        "Mercedes AMG": {
+        "Mercedes": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
@@ -154,7 +147,7 @@
             "bold": true,
             "valign": "vcenter"
         },
-        "Alpha Tauri": {
+        "RB": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
@@ -178,7 +171,7 @@
             "bold": true,
             "valign": "vcenter"
         },
-        "Alfa Romeo": {
+        "Kick Sauber": {
             "font_size": 11,
             "font_name": "Dengxian",
             "font_color": "#000000",
@@ -207,14 +200,6 @@
             "font_name": "Dengxian",
             "font_color": "#000000",
             "bg_color": "#E26B0A",
-            "align": "center",
-            "valign": "vcenter"
-        },
-        "A3": {
-            "font_size": 11,
-            "font_name": "Dengxian",
-            "font_color": "#000000",
-            "bg_color": "#00FF00",
             "align": "center",
             "valign": "vcenter"
         }

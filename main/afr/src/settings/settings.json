@@ -1,7 +1,7 @@
 {
     "default": {
         "leaguename": "AFR",
-        "seasonname": "S12",
+        "seasonname": "S14",
         "log": "log/log.log",
         "DEBUG_MODE": true
     },
@@ -46,25 +46,24 @@
     },
 
     "drivergroup": {
-        "order": ["A1","A2","A3"],
+        "order": ["A1","A2"],
         "enable_team": {
             "A1": true,
-            "A2": true,
-            "A3": false
+            "A2": true
         }
     },
 
     "content": {
         "teamorder": [
-            "Mercedes AMG",
+            "Mercedes",
             "Red Bull Racing",
             "Ferrari",
             "McLaren",
             "Alpine",
-            "Alpha Tauri",
+            "RB",
             "Aston Martin",
             "Williams",
-            "Alfa Romeo",
+            "Kick Sauber",
             "Haas"
         ],
         "flags": {
@@ -135,23 +134,22 @@
         "codename": {
             "A1": "Champions League",
             "A2": "Challenger League",
-            "A3": "Amateur League",
-            "Mercedes AMG": "梅赛德斯AMG",
+            "Mercedes": "梅赛德斯",
             "Red Bull Racing": "红牛",
             "Ferrari": "法拉利",
             "McLaren": "迈凯伦",
             "Alpine": "雷诺",
-            "Alpha Tauri": "小红牛",
+            "RB": "小红牛",
             "Aston Martin": "阿斯顿马丁",
             "Williams": "威廉姆斯",
-            "Alfa Romeo": "阿尔法罗密欧",
+            "Kick Sauber": "索伯",
             "Haas": "哈斯"
         }
     },
 
     "dbmanager": {
         "loadingconfig": {
-            "raceCalendar": "settings/Preseason_racecalendar_winver.csv",
+            "raceCalendar": "settings/RaceCalendar_S14.csv",
             "constructorsLeaderBoard": 0,
             "LANusername": 0
         }
