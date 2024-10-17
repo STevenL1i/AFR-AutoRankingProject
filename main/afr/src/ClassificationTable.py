@@ -623,9 +623,9 @@ def leaderboard_driver(workbook:xlsxwriter.Workbook, db:mysql.connector.MySQLCon
         result = cursor.fetchall()
         colcursor = 2
         for race in result:
-            if race[0] == None or race[5] == "CANCELLED":
+            if race[0] == None:
                 continue
-            if race[5] == "FINISHED":
+            if race[5] == "FINISHED" or race[5] == "CANCELLED":
                 racedonelist.append(race[3])
             
             leaderboard.set_column(colcursor, colcursor, 9)
@@ -774,9 +774,9 @@ def leaderboard_constructors(workbook:xlsxwriter.Workbook, db:mysql.connector.My
         result = cursor.fetchall()
         colcursor = 2
         for race in result:
-            if race[0] == None or race[5] == "CANCELLED":
+            if race[0] == None:
                 continue
-            if race[5] == "FINISHED":
+            if race[5] == "FINISHED" or race[5] == "CANCELLED":
                 racedonelist.append(race)
             
             leaderboard.set_column(colcursor, colcursor+1, 4)
